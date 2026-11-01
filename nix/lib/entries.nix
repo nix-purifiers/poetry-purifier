@@ -29,7 +29,10 @@ let
     toJSON
     ;
 
-  locked = (builtins.fromTOML (builtins.readFile poetryLock)).package or [ ];
+  locked =
+    (builtins.addErrorContext "while reading ${toString poetryLock}. Run `poetry lock` to write it again, and then `poetry purifier lock`." (
+      builtins.fromTOML (builtins.readFile poetryLock)
+    )).package or [ ];
 
   hexOf =
     sri:

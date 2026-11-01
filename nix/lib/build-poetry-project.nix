@@ -35,9 +35,6 @@
   src,
   # The purifier lockfile. By default, the one in `src`.
   lockFile ? src + "/poetry-purifier.lock.json",
-  # The project's poetry.lock, for a source that does not hold the one the
-  # lock was made from. It replaces any poetry.lock in `src`.
-  poetryLock ? null,
   # Fetchers for the purifier library's fetchEntry and tree, such as a
   # `fetchurl` that sends credentials or uses a mirror.
   fetchers ? { },
@@ -57,15 +54,10 @@ let
   plugin = pkgs.callPackage ../../pkgs/plugin { };
   poetry = pkgs.callPackage ../../pkgs/poetry { inherit plugin purifierSource; };
 
-  lockFiles = {
-    inherit lockFile src;
-  }
-  // lib.optionalAttrs (poetryLock != null) { inherit poetryLock; };
-  # The parsed lockfile, which the build reads only after the lock check
-  # passed, so that a bad lockfile fails with its problem rather than with a
-  # JSON parse error.
-  # The interpreter comes from the lockfile, and the lock in memory needs
-  # the interpreter, so this reads the lockfile before checkLock does.
+  lockFiles = { inherit lockFile src; };
+  # The parsed lockfile. The interpreter comes from it, and the lock in
+  # memory needs the interpreter, so the builder reads the lockfile before
+  # checkLock does. A problem found here fails evaluation with its message.
   read = import ./lockfile.nix lockFiles;
   lock = if read.problems == [ ] then read.lock else throw (lib.concatStringsSep "\n" read.problems);
   pyproject = builtins.fromTOML (builtins.readFile (src + "/pyproject.toml"));
@@ -116,7 +108,6 @@ let
       "pkgs"
       "src"
       "lockFile"
-      "poetryLock"
       "fetchers"
       "python"
       "groups"
@@ -149,9 +140,6 @@ let
         # A module imported during the build would otherwise leave bytecode
         # that records the build time, and two builds would differ.
         export PYTHONDONTWRITEBYTECODE=1
-        ${lib.optionalString (poetryLock != null) ''
-          cp --no-preserve=mode ${poetryLock} poetry.lock
-        ''}
 
         # Poetry writes the wheels it builds from sdists next to them, so the
         # directories of the cache are writable and its files are links.

@@ -27,15 +27,14 @@
   src,
   # The purifier lockfile. By default, the one in `src`.
   lockFile ? src + "/poetry-purifier.lock.json",
-  # The project's poetry.lock. By default, the one in `src`.
-  poetryLock ? src + "/poetry.lock",
   # The Python version, such as "3.14". By default, the one of the lock run.
   pythonVersion ? null,
   # The glibc version of the systems, such as "2.40".
   glibcVersion ? null,
 }:
 let
-  read = import ./lockfile.nix { inherit lockFile src poetryLock; };
+  poetryLock = src + "/poetry.lock";
+  read = import ./lockfile.nix { inherit lockFile src; };
   inherit (read) lock;
   lockName = toString lockFile;
 

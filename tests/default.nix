@@ -39,19 +39,21 @@ let
     );
   charsetWheels = arch: lib.filter (lib.hasPrefix "charset_normalizer-") (selectFor arch);
 
-  # Whether readLock reports a problem for this lockfile and this
-  # poetry.lock, and evaluating a build of the fixture with them stops the
-  # evaluation.
+  # Textualize's rich at v15.0.0, pinned by commit, as its authors publish it.
+  richUpstream = builtins.fetchTarball {
+    url = "https://github.com/Textualize/rich/archive/6ac483cbea39cab124dfd3483bba70ffafb71050.tar.gz";
+    sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
+  };
+
+  # Whether readLock reports a problem for this lockfile and this project,
+  # and evaluating a build of the project with them stops the evaluation.
   refused =
     {
       lockFile,
-      poetryLock ? ./fixtures/app/poetry.lock,
+      src ? ./fixtures/app,
     }:
     let
-      files = {
-        inherit lockFile poetryLock;
-        src = ./fixtures/app;
-      };
+      files = { inherit lockFile src; };
     in
     (poetryPurifier.readLock files).problems != [ ]
     && !(builtins.tryEval (build (files // { inherit pkgs; })).release.drvPath).success;
@@ -95,11 +97,11 @@ in
 {
   # The contract: a lockfile older than the project fails, at evaluation and
   # in the command, naming the command to run. Here the fixture's lockfile
-  # meets another project's poetry.lock.
+  # meets another project's files.
   conformance-stale =
     assert refused {
       lockFile = ./fixtures/app/poetry-purifier.lock.json;
-      poetryLock = ./real-world/rich/poetry.lock;
+      src = richUpstream;
     };
     refusedByPlugin "conformance-stale" "echo >> pyproject.toml";
 
@@ -223,35 +225,6 @@ in
       test -f ${app.release.files."app-1.0.0-py3-none-any.whl"}
       test -f ${app.release.files."app-1.0.0.tar.gz"}
       touch "$out"
-    '';
-
-  # A real-world project: Textualize's rich at v15.0.0, pinned by commit. Its
-  # own poetry.lock was made by Poetry 2.1.3, so the lock was made after
-  # `poetry lock` with Poetry 2.5.1, which kept every locked version. The
-  # build runs rich's whole pytest suite in the sandbox.
-  real-world-rich =
-    let
-      rich = build {
-        inherit pkgs;
-        src = builtins.fetchTarball {
-          url = "https://github.com/Textualize/rich/archive/6ac483cbea39cab124dfd3483bba70ffafb71050.tar.gz";
-          sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
-        };
-        poetryLock = ./real-world/rich/poetry.lock;
-        lockFile = ./real-world/rich/poetry-purifier.lock.json;
-        # test_brokenpipeerror runs `which python` and `which head`.
-        nativeCheckInputs = [ pkgs.which ];
-      };
-    in
-    assert
-      lib.attrNames rich.release.files == [
-        "rich-15.0.0-py3-none-any.whl"
-        "rich-15.0.0.tar.gz"
-      ];
-    runCommand "real-world-rich" { } ''
-      ${rich.tests}/bin/python -c 'import rich; rich.print("[bold]rich[/bold] from Nix")' | tee "$out"
-      grep -q 'rich from Nix' "$out"
-      test -f ${rich.release.files."rich-15.0.0-py3-none-any.whl"}
     '';
 
   # The plugin's unit tests: the lockfile functions, the lock command's

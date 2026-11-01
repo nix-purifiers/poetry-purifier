@@ -21,11 +21,9 @@
 {
   lockFile,
   src,
-  # The project's poetry.lock, which is in `src` unless a build keeps it
-  # elsewhere.
-  poetryLock ? src + "/poetry.lock",
 }:
 let
+  poetryLock = src + "/poetry.lock";
   version = 8;
   relock = "Run `poetry purifier lock` to write it again.";
   name = toString lockFile;
@@ -42,7 +40,9 @@ let
     fileLine "pyproject.toml" (src + "/pyproject.toml") + fileLine "poetry.lock" poetryLock
   );
 
-  lock = builtins.fromJSON text;
+  # Reached only when the content hash matched, so the text is what the
+  # plugin wrote. The context names the fix for any other failure.
+  lock = builtins.addErrorContext "while reading ${name}. ${relock}" (builtins.fromJSON text);
 
   problem =
     if !builtins.pathExists lockFile then

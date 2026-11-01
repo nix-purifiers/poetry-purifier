@@ -65,10 +65,6 @@ sandbox, and `nix develop` gives the shell.
 - `pkgs`: the package set to build with.
 - `src`: the project.
 - `lockFile`: the purifier lockfile. The default is the one in `src`.
-- `poetryLock`: the project's `poetry.lock`, for a source that does not hold
-  the one the lock was made from, such as a pinned upstream release whose
-  `poetry.lock` was relocked with a newer Poetry. The default is the one in
-  `src`.
 - `fetchers`: fetchers for the purifier library, such as a `fetchurl` that
   sends credentials or uses a mirror.
 - `python`: the interpreter. The default is the nixpkgs interpreter of the
@@ -92,8 +88,7 @@ attributes, all known by name when Nix evaluates the build:
   `release.files."<file name>"` is the path of each.
 - `fetches`: the download entries of the lock, for every supported system.
 
-`lib.poetry-purifier.readLock { src, lockFile, poetryLock }` reads both
-lockfiles into the family's shape, `{ purifier, entries, outputs, problems }`,
+`lib.poetry-purifier.readLock { src, lockFile }` reads both lockfiles into the family's shape, `{ purifier, entries, outputs, problems }`,
 for tools that read every purifier, such as an SBOM generator. An entry
 that only some systems fetch, such as a wheel for one CPU, has `systems`.
 The builder checks this shape with the purifier library's `checkLock`.
@@ -273,8 +268,10 @@ a large pytest suite. These steps were run on it:
    date. `poetry purifier lock --check` and `poetry install` said so and
    named `poetry purifier lock`.
 5. `buildPoetryProject` builds it offline in the sandbox and runs its whole
-   test suite. The `real-world-rich` check does this in CI on both systems,
-   from the pinned commit.
+   test suite. The `real-world-rich` job runs `tests/real-world-rich.sh` in
+   CI on both systems. It builds from the pinned commit with the relocked
+   `poetry.lock` of step 1 in the source tree. That tree is a derivation, so
+   the build runs from a script for the current system.
 
 ## Credits
 
@@ -293,6 +290,7 @@ tests/conformance-relock.sh
 tests/conformance-update.sh
 tests/conformance-rebuild.sh
 tests/conformance-offline.sh
+tests/real-world-rich.sh
 ```
 
 The flake checks include the contract's checks that need no network:
