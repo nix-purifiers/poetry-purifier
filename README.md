@@ -160,9 +160,7 @@ with. It links the files into Poetry's cache, keeps them and the
 interpreter alive with a garbage-collector root at
 `.poetry-purifier/prefetch`, and points the project's virtual environment
 at that interpreter. After a prefetch, `poetry install`, `poetry sync`,
-`poetry run` and `poetry build` work with the network cut off. The
-`conformance-offline` job checks this with every proxy closed and no Nix
-substituters.
+`poetry run` and `poetry build` work with the network cut off.
 
 ## Editor
 
@@ -203,7 +201,6 @@ above rather than a parse error.
 ## Sources supported and refused
 
 Every source `poetry.lock` can name works, in the Nix build and offline.
-The test fixture has one of each.
 
 | Source in `poetry.lock` | `poetry.lock` has | The purifier lockfile adds |
 |---|---|---|
@@ -245,33 +242,62 @@ The purifier refuses these:
 
 The plugin changes how Poetry looks up links, downloads files, clones git
 repositories and installs build requirements. These are Poetry internals,
-so the plugin is tested with one Poetry version, 2.5.1, the one in the
-flake.
+so the plugin works with the Poetry version in this flake, 2.5.1, and may
+not work with another.
 
 ## Examples
 
-These are projects that CI locks and builds. They show the purifier at
-work, and they are not a list of the projects it works with.
+### rich
 
-[rich](https://github.com/Textualize/rich) v15.0.0, at commit
-`6ac483cbea39cab124dfd3483bba70ffafb71050`, is a Poetry project with the
-older `[tool.poetry.dev-dependencies]` table, an optional `jupyter` extra and
-a large pytest suite. Its `poetry.lock` was made by Poetry 2.1.3, and
-`poetry lock` from Poetry 2.5.1 rewrote it without changing a locked
-version. The `real-world-rich` job runs `tests/real-world-rich.sh` on both
-systems. The script builds rich offline in the sandbox from its pinned
-commit with the rewritten `poetry.lock` in the source tree, and runs its whole
-test suite. The source tree is a derivation, so the script builds for the
-current system and no flake check holds it. The purifier lockfile of rich is
-`tests/real-world/rich/poetry-purifier.lock.json`. It holds 325 file URLs and
-two sets of build requirements.
+[rich](https://github.com/Textualize/rich) is a Python library for styled
+terminal output. Clone it and write its purifier lockfile. The command runs
+`poetry lock` first when `poetry.lock` is out of date, so add both files to
+git:
 
-The fixture `tests/fixtures/app` has a dependency of each source in the table
-above, a path dependency with a script, and a test suite. The flake checks
-build it, and the `conformance-relock`, `conformance-rebuild` and
-`conformance-offline` jobs lock, rebuild and work offline on it. The fixture
-`tests/fixtures/update` holds an old version of idna, and the
-`conformance-update` job moves it with `poetry purifier update`.
+```zsh
+git clone https://github.com/Textualize/rich
+cd rich
+nix run github:nix-purifiers/poetry-purifier -- purifier lock
+git add poetry.lock poetry-purifier.lock.json
+```
+
+Then add this `flake.nix` next to its `pyproject.toml`. The tests of rich
+run `which`, which the build sandbox does not have, so the flake adds it:
+
+```nix
+{
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.poetry-purifier.url = "github:nix-purifiers/poetry-purifier";
+
+  outputs =
+    { nixpkgs, poetry-purifier, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+      rich = poetry-purifier.lib.poetry-purifier.buildPoetryProject {
+        inherit pkgs;
+        src = ./.;
+        nativeCheckInputs = [ pkgs.which ];
+      };
+    in
+    {
+      packages.${system}.default = rich.packages.rich;
+      checks.${system}.tests = rich.tests;
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [ poetry-purifier.packages.${system}.poetry ];
+      };
+    };
+}
+```
+
+`nix build` builds the library, and `nix flake check` runs its test suite in
+the sandbox. For development, run these in `nix develop`:
+
+```zsh
+poetry purifier prefetch
+poetry install --extras jupyter
+poetry run pytest
+```
 
 ## Credits
 
@@ -281,20 +307,3 @@ Poetry. sbt-nix-backend made Nix the dependency and build backend of sbt,
 with a lockfile of every download, a sandboxed build from it, an offline
 interactive mode, and a publish step that publishes what Nix built. The
 nix-purifiers family takes its idea from nixcloud's cargo work (libnix).
-
-## Tests
-
-```zsh
-nix flake check
-tests/conformance-relock.sh
-tests/conformance-update.sh
-tests/conformance-rebuild.sh
-tests/conformance-offline.sh
-tests/real-world-rich.sh
-```
-
-The flake checks include the contract's checks that need no network:
-`conformance-stale`, `conformance-tampered`, `conformance-missing`,
-`conformance-malformed` and `conformance-external`. The scripts are the
-checks that need the network, and CI runs each as a job of the same name.
-CI runs everything on x86_64-linux and aarch64-linux.
