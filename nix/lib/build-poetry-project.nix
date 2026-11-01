@@ -1,7 +1,17 @@
 # SPDX-License-Identifier: MIT
 #
-# lib.poetry-purifier.buildPoetryProject: builds a Poetry project from its
+# buildPoetryProject: builds a Poetry project from its
 # poetry-purifier.lock.json, offline, and meets the purifier contract.
+#
+# The file is a package for callPackage: the first argument set is what it
+# takes from the package set, and the result is the builder. The default
+# package overlay (`overlays.default`) adds it to the package set as
+# `buildPoetryProject`, so a package written for callPackage takes it like
+# any other builder:
+#
+#   { buildPoetryProject }: (buildPoetryProject { src = ./.; }).packages.app
+#
+# and `buildPoetryProject.override` replaces what it takes from the set.
 #
 # Nix fetches the files the lockfile names for this system into a copy of
 # Poetry's cache, and Poetry, with the purifier plugin in offline mode, runs
@@ -25,21 +35,29 @@
 #   fetches the entries that `lib.purifier.entriesFor` gives for it.
 {
   lib,
-  # The shared purifier library, `lib.purifier`.
+  stdenv,
+  runCommand,
+  # The fetchers for the files and the git checkouts of the lock.
+  fetchurl,
+  fetchgit,
+  # The interpreters a build can run on; the default interpreter of a build
+  # is the one of the Python version the lock was made with.
+  pythonInterpreters,
+  # The shared purifier library.
   purifier,
-  # Its source, for the Nix files that the Poetry wrapper writes.
-  purifierSource,
+  # The poetry-purifier package scope, whose `poetry` is Poetry with the
+  # purifier plugin.
+  poetry-purifier,
 }:
 {
-  pkgs,
   src,
   # The purifier lockfile. By default, the one in `src`.
   lockFile ? src + "/poetry-purifier.lock.json",
   # Fetchers for the purifier library's fetchEntry and tree, such as a
   # `fetchurl` that sends credentials or uses a mirror.
   fetchers ? { },
-  # The interpreter. By default, nixpkgs' interpreter of the Python version
-  # the lock was made with.
+  # The interpreter. By default, the nixpkgs interpreter of the Python
+  # version the lock was made with.
   python ? null,
   # The dependency groups to install beside the project.
   groups ? [ "main" ],
@@ -50,9 +68,7 @@
   ...
 }@args:
 let
-  inherit (pkgs) stdenv runCommand;
-  plugin = pkgs.callPackage ../../pkgs/plugin { };
-  poetry = pkgs.callPackage ../../pkgs/poetry { inherit plugin purifierSource; };
+  inherit (poetry-purifier) poetry;
 
   lockFiles = { inherit lockFile src; };
   # The parsed lockfile. The interpreter comes from it, and the lock in
@@ -70,7 +86,10 @@ let
   );
 
   interpreter =
-    if python != null then python else pkgs."python${lib.replaceStrings [ "." ] [ "" ] lock.python}";
+    if python != null then
+      python
+    else
+      pythonInterpreters."python${lib.replaceStrings [ "." ] [ "" ] lock.python}";
 
   system = {
     pythonVersion = lib.versions.majorMinor interpreter.version;
@@ -96,7 +115,7 @@ let
   # at the path the plugin copies it from.
   cache = purifier.tree (
     {
-      inherit pkgs;
+      pkgs = { inherit runCommand fetchurl fetchgit; };
       name = "${projectName}-poetry-cache";
       entries = purifier.entriesFor stdenv.hostPlatform.system checked;
     }
@@ -105,7 +124,6 @@ let
 
   environment = stdenv.mkDerivation (
     removeAttrs args [
-      "pkgs"
       "src"
       "lockFile"
       "fetchers"

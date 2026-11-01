@@ -11,10 +11,10 @@ let
   inherit (pkgs) lib runCommand;
   purified = pkgs.extend overlay;
   inherit (purified.poetry-purifier) poetry;
-  build = poetryPurifier.buildPoetryProject;
+  inherit (purified) buildPoetryProject;
+  build = buildPoetryProject;
 
   app = build {
-    inherit pkgs;
     src = ./fixtures/app;
   };
   environment = app.packages.app;
@@ -56,7 +56,7 @@ let
       files = { inherit lockFile src; };
     in
     (poetryPurifier.readLock files).problems != [ ]
-    && !(builtins.tryEval (build (files // { inherit pkgs; })).release.drvPath).success;
+    && !(builtins.tryEval (build files).release.drvPath).success;
   # The fixture's lockfile with its text changed by `change`.
   changedLock = change: builtins.toFile "poetry-purifier.lock.json" (change lockText);
   gitHash = builtins.head (builtins.attrValues lock.git);
@@ -146,7 +146,6 @@ in
   conformance-external =
     let
       external = build {
-        inherit pkgs;
         src = builtins.path {
           path = ./fixtures/app;
           name = "app-without-lockfile";
@@ -188,7 +187,6 @@ in
       '';
     in
     (build {
-      inherit pkgs;
       src = ./fixtures/app;
       preBuild = unset;
       checkPhase = ''
@@ -198,6 +196,23 @@ in
         runHook postCheck
       '';
     }).tests;
+
+  # A package written for callPackage takes the builder by name, and
+  # `override` replaces what the builder takes from the package set. The
+  # replacement `fetchgit` stops the evaluation of the fixture, which has a
+  # git dependency, so the replacement reaches the fetches.
+  builder-in-the-package-set =
+    let
+      consumer = purified.callPackage (
+        { buildPoetryProject }: (buildPoetryProject { src = ./fixtures/app; }).packages.app
+      ) { };
+      overridden = (buildPoetryProject.override { fetchgit = _: throw "replaced fetchgit"; }) {
+        src = ./fixtures/app;
+      };
+    in
+    assert consumer.outPath == environment.outPath;
+    assert !(builtins.tryEval overridden.packages.app.drvPath).success;
+    runCommand "builder-in-the-package-set" { } "touch $out";
 
   # The lock in memory: the shape that the purifier library checks, the
   # charset-normalizer wheels of each CPU marked with their system, the git

@@ -1,7 +1,7 @@
 # poetry-purifier
 
 A Poetry plugin and Nix library that build a Poetry project in the Nix
-sandbox, offline, from its lockfiles. You do not commit generated Nix files.
+sandbox, offline, from its lockfiles.
 
 Poetry still installs, builds, tests and publishes the project.
 `poetry.lock` already records the name, version and hash of every file
@@ -26,8 +26,8 @@ nix run github:nix-purifiers/poetry-purifier -- purifier lock
 git add poetry-purifier.lock.json
 ```
 
-Then add a `flake.nix` that builds the project with
-`lib.poetry-purifier.buildPoetryProject`:
+Then add a `flake.nix`. The flake's `overlays.default` adds the builder
+`buildPoetryProject` to a package set, where nixpkgs keeps its own builders:
 
 ```nix
 {
@@ -38,19 +38,19 @@ Then add a `flake.nix` that builds the project with
     { nixpkgs, poetry-purifier, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      project = poetry-purifier.lib.poetry-purifier.buildPoetryProject {
-        inherit pkgs;
-        src = ./.;
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ poetry-purifier.overlays.default ];
       };
+      project = pkgs.buildPoetryProject { src = ./.; };
     in
     {
-      # The project's environment, and one package per script.
+      # The packages are the environment of the project and its scripts.
       packages.${system} = project.packages;
       checks.${system}.tests = project.tests;
-      # A shell whose `poetry` has the plugin.
+      # The shell has a `poetry` with the plugin.
       devShells.${system}.default = pkgs.mkShell {
-        packages = [ poetry-purifier.packages.${system}.poetry ];
+        packages = [ pkgs.poetry-purifier.poetry ];
       };
     };
 }
@@ -60,9 +60,21 @@ Then add a `flake.nix` that builds the project with
 runs one of the project's scripts, `nix flake check` runs the tests in the
 sandbox, and `nix develop` gives the shell.
 
+A package written for `callPackage` takes the builder by name, like any
+other builder:
+
+```nix
+# package.nix
+{ buildPoetryProject }:
+(buildPoetryProject { src = ./.; }).packages.<project>
+```
+
+`buildPoetryProject.override` replaces what the builder takes from the
+package set, such as `fetchurl`, `pythonInterpreters` or the
+`poetry-purifier` scope.
+
 `buildPoetryProject` takes these arguments:
 
-- `pkgs`: the package set to build with.
 - `src`: the project.
 - `lockFile`: the purifier lockfile. The default is the one in `src`.
 - `fetchers`: fetchers for the purifier library, such as a `fetchurl` that
@@ -88,12 +100,13 @@ attributes, all known by name when Nix evaluates the build:
   `release.files."<file name>"` is the path of each.
 - `fetches`: the download entries of the lock, for every supported system.
 
-`lib.poetry-purifier.readLock { src, lockFile }` reads both lockfiles into the family's shape, `{ purifier, entries, outputs, problems }`,
-for tools that read every purifier, such as an SBOM generator. An entry
-that only some systems fetch, such as a wheel for one CPU, has `systems`.
-The builder checks this shape with the purifier library's `checkLock`.
+`lib.poetry-purifier.readLock { src, lockFile }` reads both lockfiles into
+the family's shape, `{ purifier, entries, outputs, problems }`, for tools
+that read every purifier, such as an SBOM generator. An entry that only some
+systems fetch, such as a wheel for one CPU, has `systems`. The builder
+checks this shape with the purifier library's `checkLock`.
 
-## Everyday loop
+## Development loop
 
 | Step | Command |
 |---|---|
@@ -147,7 +160,7 @@ from the lockfiles, then runs Poetry's own `publish` on its files.
 Repositories, credentials and the other options of `poetry publish` work as
 they do there.
 
-## Offline work
+## Working offline
 
 ```zsh
 poetry purifier prefetch
@@ -178,7 +191,7 @@ instead, which writes a plain path entry, in the project's `poetry.toml`:
 editable_mode = "compat"
 ```
 
-## Errors and fixes
+## Troubleshooting
 
 Each of these fails in the command and when Nix evaluates the build, and
 each message names the command that fixes it.
@@ -198,7 +211,7 @@ Nix reads the content hash from the first line of the lockfile and checks
 it before it parses the JSON, so a malformed file fails with the message
 above rather than a parse error.
 
-## Sources supported and refused
+## Supported language repositories
 
 Every source `poetry.lock` can name works, in the Nix build and offline.
 
@@ -228,7 +241,7 @@ git checkout, a path dependency or the project itself with
 version comes from `poetry.lock` for dependencies, and from the sdist name
 of the lock run for the project.
 
-The purifier refuses these:
+The purifier does not support these:
 
 - A hash other than SHA-256 in `poetry.lock`.
 - A build requirement that a build backend adds at build time, through the
@@ -273,9 +286,11 @@ run `which`, which the build sandbox does not have, so the flake adds it:
     { nixpkgs, poetry-purifier, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      rich = poetry-purifier.lib.poetry-purifier.buildPoetryProject {
-        inherit pkgs;
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ poetry-purifier.overlays.default ];
+      };
+      rich = pkgs.buildPoetryProject {
         src = ./.;
         nativeCheckInputs = [ pkgs.which ];
       };
@@ -284,7 +299,7 @@ run `which`, which the build sandbox does not have, so the flake adds it:
       packages.${system}.default = rich.packages.rich;
       checks.${system}.tests = rich.tests;
       devShells.${system}.default = pkgs.mkShell {
-        packages = [ poetry-purifier.packages.${system}.poetry ];
+        packages = [ pkgs.poetry-purifier.poetry ];
       };
     };
 }

@@ -7,6 +7,7 @@
 #   prefetch` and interactive use.
 # - POETRY_PURIFIER_BUILD names a Nix file that builds the `release` of a
 #   project with `buildPoetryProject`, for `poetry purifier publish`.
+#   POETRY_PURIFIER_POETRY names this wrapper, which that build uses.
 #
 # Both use this package set's nixpkgs, and the shared purifier library from
 # the source this flake pins, which the files load the way the library's
@@ -30,17 +31,10 @@
 let
   inherit (pkgs) poetry;
   withPlugin = poetry.withPlugins (_: [ plugin ]);
-  # The Nix files of the builder, with the packages and the plugin source
-  # that it builds the plugin and this wrapper from.
+  # The Nix files of the builder.
   sources = lib.fileset.toSource {
     root = ../..;
-    fileset = lib.fileset.unions [
-      ../../nix
-      ../../pkgs
-      ../../pyproject.toml
-      ../../version.txt
-      ../../src
-    ];
+    fileset = ../../nix;
   };
   context = ''
     pkgs = import ${path} { system = "${stdenv.hostPlatform.system}"; };
@@ -56,17 +50,21 @@ let
   '';
 
   build = writeText "poetry-purifier-build.nix" ''
-    { src, lockFile }:
+    {
+      src,
+      lockFile,
+      # This wrapper, whose path the wrapper script sets.
+      poetry ? builtins.storePath (builtins.getEnv "POETRY_PURIFIER_POETRY"),
+    }:
     let
       ${context}
       ignored = [ ".git" ".venv" ".poetry-purifier" "dist" "__pycache__" ];
     in
-    import ${sources}/nix/lib/build-poetry-project.nix {
-      inherit (pkgs) lib;
+    pkgs.callPackage ${sources}/nix/lib/build-poetry-project.nix {
       inherit purifier;
-      purifierSource = builtins.storePath "${purifierSource}";
+      poetry-purifier = { inherit poetry; };
     } {
-      inherit pkgs lockFile;
+      inherit lockFile;
       src = builtins.path {
         path = src;
         name = "source";
@@ -86,6 +84,7 @@ symlinkJoin {
     wrapProgram "$out/bin/poetry" \
       --set POETRY_PURIFIER_REALIZE ${realize} \
       --set POETRY_PURIFIER_BUILD ${build} \
+      --set POETRY_PURIFIER_POETRY "$out" \
       --prefix PATH : ${lib.makeBinPath [ nix-prefetch-git ]}
   '';
   meta.mainProgram = "poetry";

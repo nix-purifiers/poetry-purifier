@@ -17,7 +17,7 @@
 }:
 let
   system = builtins.currentSystem;
-  pkgs = flake.inputs.nixpkgs.legacyPackages.${system};
+  pkgs = flake.inputs.nixpkgs.legacyPackages.${system}.extend flake.overlays.default;
   inherit (pkgs) runCommand;
 
   upstream = builtins.fetchTarball {
@@ -25,8 +25,7 @@ let
     sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
   };
 
-  rich = flake.lib.poetry-purifier.buildPoetryProject {
-    inherit pkgs;
+  rich = pkgs.buildPoetryProject {
     src = runCommand "rich-source" { } ''
       cp -r ${upstream} "$out"
       chmod -R u+w "$out"
