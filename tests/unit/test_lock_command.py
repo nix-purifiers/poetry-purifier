@@ -57,8 +57,8 @@ def test_universal_wheels() -> None:
     assert not lock_command._is_universal_wheel("demo-1.0-cp314-cp314-linux_x86_64.whl")
 
 
-def _files(*names: str) -> list[dict[str, Any]]:
-    return [{"url": f"https://example.org/{name}"} for name in names]
+def _files(*names: str) -> list[str]:
+    return [f"https://example.org/{name}" for name in names]
 
 
 class _Response(io.BytesIO):
@@ -111,5 +111,5 @@ def test_check_names_the_command_for_a_missing_lock(tmp_path: Path) -> None:
     command = PurifierLockCommand()
     lines: list[str] = []
     command.line_error = lines.append  # type: ignore[method-assign]
-    assert command._check(tmp_path) == 1
+    assert command._check(tmp_path, tmp_path / "poetry-purifier.lock.json") == 1
     assert "poetry purifier lock" in lines[0]

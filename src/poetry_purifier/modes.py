@@ -167,9 +167,12 @@ def _sdist_version(sdist: str) -> str:
     return sdist.removesuffix(".tar.gz").rsplit("-", 1)[1]
 
 
-def enable_offline(lock_path: Path, *, sandbox: bool = False) -> None:
+def enable_offline(lock_path: Path, root: Path, *, sandbox: bool = False) -> None:
+    """Puts Poetry offline for the project at `root`, from the lockfile at
+    `lock_path`."""
     lock = lockfile.read(lock_path)
-    packages: dict[str, list[dict[str, Any]]] = lock["packages"]
+    poetry_lock = root / "poetry.lock"
+    packages = lockfile.expand(lock, poetry_lock)
     builds: dict[str, list[dict[str, str]]] = lock["builds"]
     checkouts = {
         (entry["git"]["url"], entry["git"]["rev"]): entry["path"]
@@ -178,13 +181,9 @@ def enable_offline(lock_path: Path, *, sandbox: bool = False) -> None:
         if "git" in entry
     }
 
-    # The project is the working directory in the Nix sandbox, where the
-    # lockfile is a store path, and the directory of the lockfile otherwise.
-    root = Path.cwd() if sandbox else lock_path.parent
     versions = _SourceVersions()
     versions.add(root, _sdist_version(lock["dist"]["sdist"]))
     git_versions: dict[tuple[str, str], str] = {}
-    poetry_lock = root / "poetry.lock"
     for info in tomllib.loads(poetry_lock.read_text()).get("package", []):
         source = info.get("source", {})
         if source.get("type") == "directory":

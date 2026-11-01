@@ -3,9 +3,10 @@
 # Poetry with the purifier plugin. The wrapper tells the plugin about Nix:
 #
 # - POETRY_PURIFIER_REALIZE names a Nix file that builds the cache directory
-#   of a lockfile's files, for interactive use.
-# - POETRY_PURIFIER_BUILD names a Nix file that builds a project with
-#   `buildPoetryProject`, for `poetry purifier publish`.
+#   of a lockfile's files and the interpreter, for `poetry purifier
+#   prefetch` and interactive use.
+# - POETRY_PURIFIER_BUILD names a Nix file that builds the `release` of a
+#   project with `buildPoetryProject`, for `poetry purifier publish`.
 #
 # Both use this package set's nixpkgs, and the shared purifier library from
 # the source this flake pins, which the files load the way the library's
@@ -29,6 +30,18 @@
 let
   inherit (pkgs) poetry;
   withPlugin = poetry.withPlugins (_: [ plugin ]);
+  # The Nix files of the builder, with the packages and the plugin source
+  # that it builds the plugin and this wrapper from.
+  sources = lib.fileset.toSource {
+    root = ../..;
+    fileset = lib.fileset.unions [
+      ../../nix
+      ../../pkgs
+      ../../pyproject.toml
+      ../../version.txt
+      ../../src
+    ];
+  };
   context = ''
     pkgs = import ${path} { system = "${stdenv.hostPlatform.system}"; };
     purifier = import ${purifierSource}/nix/lib { inherit (pkgs) lib; };
@@ -39,19 +52,21 @@ let
     let
       ${context}
     in
-    import ${../../nix/lib}/realize.nix ({ inherit pkgs purifier; } // args)
+    import ${sources}/nix/lib/realize.nix ({ inherit pkgs purifier; } // args)
   '';
 
   build = writeText "poetry-purifier-build.nix" ''
-    { src }:
+    { src, lockFile }:
     let
       ${context}
       ignored = [ ".git" ".venv" ".poetry-purifier" "dist" "__pycache__" ];
     in
-    pkgs.callPackage ${../../nix/lib}/build-poetry-project.nix {
+    import ${sources}/nix/lib/build-poetry-project.nix {
+      inherit (pkgs) lib;
       inherit purifier;
-      poetry-purifier.poetry = builtins.storePath "${withPlugin}";
+      purifierSource = builtins.storePath "${purifierSource}";
     } {
+      inherit pkgs lockFile;
       src = builtins.path {
         path = src;
         name = "source";

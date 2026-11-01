@@ -1,23 +1,25 @@
 # SPDX-License-Identifier: MIT
 #
-# `poetry purifier lock`: writes poetry-purifier.lock.json.
+# `poetry purifier lock`: writes poetry-purifier.lock.json, with what
+# poetry.lock cannot record.
 #
 # The command copies the project to a temporary directory and runs Poetry
 # there in record mode, with an empty cache and the network on: `poetry
 # install` with every group and extra, then `poetry build`. That run shows
-# which files Poetry downloads and which build requirements Poetry installs
-# when it builds a package from source.
+# which build requirements Poetry installs when it builds a package from
+# source, and the file names of the project's wheel and sdist.
 #
 # The command then locks every platform rather than the platform it runs
 # on. It asks Poetry's repositories for the URL of every file that
-# poetry.lock names. A registry package that some platform may build from
-# its sdist has its build requirements read from the sdist. Every set of
-# build requirements is resolved for all platforms with `poetry lock` in a
-# throwaway project. A git dependency is hashed with nix-prefetch-git, so
-# that Nix fetches the same checkout.
+# poetry.lock names, which poetry.lock does not record. A registry package
+# that some platform may build from its sdist has its build requirements
+# read from the sdist. Every set of build requirements is resolved for all
+# platforms with `poetry lock` in a throwaway project, with each package
+# that poetry.lock also locks held at the version poetry.lock has. A git
+# dependency is hashed with nix-prefetch-git, so that Nix fetches the same
+# checkout.
 from __future__ import annotations
 
-import hashlib
 import io
 import json
 import os
@@ -33,14 +35,15 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from cleo.helpers import argument
 from cleo.helpers import option
-from poetry.__version__ import __version__ as poetry_version
 from poetry.console.commands.command import Command
 from poetry.core.packages.package import Package
 from poetry.core.utils.helpers import canonicalize_name
 from poetry.factory import Factory
 
 from poetry_purifier import lockfile
+from poetry_purifier import lockfile_option
 
 
 IGNORED = shutil.ignore_patterns(
@@ -59,7 +62,7 @@ def _is_universal_wheel(file_name: str) -> bool:
 class PurifierLockCommand(Command):
     name = "purifier lock"
     description = (
-        "Records the files Poetry downloads for this project in"
+        "Records what Poetry downloads for this project, beyond poetry.lock, in"
         f" {lockfile.FILE_NAME}."
     )
     options = [  # noqa: RUF012
@@ -74,13 +77,13 @@ class PurifierLockCommand(Command):
         option(
             "check",
             None,
-            f"Checks that {lockfile.FILE_NAME} is up to date with pyproject.toml"
-            " and poetry.lock, without locking.",
+            "Checks that the lockfile is up to date with pyproject.toml and"
+            " poetry.lock, without locking.",
         ),
         option(
             "force",
             None,
-            f"Locks even when {lockfile.FILE_NAME} is up to date.",
+            "Locks even when the lockfile is up to date.",
         ),
         option(
             "update-build-requirements",
@@ -88,32 +91,52 @@ class PurifierLockCommand(Command):
             "Resolves the build requirements again, rather than keeping the"
             " versions the current lockfile has for them.",
         ),
+        lockfile_option.OPTION,
     ]
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
-        target = root / lockfile.FILE_NAME
+        target = lockfile_option.path(self)
         if self.option("check"):
-            return self._check(root)
-        if not self.option("force") and lockfile.is_fresh(target, root):
+            return self._check(root, target)
+        if self._resolve(root):
+            # Poetry reads the new poetry.lock.
+            self.get_application().reset_poetry()
+        elif not self.option("force") and lockfile.is_fresh(target, root):
             self.line(f"{target} is up to date.")
             return 0
+        return self._lock(root, target)
+
+    def _resolve(self, root: Path) -> bool:
+        """Writes poetry.lock where it is missing or out of date with
+        pyproject.toml, keeping the versions it has, and returns whether it
+        ran. `poetry lock` keeps the versions of an existing poetry.lock."""
+        locker = self.poetry.locker
+        if locker.is_locked() and locker.is_fresh():
+            return False
+        self._run_project_poetry(root, "lock")
+        return True
+
+    def _run_project_poetry(self, root: Path, *arguments: str) -> None:
+        """Runs Poetry on the project itself, with the user's configuration."""
+        self.line(f"Running poetry {' '.join(arguments)}")
+        subprocess.run(
+            [sys.executable, "-m", "poetry", *arguments],
+            cwd=root,
+            env=os.environ | {"PYTHONPATH": os.pathsep.join(p for p in sys.path if p)},
+            check=True,
+        )
+
+    def _lock(self, root: Path, target: Path) -> int:
         # A relock keeps the resolutions of build requirements that the
         # current lockfile has, so that it changes only what its inputs
         # changed.
-        self._previous: dict[str, Any] = {"builds": {}, "packages": {}}
+        self._previous: dict[str, Any] = {"builds": {}, "buildPackages": {}}
         if not self.option("update-build-requirements"):
             try:
                 self._previous = lockfile.read(target)
             except (OSError, lockfile.LockfileError):
                 pass
-        locker = self.poetry.locker
-        if not locker.is_locked() or not locker.is_fresh():
-            self.line_error(
-                "<error>poetry.lock is missing or out of date. Run `poetry lock`"
-                " first.</error>"
-            )
-            return 1
 
         python = shutil.which(self.option("python"))
         if python is None:
@@ -130,8 +153,7 @@ class PurifierLockCommand(Command):
         self.line(f"Wrote {target}")
         return 0
 
-    def _check(self, root: Path) -> int:
-        lock_path = root / lockfile.FILE_NAME
+    def _check(self, root: Path, lock_path: Path) -> int:
         if not lock_path.exists():
             self.line_error(
                 f"<error>{lock_path} is missing. Run `poetry purifier lock`.</error>"
@@ -139,8 +161,14 @@ class PurifierLockCommand(Command):
             return 1
         try:
             lock = lockfile.read(lock_path)
-        except lockfile.LockfileError as e:
-            self.line_error(f"<error>{e}</error>")
+            lockfile.expand(lock, root / "poetry.lock")
+        except (lockfile.LockfileError, KeyError) as e:
+            message = (
+                str(e)
+                if isinstance(e, lockfile.LockfileError)
+                else f"{lock_path} has no entry for {e}. Run `poetry purifier lock`."
+            )
+            self.line_error(f"<error>{message}</error>")
             return 1
         if lock["inputsHash"] != lockfile.inputs_hash(root):
             self.line_error(
@@ -202,41 +230,37 @@ class PurifierLockCommand(Command):
     def _compose(
         self, root: Path, python: str, records: list[dict[str, Any]]
     ) -> dict[str, Any]:
-        downloads = {r["url"]: r for r in records if r["kind"] == "download"}
-        packages: dict[str, list[dict[str, Any]]] = {}
-        # Registry packages whose sdist some platform may build.
-        buildable: list[list[dict[str, Any]]] = []
+        urls: dict[str, str] = {}
+        git: dict[str, str] = {}
+        # The versions poetry.lock has, which build requirements keep.
+        locked_versions: dict[str, str] = {}
+        # The URLs of the files of registry packages that some platform may
+        # build from their sdist.
+        buildable: list[list[str]] = []
 
         for package in self.poetry.locker.locked_repository().packages:
-            key = lockfile.package_key(
-                canonicalize_name(package.name), package.version.text
-            )
+            name = canonicalize_name(package.name)
             if package.source_type in ("directory", "file"):
                 continue
+            locked_versions[name] = package.version.text
             if package.source_type == "git":
-                packages[key] = [self._git_entry(package)]
-            elif package.source_type == "url":
-                download = downloads.get(package.source_url or "")
-                if download is None:
-                    raise RuntimeError(
-                        f"The lock run did not download {package.source_url}."
-                    )
-                packages[key] = [
-                    {k: download[k] for k in ("path", "url", "hash")} | {"mirrors": []}
-                ]
-            else:
-                packages[key] = self._locked_files(package, self.poetry.pool)
-                buildable.append(packages[key])
+                url = package.source_url
+                rev = package.source_resolved_reference
+                assert url is not None and rev is not None
+                git[lockfile.git_key(url, rev)] = self._git_hash(url, rev)
+            elif package.source_type != "url":
+                files = self._file_urls(package)
+                urls |= files
+                buildable.append(list(files.values()))
 
         requirement_sets = {
             tuple(sorted(r["requirements"])) for r in records if r["kind"] == "build"
         }
         requirement_sets |= {self._sdist_requirements(f) for f in buildable}
-        builds = self._resolve_builds(requirement_sets, packages)
+        builds, build_packages = self._resolve_builds(requirement_sets, locked_versions)
 
         return {
-            "format": lockfile.FORMAT,
-            "poetry": poetry_version,
+            "version": lockfile.VERSION,
             "python": subprocess.run(
                 [python, "-c", "import sys; print('%d.%d' % sys.version_info[:2])"],
                 check=True,
@@ -247,53 +271,46 @@ class PurifierLockCommand(Command):
             # The file names of the project's wheel and sdist, as `poetry
             # build` made them on the system of the lock run.
             "dist": self._dist,
-            "packages": packages,
+            "urls": urls,
+            "git": git,
             "builds": builds,
+            "buildPackages": build_packages,
         }
 
-    def _locked_files(self, package: Package, pool: Any) -> list[dict[str, Any]]:
+    def _file_urls(self, package: Package) -> dict[str, str]:
+        """The URL of each file that poetry.lock names for a package from a
+        package index, by file name."""
+        pool = self.poetry.pool
         if package.source_type:
             repository = pool.repository(package.source_reference)
         elif pool.has_repository("pypi"):
             repository = pool.repository("pypi")
         else:
             repository = pool.repositories[0]
-
-        hashes = {f["file"]: f["hash"] for f in package.files}
-        files = []
-        for link in repository.find_links_for_package(package):
-            locked = hashes.get(link.filename)
-            if locked is None:
-                continue
-            algorithm, _, digest = locked.partition(":")
-            if algorithm != "sha256":
-                raise RuntimeError(
-                    f"poetry.lock records {link.filename} with a {algorithm} hash,"
-                    " and the Poetry purifier needs sha256."
-                )
-            files.append(
-                {
-                    "path": lockfile.cache_path(
-                        lockfile.link_with_hash(link.url_without_fragment, digest)
-                    ),
-                    "url": link.url_without_fragment,
-                    # Package indexes serve each file at one URL.
-                    "mirrors": [],
-                    "hash": lockfile.sri_from_hex(digest),
-                }
-            )
-        missing = set(hashes) - {f["url"].rsplit("/", 1)[-1] for f in files}
+        names = {f["file"] for f in package.files}
+        urls = {
+            link.filename: link.url_without_fragment
+            for link in repository.find_links_for_package(package)
+            if link.filename in names
+        }
+        missing = names - set(urls)
         if missing:
             raise RuntimeError(
                 f"The repository of {package.name} {package.version.text} has no"
                 f" link for {sorted(missing)}."
             )
-        return files
+        return urls
 
-    def _git_entry(self, package: Package) -> dict[str, Any]:
-        url = package.source_url
-        rev = package.source_resolved_reference
-        assert url is not None and rev is not None
+    def _build_files(self, package: Package) -> list[dict[str, str]]:
+        """The URL and hash of each file of a build package that poetry.lock
+        does not lock."""
+        urls = self._file_urls(package)
+        return [
+            {"url": urls[f["file"]], "hash": lockfile.sri_from_hex(f["hash"].split(":")[1])}
+            for f in sorted(package.files, key=lambda f: f["file"])
+        ]
+
+    def _git_hash(self, url: str, rev: str) -> str:
         self.line(f"Hashing {url} at {rev}")
         # Poetry clones git dependencies with their submodules.
         prefetch = subprocess.run(
@@ -310,33 +327,19 @@ class PurifierLockCommand(Command):
             capture_output=True,
             text=True,
         )
-        result = json.loads(prefetch.stdout)
-        url_digest = hashlib.sha256(url.encode()).hexdigest()[:16]
-        return {
-            "path": f"purifier-git/{url_digest}-{rev}",
-            # Builds of the checkout get their version from the plugin, so
-            # they need no .git directory.
-            "git": {
-                "url": url,
-                "rev": rev,
-                "submodules": True,
-                "leaveDotGit": False,
-                "commitObject": None,
-            },
-            "hash": result["hash"],
-        }
+        return str(json.loads(prefetch.stdout)["hash"])
 
-    def _sdist_requirements(self, files: list[dict[str, Any]]) -> tuple[str, ...]:
+    def _sdist_requirements(self, urls: list[str]) -> tuple[str, ...]:
         """The static build requirements of a package that some platform
         builds from its sdist, or no requirements when every platform
         installs a wheel."""
-        names = [f["url"].rsplit("/", 1)[-1] for f in files]
-        sdists = [f for f, n in zip(files, names, strict=True) if not n.endswith(".whl")]
+        names = [url.rsplit("/", 1)[-1] for url in urls]
+        sdists = [u for u, n in zip(urls, names, strict=True) if not n.endswith(".whl")]
         if not sdists or any(_is_universal_wheel(n) for n in names):
             return ()
-        with urllib.request.urlopen(sdists[0]["url"]) as response:
+        with urllib.request.urlopen(sdists[0]) as response:
             data = response.read()
-        pyproject = self._read_pyproject(sdists[0]["url"], data)
+        pyproject = self._read_pyproject(sdists[0], data)
         if pyproject is None or "build-system" not in pyproject:
             return tuple(DEFAULT_BUILD_REQUIREMENTS)
         return tuple(sorted(pyproject["build-system"].get("requires", [])))
@@ -360,12 +363,15 @@ class PurifierLockCommand(Command):
     def _resolve_builds(
         self,
         requirement_sets: set[tuple[str, ...]],
-        packages: dict[str, list[dict[str, Any]]],
-    ) -> dict[str, list[dict[str, str]]]:
+        locked_versions: dict[str, str],
+    ) -> tuple[dict[str, list[dict[str, str]]], dict[str, list[dict[str, str]]]]:
         """Resolves every set of build requirements for all platforms. A
         build requirement that some platform builds from its sdist adds its
-        own build requirements, until no set is new."""
+        own build requirements, until no set is new. Returns the sets with
+        their packages, and the files of the packages poetry.lock does not
+        lock."""
         builds: dict[str, list[dict[str, str]]] = {}
+        build_packages: dict[str, list[dict[str, str]]] = {}
         pending = {s for s in requirement_sets if s}
         while pending:
             requirements = pending.pop()
@@ -373,6 +379,13 @@ class PurifierLockCommand(Command):
             if key in builds:
                 continue
             reused = self._previous["builds"].get(key)
+            # A resolution that disagrees with poetry.lock, after poetry.lock
+            # moved a package, is resolved again.
+            if reused is not None and any(
+                locked_versions.get(entry["name"], entry["version"]) != entry["version"]
+                for entry in reused
+            ):
+                reused = None
             if reused is not None:
                 builds[key] = reused
                 resolved = [
@@ -380,7 +393,7 @@ class PurifierLockCommand(Command):
                     for entry in reused
                 ]
             else:
-                resolved = self._lock_requirements(requirements)
+                resolved = self._lock_requirements(requirements, locked_versions)
                 builds[key] = [
                     {
                         "name": canonicalize_name(package.name),
@@ -390,23 +403,55 @@ class PurifierLockCommand(Command):
                     for package, marker in resolved
                 ]
             for package, _ in resolved:
-                package_key = lockfile.package_key(
-                    canonicalize_name(package.name), package.version.text
+                name = canonicalize_name(package.name)
+                if locked_versions.get(name) == package.version.text:
+                    continue
+                package_key = lockfile.package_key(name, package.version.text)
+                if package_key in build_packages:
+                    continue
+                build_packages[package_key] = self._previous["buildPackages"].get(
+                    package_key
+                ) or self._build_files(self._locked_package(package))
+                nested = self._sdist_requirements(
+                    [f["url"] for f in build_packages[package_key]]
                 )
-                if package_key not in packages:
-                    packages[package_key] = self._previous["packages"].get(
-                        package_key
-                    ) or self._locked_files(package, self.poetry.pool)
-                    nested = self._sdist_requirements(packages[package_key])
-                    if nested and "\n".join(nested) not in builds:
-                        pending.add(nested)
-        return builds
+                if nested and "\n".join(nested) not in builds:
+                    pending.add(nested)
+        return builds, build_packages
+
+    def _locked_package(self, package: Package) -> Package:
+        """The package with the files its throwaway lock recorded."""
+        if package.files:
+            return package
+        return self._build_requirement_packages[
+            lockfile.package_key(canonicalize_name(package.name), package.version.text)
+        ]
 
     def _lock_requirements(
-        self, requirements: tuple[str, ...]
+        self, requirements: tuple[str, ...], locked_versions: dict[str, str]
+    ) -> list[tuple[Package, str]]:
+        """Resolves build requirements in a throwaway project. A package that
+        poetry.lock also locks is held at its version there."""
+        pins: dict[str, str] = {}
+        while True:
+            resolved = self._lock_once(requirements, pins)
+            conflicts = {
+                canonicalize_name(p.name): locked_versions[canonicalize_name(p.name)]
+                for p, _ in resolved
+                if canonicalize_name(p.name) in locked_versions
+                and p.version.text != locked_versions[canonicalize_name(p.name)]
+                and canonicalize_name(p.name) not in pins
+            }
+            if not conflicts:
+                return resolved
+            pins |= conflicts
+
+    def _lock_once(
+        self, requirements: tuple[str, ...], pins: dict[str, str]
     ) -> list[tuple[Package, str]]:
         project = Path(tempfile.mkdtemp(dir=self._workdir, prefix="build-"))
         python = self.poetry.package.python_versions
+        dependencies = [*requirements, *(f"{n}=={v}" for n, v in sorted(pins.items()))]
         (project / "pyproject.toml").write_text(
             "[tool.poetry]\n"
             "package-mode = false\n"
@@ -415,7 +460,7 @@ class PurifierLockCommand(Command):
             "[project]\n"
             'name = "purifier-build-requirements"\n'
             'version = "0"\n'
-            f"dependencies = {json.dumps(list(requirements))}\n"
+            f"dependencies = {json.dumps(dependencies)}\n"
         )
         self._run_poetry(project, "lock")
         locked = tomllib.loads((project / "poetry.lock").read_text())
@@ -425,8 +470,35 @@ class PurifierLockCommand(Command):
             if isinstance(marker, dict):
                 marker = marker.get("main", "*")
             markers[canonicalize_name(info["name"])] = "" if marker == "*" else marker
-        poetry = Factory().create_poetry(project)
-        return [
-            (package, markers[canonicalize_name(package.name)])
-            for package in poetry.locker.locked_repository().packages
-        ]
+        packages = Factory().create_poetry(project).locker.locked_repository().packages
+        if not hasattr(self, "_build_requirement_packages"):
+            self._build_requirement_packages: dict[str, Package] = {}
+        for package in packages:
+            self._build_requirement_packages[
+                lockfile.package_key(
+                    canonicalize_name(package.name), package.version.text
+                )
+            ] = package
+        return [(p, markers[canonicalize_name(p.name)]) for p in packages]
+
+
+class PurifierUpdateCommand(PurifierLockCommand):
+    name = "purifier update"
+    description = (
+        "Updates poetry.lock with `poetry update --lock`, for every package or"
+        f" the named ones, and then relocks {lockfile.FILE_NAME}."
+    )
+    arguments = [  # noqa: RUF012
+        argument("packages", "The packages to update.", optional=True, multiple=True)
+    ]
+    options = [  # noqa: RUF012
+        o
+        for o in PurifierLockCommand.options
+        if o.name not in ("check", "force")
+    ]
+
+    def handle(self) -> int:
+        root = self.poetry.pyproject_path.parent
+        self._run_project_poetry(root, "update", "--lock", *self.argument("packages"))
+        self.get_application().reset_poetry()
+        return self._lock(root, lockfile_option.path(self))

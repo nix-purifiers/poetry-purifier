@@ -1,13 +1,17 @@
 # SPDX-License-Identifier: MIT
 #
 # Every job runs on x86_64-linux and aarch64-linux. `check` runs the flake's
-# checks: the unit tests, the lockfile mistakes, the fixture built offline
-# in the Nix sandbox with its tests, the publish step against a local
-# package index, and the formatting. `interactive` installs the fixture
-# offline through the plugin outside the sandbox and runs pyright on it.
-# `lock-run` relocks the fixture against the real package index and GitHub,
-# checks that the relock is byte for byte the committed lockfile, and locks
-# a copy from scratch.
+# checks: the unit tests, the conformance checks that need no network (a
+# stale, tampered, missing, malformed or external lockfile), the fixture
+# built offline in the Nix sandbox with its tests, the real-world rich
+# build, the publish step against a local package index, and the
+# formatting. The four conformance jobs need the network.
+# `conformance-relock` relocks the fixture and compares it byte for byte.
+# `conformance-update` updates a fixture that holds an old version and
+# checks both lockfiles.
+# `conformance-rebuild` builds the fixture a second time and compares the
+# outputs. `conformance-offline` prefetches and then runs the everyday loop
+# with the network cut off.
 name: check
 
 on:
@@ -32,7 +36,7 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - run: nix flake check -L
 
-  interactive:
+  conformance-relock:
     strategy:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
@@ -43,9 +47,9 @@ jobs:
       - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: tests/interactive.sh
+      - run: tests/conformance-relock.sh
 
-  lock-run:
+  conformance-rebuild:
     strategy:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
@@ -56,4 +60,30 @@ jobs:
       - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: tests/lock-run.sh
+      - run: tests/conformance-rebuild.sh
+
+  conformance-update:
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: tests/conformance-update.sh
+
+  conformance-offline:
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - run: tests/conformance-offline.sh

@@ -1,0 +1,17 @@
+{
+  "contentHash": "a8ae3a163472659df0d21ed9450125080625a25e45f22ab9e0a0b96386910297",
+  "buildPackages": {},
+  "builds": {},
+  "dist": {
+    "sdist": "update_fixture-0.1.0.tar.gz",
+    "wheel": "update_fixture-0.1.0-py3-none-any.whl"
+  },
+  "git": {},
+  "inputsHash": "c9fb051efb909ed3e81f84448c98da0e42733c6503f0ae122c1523dc97ee053d",
+  "python": "3.14",
+  "urls": {
+    "idna-3.7-py3-none-any.whl": "https://files.pythonhosted.org/packages/e5/3e/741d8c82801c347547f8a2a06aa57dbb1992be9e948df2ea0eda2c8b79e8/idna-3.7-py3-none-any.whl",
+    "idna-3.7.tar.gz": "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
+  },
+  "version": 8
+}

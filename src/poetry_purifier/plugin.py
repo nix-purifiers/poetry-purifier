@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 #
-# The Poetry application plugin. It adds `poetry purifier lock` and `poetry
-# purifier publish`, and it puts Poetry in the mode that POETRY_PURIFIER_MODE
+# The Poetry application plugin. It adds `poetry purifier lock`, `update`,
+# `prefetch` and `publish`, and it puts Poetry in the mode that POETRY_PURIFIER_MODE
 # names before a command runs:
 #
 # - `record`: the Poetry that `poetry purifier lock` runs.
@@ -26,6 +26,8 @@ from poetry_purifier import interactive
 from poetry_purifier import lockfile
 from poetry_purifier import modes
 from poetry_purifier.lock_command import PurifierLockCommand
+from poetry_purifier.lock_command import PurifierUpdateCommand
+from poetry_purifier.prefetch_command import PurifierPrefetchCommand
 from poetry_purifier.publish_command import PurifierPublishCommand
 
 
@@ -40,7 +42,12 @@ OFFLINE_COMMANDS = {"install", "sync", "build"}
 class PurifierPlugin(ApplicationPlugin):
     @property
     def commands(self) -> list[Any]:
-        return [PurifierLockCommand, PurifierPublishCommand]
+        return [
+            PurifierLockCommand,
+            PurifierUpdateCommand,
+            PurifierPrefetchCommand,
+            PurifierPublishCommand,
+        ]
 
     def activate(self, application: Application) -> None:
         super().activate(application)
@@ -48,7 +55,10 @@ class PurifierPlugin(ApplicationPlugin):
         if mode == "record":
             modes.enable_record(Path(os.environ["POETRY_PURIFIER_RECORD"]))
         elif mode == "offline":
-            modes.enable_offline(Path(os.environ["POETRY_PURIFIER_LOCK"]), sandbox=True)
+            # The project is the working directory of the Nix build.
+            modes.enable_offline(
+                Path(os.environ["POETRY_PURIFIER_LOCK"]), Path.cwd(), sandbox=True
+            )
         elif mode is None and os.environ.get("POETRY_PURIFIER") != "0":
             dispatcher = application.event_dispatcher
             assert dispatcher is not None
@@ -62,7 +72,11 @@ class PurifierPlugin(ApplicationPlugin):
         if realize is None or command.name not in OFFLINE_COMMANDS:
             return
         root = command.poetry.pyproject_path.parent  # type: ignore[attr-defined]
-        lock_path = root / lockfile.FILE_NAME
+        # POETRY_PURIFIER_LOCKFILE names a lockfile kept outside the project,
+        # like the --lockfile option of the purifier commands.
+        lock_path = Path(
+            os.environ.get("POETRY_PURIFIER_LOCKFILE") or root / lockfile.FILE_NAME
+        )
         if not lock_path.exists():
             return
         if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(root):
@@ -72,4 +86,4 @@ class PurifierPlugin(ApplicationPlugin):
             )
             return
         interactive.use_locked_cache(root, lock_path, Path(realize), event.io)
-        modes.enable_offline(lock_path)
+        modes.enable_offline(lock_path, root)

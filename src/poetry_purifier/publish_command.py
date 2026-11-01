@@ -2,15 +2,14 @@
 #
 # `poetry purifier publish`: publishes the wheel and sdist that Nix built.
 #
-# The command has Nix build the project's `dist` output from its
-# poetry-purifier.lock.json, offline, as `buildPoetryProject` does, and then
-# runs Poetry's own publish on that directory. Repositories, credentials and
-# the other options of `poetry publish` work as they do there, and nothing
-# is built outside the Nix sandbox. The command sets `--dist-dir` itself
-# and turns `--build` off.
+# The command has Nix build the project's `release`, as buildPoetryProject
+# does, offline, and then runs Poetry's own publish on that directory.
+# Repositories, credentials and the other options of `poetry publish` work
+# as they do there, and nothing is built outside the Nix sandbox. The
+# command sets `--dist-dir` itself and turns `--build` off.
 #
 # POETRY_PURIFIER_DIST names a directory to publish instead of building
-# one, for a build that already has the `dist` output.
+# one, for a build that already has the release.
 from __future__ import annotations
 
 import os
@@ -21,44 +20,48 @@ from pathlib import Path
 from poetry.console.commands.publish import PublishCommand
 
 from poetry_purifier import lockfile
+from poetry_purifier import lockfile_option
 
 
 class PurifierPublishCommand(PublishCommand):
     name = "purifier publish"
-    description = (
-        "Publishes the wheel and sdist that Nix builds from"
-        f" {lockfile.FILE_NAME}."
-    )
+    description = "Publishes the wheel and sdist that Nix builds from the lockfile."
+    options = [*PublishCommand.options, lockfile_option.OPTION]  # noqa: RUF012
+
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
-        lock_path = root / lockfile.FILE_NAME
+        lock_path = lockfile_option.path(self)
         if not lock_path.exists():
             self.line_error(
-                f"<error>{lockfile.FILE_NAME} is missing. Run `poetry purifier"
-                " lock` first.</error>"
+                f"<error>{lock_path} is missing. Run `poetry purifier lock`.</error>"
             )
             return 1
-        if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(root):
+        try:
+            lock = lockfile.read(lock_path)
+        except lockfile.LockfileError as e:
+            self.line_error(f"<error>{e}</error>")
+            return 1
+        if lock["inputsHash"] != lockfile.inputs_hash(root):
             self.line_error(
-                f"<error>{lockfile.FILE_NAME} is out of date. Run `poetry purifier"
-                " lock` to renew it.</error>"
+                f"<error>{lock_path} is out of date with pyproject.toml or"
+                " poetry.lock. Run `poetry purifier lock`.</error>"
             )
             return 1
 
-        dist = os.environ.get("POETRY_PURIFIER_DIST") or self._build(root)
+        dist = os.environ.get("POETRY_PURIFIER_DIST") or self._build(root, lock_path)
         self.line(f"Publishing the files Nix built in {dist}")
         self.io.input.set_option("dist-dir", dist)
         self.io.input.set_option("build", False)
         return super().handle()
 
-    def _build(self, root: Path) -> str:
+    def _build(self, root: Path, lock_path: Path) -> str:
         build_nix = os.environ.get("POETRY_PURIFIER_BUILD")
         if build_nix is None:
             raise RuntimeError(
                 "POETRY_PURIFIER_BUILD is not set. Run `poetry purifier publish`"
                 " with the Poetry from the poetry-purifier flake."
             )
-        self.line("Building the project with Nix")
+        self.line("Building the release with Nix")
         build = subprocess.run(
             [
                 "nix-build",
@@ -66,8 +69,11 @@ class PurifierPublishCommand(PublishCommand):
                 "--arg",
                 "src",
                 str(root),
+                "--arg",
+                "lockFile",
+                str(lock_path),
                 "--attr",
-                "dist",
+                "release",
                 "--no-out-link",
             ],
             capture_output=True,

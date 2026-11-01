@@ -4,21 +4,32 @@
   overlay,
   # The shared purifier library.
   purifier,
+  # This flake's library namespace, with buildPoetryProject.
+  poetryPurifier,
 }:
 let
   inherit (pkgs) lib runCommand;
   purified = pkgs.extend overlay;
   inherit (purified.poetry-purifier) poetry;
+  build = poetryPurifier.buildPoetryProject;
 
-  app = purified.buildPoetryProject { src = ./fixtures/app; };
-  lock = lib.importJSON ./fixtures/app/poetry-purifier.lock.json;
-  sitePackages = "${app}/${app.python.sitePackages}";
+  app = build {
+    inherit pkgs;
+    src = ./fixtures/app;
+  };
+  environment = app.packages.app;
+  sitePackages = "${environment}/${environment.python.sitePackages}";
+  lockText = builtins.readFile ./fixtures/app/poetry-purifier.lock.json;
+  lock = builtins.fromJSON lockText;
 
   selectFor =
     arch:
     map (file: baseNameOf file.path) (
       import ../nix/lib/select.nix {
-        inherit lock;
+        packages = import ../nix/lib/entries.nix {
+          inherit lock;
+          poetryLock = ./fixtures/app/poetry.lock;
+        };
         installs = purifier.wheels {
           inherit arch;
           pythonVersion = "3.14";
@@ -28,33 +39,41 @@ let
     );
   charsetWheels = arch: lib.filter (lib.hasPrefix "charset_normalizer-") (selectFor arch);
 
-  # A lockfile changed by `change`, written to the store at evaluation time.
-  # `rehash` gives it a matching contentHash, as a lock written by another
-  # project or version of the plugin would have.
-  changedLock =
+  # Whether readLock reports a problem for this lockfile and this
+  # poetry.lock, and evaluating a build of the fixture with them stops the
+  # evaluation.
+  refused =
     {
-      change,
-      rehash ? false,
+      lockFile,
+      poetryLock ? ./fixtures/app/poetry.lock,
     }:
     let
-      changed = change lock;
-      body = removeAttrs changed [ "contentHash" ];
-      final =
-        if rehash then
-          changed // { contentHash = builtins.hashString "sha256" (builtins.toJSON body); }
-        else
-          changed;
-    in
-    builtins.toFile "poetry-purifier.lock.json" (builtins.toJSON final);
-  # Whether reading `lockFile` against the fixture stops the evaluation.
-  refused =
-    lockFile:
-    !(builtins.tryEval (
-      builtins.deepSeq (import ../nix/lib/check-lock.nix {
-        inherit lockFile;
+      files = {
+        inherit lockFile poetryLock;
         src = ./fixtures/app;
-      }) true
-    )).success;
+      };
+    in
+    (poetryPurifier.readLock files).problems != [ ]
+    && !(builtins.tryEval (build (files // { inherit pkgs; })).release.drvPath).success;
+  # The fixture's lockfile with its text changed by `change`.
+  changedLock = change: builtins.toFile "poetry-purifier.lock.json" (change lockText);
+  gitHash = builtins.head (builtins.attrValues lock.git);
+
+  # Checks that the plugin refuses a lockfile that `damage` changed, with a
+  # message that names the command to run.
+  refusedByPlugin =
+    name: damage:
+    runCommand name { nativeBuildInputs = [ poetry ]; } ''
+      ${withFixture}
+      ${damage}
+      if poetry purifier lock --check > "$TMPDIR/message" 2>&1; then
+        echo "the plugin accepted the lockfile" >&2
+        exit 1
+      fi
+      cat "$TMPDIR/message"
+      grep -q 'Run `poetry purifier lock`' "$TMPDIR/message"
+      touch "$out"
+    '';
 
   # Poetry's own Python with pytest and the modules Poetry needs, for the
   # plugin's unit tests. nixpkgs builds Poetry as an application, so its own
@@ -74,18 +93,137 @@ let
   '';
 in
 {
+  # The contract: a lockfile older than the project fails, at evaluation and
+  # in the command, naming the command to run. Here the fixture's lockfile
+  # meets another project's poetry.lock.
+  conformance-stale =
+    assert refused {
+      lockFile = ./fixtures/app/poetry-purifier.lock.json;
+      poetryLock = ./real-world/rich/poetry.lock;
+    };
+    refusedByPlugin "conformance-stale" "echo >> pyproject.toml";
+
+  # The contract: a lockfile with a changed hash fails. Here the hash of the
+  # git checkout changes.
+  conformance-tampered =
+    assert refused {
+      lockFile = changedLock (
+        builtins.replaceStrings [ gitHash ] [ "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" ]
+      );
+    };
+    refusedByPlugin "conformance-tampered" ''
+      sed -i 's|${gitHash}|sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=|' poetry-purifier.lock.json
+    '';
+
+  # The contract: a lockfile without a needed entry fails, naming the
+  # command to run. Here the URL of docopt's sdist goes missing.
+  conformance-missing =
+    assert refused {
+      lockFile = changedLock (
+        builtins.replaceStrings [ ''"docopt-0.6.2.tar.gz"'' ] [ ''"docopt-0.6.3.tar.gz"'' ]
+      );
+    };
+    refusedByPlugin "conformance-missing" ''
+      sed -i 's|"docopt-0.6.2.tar.gz"|"docopt-0.6.3.tar.gz"|' poetry-purifier.lock.json
+    '';
+
+  # The contract: a lockfile that is not valid fails, naming the command to
+  # run. A truncated file is not JSON, and the evaluation stops with the
+  # purifier's message, before anything parses it.
+  conformance-malformed =
+    assert refused {
+      lockFile = changedLock (builtins.substring 0 500);
+    };
+    refusedByPlugin "conformance-malformed" ''
+      head -c 500 poetry-purifier.lock.json > truncated
+      mv truncated poetry-purifier.lock.json
+    '';
+
+  # The contract: a fixture whose source holds no purifier lockfile builds
+  # from a lockfile kept outside it.
+  conformance-external =
+    let
+      external = build {
+        inherit pkgs;
+        src = builtins.path {
+          path = ./fixtures/app;
+          name = "app-without-lockfile";
+          filter = path: _: baseNameOf path != "poetry-purifier.lock.json";
+        };
+        lockFile = ./fixtures/app/poetry-purifier.lock.json;
+      };
+    in
+    runCommand "conformance-external" { } ''
+      ${lib.getExe external.packages.hello} --name=external | tee "$out"
+      grep -q 'hello, external' "$out"
+    '';
+
   # The project's script runs from the environment Poetry installed
   # offline. It imports one dependency of each kind: registry wheels, an
   # sdist Poetry built with the setuptools the lock resolved, a git
   # dependency, a URL sdist and a path dependency.
   app-runs = runCommand "app-runs" { } ''
-    ${lib.getExe app.bins.hello} --name=nix | tee "$out"
+    ${lib.getExe app.packages.hello} --name=nix | tee "$out"
     grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example.*attrs 25\.4\.0)' "$out"
   '';
 
-  # `doCheck = true` runs the fixture's pytest suite in the sandbox, with
-  # the `dev` group installed offline beside the built wheel.
-  app-tests = app.overrideAttrs { doCheck = true; };
+  # `tests` runs the fixture's pytest suite in the sandbox, with the `dev`
+  # group installed offline beside the built wheel.
+  app-tests = app.tests;
+
+  # The lock in memory: the shape that the purifier library checks, the
+  # charset-normalizer wheels of each CPU marked with their system, the git
+  # checkout on every system, and the outputs by name.
+  read-lock =
+    let
+      memory = poetryPurifier.readLock { src = ./fixtures/app; };
+      named = prefix: lib.filter (entry: lib.hasPrefix prefix (baseNameOf entry.path)) memory.entries;
+      charset = named "charset_normalizer-";
+      checkouts = lib.filter (entry: entry ? git) memory.entries;
+    in
+    assert purifier.checkLock memory == memory;
+    assert memory.purifier == "poetry-purifier";
+    assert lib.any (entry: entry.systems or null == [ "aarch64-linux" ]) charset;
+    assert lib.any (entry: entry.systems or null == [ "x86_64-linux" ]) charset;
+    assert checkouts != [ ] && lib.all (entry: !(entry ? systems)) checkouts;
+    assert
+      memory.outputs == {
+        app.kind = "environment";
+        hello.kind = "script";
+      };
+    assert
+      app.fetches == (poetryPurifier.readLock {
+        src = ./fixtures/app;
+        pythonVersion = "3.14";
+        glibcVersion = pkgs.stdenv.cc.libc.version;
+      }).entries;
+    runCommand "read-lock" { } "touch $out";
+
+  # The fixture's environment and its release, which the conformance-rebuild
+  # job builds a second time with `nix build --rebuild`.
+  app-environment = environment;
+  app-release = app.release;
+
+  # Nix knows the project's outputs when it evaluates the build: the
+  # environment and the one script from pyproject.toml, and the wheel and
+  # sdist of `poetry build` by the file names the lock run recorded.
+  outputs-by-name =
+    assert
+      lib.attrNames app.packages == [
+        "app"
+        "hello"
+      ];
+    assert
+      lib.attrNames app.release.files == [
+        "app-1.0.0-py3-none-any.whl"
+        "app-1.0.0.tar.gz"
+      ];
+    assert lib.all (entry: entry ? path) app.fetches;
+    runCommand "outputs-by-name" { } ''
+      test -f ${app.release.files."app-1.0.0-py3-none-any.whl"}
+      test -f ${app.release.files."app-1.0.0.tar.gz"}
+      touch "$out"
+    '';
 
   # A real-world project: Textualize's rich at v15.0.0, pinned by commit. Its
   # own poetry.lock was made by Poetry 2.1.3, so the lock was made after
@@ -93,27 +231,27 @@ in
   # build runs rich's whole pytest suite in the sandbox.
   real-world-rich =
     let
-      rich = purified.buildPoetryProject {
+      rich = build {
+        inherit pkgs;
         src = builtins.fetchTarball {
           url = "https://github.com/Textualize/rich/archive/6ac483cbea39cab124dfd3483bba70ffafb71050.tar.gz";
           sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
         };
-        poetryLockFile = ./real-world/rich/poetry.lock;
+        poetryLock = ./real-world/rich/poetry.lock;
         lockFile = ./real-world/rich/poetry-purifier.lock.json;
-        doCheck = true;
         # test_brokenpipeerror runs `which python` and `which head`.
         nativeCheckInputs = [ pkgs.which ];
       };
     in
     assert
-      lib.attrNames rich.artifacts == [
+      lib.attrNames rich.release.files == [
         "rich-15.0.0-py3-none-any.whl"
         "rich-15.0.0.tar.gz"
       ];
     runCommand "real-world-rich" { } ''
-      ${rich}/bin/python -c 'import rich; rich.print("[bold]rich[/bold] from Nix")' | tee "$out"
+      ${rich.tests}/bin/python -c 'import rich; rich.print("[bold]rich[/bold] from Nix")' | tee "$out"
       grep -q 'rich from Nix' "$out"
-      test -f ${rich.artifacts."rich-15.0.0-py3-none-any.whl"}
+      test -f ${rich.release.files."rich-15.0.0-py3-none-any.whl"}
     '';
 
   # The plugin's unit tests: the lockfile functions, the lock command's
@@ -130,55 +268,6 @@ in
         PYTHONPATH=src:${poetryModules} python -m pytest -p no:cacheprovider unit
         touch "$out"
       '';
-
-  # Each mistake in a lockfile stops the evaluation of the build, rather
-  # than failing inside it: a lock out of date with pyproject.toml or
-  # poetry.lock, an edited hash, a removed entry, and another format.
-  lock-errors =
-    assert refused (changedLock {
-      change = l: l // { inputsHash = lib.fixedWidthString 64 "0" ""; };
-      rehash = true;
-    });
-    assert refused (changedLock {
-      change =
-        l:
-        l
-        // {
-          packages = l.packages // {
-            "six==1.17.0" = map (
-              f: f // { hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; }
-            ) l.packages."six==1.17.0";
-          };
-        };
-    });
-    assert refused (changedLock {
-      change = l: l // { packages = removeAttrs l.packages [ "six==1.17.0" ]; };
-    });
-    assert refused (changedLock {
-      change = l: l // { format = l.format - 1; };
-      rehash = true;
-    });
-    assert
-      !refused (changedLock {
-        change = l: l;
-      });
-    pkgs.emptyFile;
-
-  # Nix knows the project's outputs when it evaluates the build: its one
-  # script from pyproject.toml, and the wheel and sdist of `poetry build` by
-  # the file names the lock run recorded.
-  outputs-by-name =
-    assert lib.attrNames app.bins == [ "hello" ];
-    assert
-      lib.attrNames app.artifacts == [
-        "app-1.0.0-py3-none-any.whl"
-        "app-1.0.0.tar.gz"
-      ];
-    runCommand "outputs-by-name" { } ''
-      test -f ${app.artifacts."app-1.0.0-py3-none-any.whl"}
-      test -f ${app.artifacts."app-1.0.0.tar.gz"}
-      touch "$out"
-    '';
 
   # A compiled wheel the lock run built on another system gets the tags of
   # this one, from the shared library's wheelName: its CPython tags, and the
@@ -208,10 +297,18 @@ in
   '';
 
   # The git dependency is fetched with its submodules, as Poetry clones it.
-  git-submodules = runCommand "git-submodules" { } ''
-    test -n "$(ls -A ${app.cache}/purifier-git/*/submodules/sample-namespace-packages)"
-    touch "$out"
-  '';
+  git-submodules =
+    let
+      checkout = purifier.fetchEntry { inherit pkgs; } (
+        lib.findFirst (
+          entry: entry ? git && lib.hasInfix "test-fixture-vcs-repository" entry.git.url
+        ) null app.fetches
+      );
+    in
+    runCommand "git-submodules" { } ''
+      test -n "$(ls -A ${checkout}/submodules/sample-namespace-packages)"
+      touch "$out"
+    '';
 
   # One lock serves every system: for each CPU, the build fetches only the
   # wheels of that CPU.
@@ -231,8 +328,8 @@ in
     touch "$out"
   '';
 
-  # `poetry purifier publish` uploads the wheel and sdist that Nix built to
-  # a package index.
+  # `poetry purifier publish` uploads the `release` that Nix built to a
+  # package index.
   publish =
     runCommand "publish"
       {
@@ -260,13 +357,13 @@ in
         # The index accepts any credentials.
         export POETRY_HTTP_BASIC_LOCAL_USERNAME=purifier
         export POETRY_HTTP_BASIC_LOCAL_PASSWORD="$POETRY_HTTP_BASIC_LOCAL_USERNAME"
-        export POETRY_PURIFIER_DIST=${app.dist}
+        export POETRY_PURIFIER_DIST=${app.release}
         poetry purifier publish --repository local
 
         kill "$server"
         test -f "$TMPDIR/index/app-1.0.0-py3-none-any.whl"
         test -f "$TMPDIR/index/app-1.0.0.tar.gz"
-        cmp "$TMPDIR/index/app-1.0.0-py3-none-any.whl" ${app.artifacts."app-1.0.0-py3-none-any.whl"}
+        cmp "$TMPDIR/index/app-1.0.0-py3-none-any.whl" ${app.release.files."app-1.0.0-py3-none-any.whl"}
         touch "$out"
       '';
 }

@@ -64,6 +64,7 @@
               inherit pkgs;
               overlay = self.overlays.default;
               purifier = self.inputs.purifier.lib.purifier;
+              poetryPurifier = self.lib.poetry-purifier;
             };
             treefmt.programs.nixfmt.enable = true;
           };

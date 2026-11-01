@@ -1,4 +1,107 @@
 {
+  "contentHash": "22a6ef5edc8c3b73385a1cfefc878a6164613385f73ffbb2b26123d0c6031b66",
+  "buildPackages": {
+    "hatch-fancy-pypi-readme==25.1.0": [
+      {
+        "hash": "sha256-zgE0xA1j2HSsSPSMzGeLjztiuOUOkxhSDSv/x1Lu2vM=",
+        "url": "https://files.pythonhosted.org/packages/58/b4/ad71e051b34f1935783de37beffee16e343ff2514b204dc515f9e939d4af/hatch_fancy_pypi_readme-25.1.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-nFjtPf+Q1R9DQUzjcAmtHVsPCP/J/CFpmKBjgPAcAEU=",
+        "url": "https://files.pythonhosted.org/packages/f3/0f/aed57c301f339936eb91cb4d8c1e5088a101081854bd3ec18a889df32365/hatch_fancy_pypi_readme-25.1.0.tar.gz"
+      }
+    ],
+    "hatch-vcs==0.5.0": [
+      {
+        "hash": "sha256-tJZ329xZdGDMItAbJ6s2lvXhaiHs8nAPsBvCjh8qBKc=",
+        "url": "https://files.pythonhosted.org/packages/5f/48/1f85cee4b7b4f40b9b814b1febbc661bda6ced9649e410a0b74f6e415dd0/hatch_vcs-0.5.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-A5X6EmlANAIVCQw0Siv04qd7y+faqxb0Gze5jJWAn/k=",
+        "url": "https://files.pythonhosted.org/packages/6b/b0/4cc743d38adbee9d57d786fa496ed1daadb17e48589b6da8fa55717a0746/hatch_vcs-0.5.0.tar.gz"
+      }
+    ],
+    "hatchling==1.33.0": [
+      {
+        "hash": "sha256-QVKQuE9GTSiEMD/KiXTTjnuFV5Bp+rAqFdsIKPuxRG0=",
+        "url": "https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-TEIr1NVU/P9d5bc+lZb4XkHp+X9+VT2PdZXssxpie+8=",
+        "url": "https://files.pythonhosted.org/packages/7a/f1/e47b937226ae3b093bbd0132eb0b7ee5bfad12c2b5324afd10ae49946b05/hatchling-1.33.0.tar.gz"
+      }
+    ],
+    "pathspec==1.1.1": [
+      {
+        "hash": "sha256-oAzmQvV3v39HOTIxgFYhK8T4v99TEox4u9WvC5sgsYk=",
+        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-F9tezVJBBKEg4XOBTJA2epapjQfEWy4QwvORn/+Rv1o=",
+        "url": "https://files.pythonhosted.org/packages/5a/82/42f767fc1c1143d6fd36efb827202a2d997a375e160a71eb2888a925aac1/pathspec-1.1.1.tar.gz"
+      }
+    ],
+    "poetry-core==2.5.0": [
+      {
+        "hash": "sha256-mO5GW2b34Uu5++aPteANDP8YTwNpk+yUYQrktWEvOt0=",
+        "url": "https://files.pythonhosted.org/packages/b7/25/7ed0a2ea4fe12f7fd0394387b5debbcd6fdbd06e5ac9daab96ba11471da8/poetry_core-2.5.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-gdBMklOxnQYEcYJo14GGfI97ISjlslu/HoQUHuxricQ=",
+        "url": "https://files.pythonhosted.org/packages/42/b5/50f1fda26c4fe5b1d6ce5cdf0391bdfa1ca12fdcb8ad68344d5cf678fc90/poetry_core-2.5.0.tar.gz"
+      }
+    ],
+    "setuptools-scm==10.3.4": [
+      {
+        "hash": "sha256-gvNMPjCE/CtX05cgBjfME/IzgAQFLS/uR7ql8OkCRk4=",
+        "url": "https://files.pythonhosted.org/packages/da/f5/54538a1f17ea753c42b0928dc2e62986d463f8c393340b9a1e602f2d4dd9/setuptools_scm-10.3.4-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-pp8ov8JFYIeBIF6RL6rkN8KyFldzr6TnuXnXdEemndI=",
+        "url": "https://files.pythonhosted.org/packages/85/d8/fc143f88819ccf10ba2388ba86732ee2de193e578234e25a783f6cc14bf7/setuptools_scm-10.3.4.tar.gz"
+      }
+    ],
+    "setuptools==84.2.1": [
+      {
+        "hash": "sha256-yhQLRdUyWpR4+IDjUUhPYv7xXzNkYuRJygwDyHPVicI=",
+        "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-P/iztUkqCqZpYPRBk2Woa4TgEwcNQxPk1KaJT11k1rw=",
+        "url": "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz"
+      }
+    ],
+    "tomlkit==0.15.2": [
+      {
+        "hash": "sha256-BVYkEhY6MDe5RJc4X7f5IExje8YFr3pIGZ5BzyJy9Dc=",
+        "url": "https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-g+MnVbodINk0C9Bp7pfp9iMrojRrY//LpCXeAffjJ6Y=",
+        "url": "https://files.pythonhosted.org/packages/08/72/fc01563df95c189a9f65850096bdc205bc2fe37da6c740cd64afaf18d07e/tomlkit-0.15.2.tar.gz"
+      }
+    ],
+    "trove-classifiers==2026.9.21.13": [
+      {
+        "hash": "sha256-ix/0+cGRsQQLccN/HkRauZcykR482R3lKDhFOoVNehc=",
+        "url": "https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-Cp68jU4vPooihIxSWAMwNb7BejASrD/qFtuqdkSJ63E=",
+        "url": "https://files.pythonhosted.org/packages/bf/93/af436dfaa845cab5d96f0adbc1e4f3730532d37fa249e4eb796fb1d7fc82/trove_classifiers-2026.9.21.13.tar.gz"
+      }
+    ],
+    "vcs-versioning==2.6.0": [
+      {
+        "hash": "sha256-+L69EwLrwS5nzrMPx91pjslpQUtvpDsww/FKybHnLEE=",
+        "url": "https://files.pythonhosted.org/packages/73/1d/ad4064bf12f4503bf61e65d74c93c523672776d25ee0a06aaf42ae09ef3f/vcs_versioning-2.6.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-IukVkoji2Lyi+m9sMcNMnGauwVf2Dp5Sb10WDSUW1g8=",
+        "url": "https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz"
+      }
+    ]
+  },
   "builds": {
     "hatch-fancy-pypi-readme>=23.2.0\nhatch-vcs\nhatchling": [
       {
@@ -79,1371 +182,210 @@
       }
     ]
   },
-  "contentHash": "23c259816fcc61f2d15ab53b40efeb56106c3523bc8ba2f1109a6beca7f93320",
   "dist": {
     "sdist": "app-1.0.0.tar.gz",
     "wheel": "app-1.0.0-py3-none-any.whl"
   },
-  "format": 6,
-  "inputsHash": "f1679c7fe7e10dd2bdd33ef1fe5151a16a69c1eefc9703fcfa50eeda398eb56b",
-  "packages": {
-    "attrs==25.4.0": [
-      {
-        "git": {
-          "commitObject": null,
-          "leaveDotGit": false,
-          "rev": "9a98e00a7c078360add417c5d62db820d4645ab1",
-          "submodules": true,
-          "url": "https://github.com/python-attrs/attrs.git"
-        },
-        "hash": "sha256-gvcMkujTwKDSOCtM3XQA3vXvw1rPjC7Fi6eokPXEFxs=",
-        "path": "purifier-git/4dd5c563558a4d42-9a98e00a7c078360add417c5d62db820d4645ab1"
-      }
-    ],
-    "certifi==2026.10.23": [
-      {
-        "hash": "sha256-6bVN525TC7bPDM0DZ4cQOstY/UK6kw6ov5SN26ovYdE=",
-        "mirrors": [],
-        "path": "artifacts/ca/bc/69/d117bfa296fabf22f044dc8a56908368f16ca7f167322d30a44e2dd0a3/certifi-2026.10.23-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-qYlebidYs3HgVF4yGjqP0fz9mCmtqIJKk237FqqvNs0=",
-        "mirrors": [],
-        "path": "artifacts/4f/d8/dd/852044ac1bf2abdfb21418abe25f8382ace2aa2c41768bf7dc20aed43c/certifi-2026.10.23.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/fd/11/b524cbd9bbdaca58608e4cf4053fd463417549e1959fa8d3aa18319f9555/certifi-2026.10.23.tar.gz"
-      }
-    ],
-    "charset-normalizer==3.5.2": [
-      {
-        "hash": "sha256-GVwm+2WVD4/OVOJjSYUre918XxIK7vvMRAuKIPqu1KM=",
-        "mirrors": [],
-        "path": "artifacts/87/b4/62/13a80ef4f835389f8b41d8394a885e0293ca12466debc322c2828480c7/charset_normalizer-3.5.2-cp310-cp310-macosx_10_9_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/98/77/46e87bcfc45d25ab4db7cfc9bb544bfa3ffd302289ed31ae93f5433eb899/charset_normalizer-3.5.2-cp310-cp310-macosx_10_9_universal2.whl"
-      },
-      {
-        "hash": "sha256-k3OtE+8NLA+3YeBOVb/e5aCLUs7yyILI++mTWxUXFS4=",
-        "mirrors": [],
-        "path": "artifacts/38/66/40/69444b913245f6d5e37a14e253e78727ad28512be7f1ab40bb6f4b6c92/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/52/fc/e518013affcc43c9f919c3ba41bffe9b4ee4aceb0a6462a6243efcca5f2d/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-3fGcBivqegzID1GSQ9LAHdCRvgz5UqB1DUrVdnCVWfU=",
-        "mirrors": [],
-        "path": "artifacts/c1/71/e7/18b60c5b6a4baf4610cd3d48cf09a41b2dcb6c02177c362938f1d01344/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/d5/ad/2a895c945ee61988dfd9ccee64f0b78dc09f29c9b34d1dd545246d78e0ad/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-PRS1Dea/TQ7fhXqThoNoRvmCuPUk4Yji5ouW1wK89Ko=",
-        "mirrors": [],
-        "path": "artifacts/ea/c8/f1/6f08e582b1d6681f2b732d57d6de1cd02ce0e05b29a7f0a2cf767f6781/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/c9/05/5d958bc8ea503e26be25ada5430fd409cfb45dc22ff33f9f96e649613c99/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-KKFf2tSSqZtuzPqu1m7z90BQaAVF6mHsiy9MU48fEyA=",
-        "mirrors": [],
-        "path": "artifacts/74/6a/64/faa244f3dcd5275cad4d83f5a4c907382cf8900d3f4943dde098a5aa57/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/55/e2/06bad57dfdb49cad92c0ba85b6b4fa5827a67df37897287cfef0553843c2/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-iok8wQEUn4CmU/ggYuvJWzRSWiYUOC4dpUWP58aZckk=",
-        "mirrors": [],
-        "path": "artifacts/69/fe/51/3d67afd6e431d6a820d9af8a908961dde67eaa543ae4871f4d17ca53b6/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/c4/9f/9f52d2886d52645987d603425482c63c5045a3005db1354a7097e5ed1ae9/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-YZeZNp7u9jZu0+h1WlZw9PLw+2swoP1yZNwP3CNXBY4=",
-        "mirrors": [],
-        "path": "artifacts/ef/cb/fe/56f603af7aecd0c4f84240511741cdc2b73f04029a42577e8eebef009e/charset_normalizer-3.5.2-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/4a/41/e05e19578b7b87e7db2c3ecb884bd09d065274ab41e1f535542e8bae9b06/charset_normalizer-3.5.2-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-RHRB527HILFeZEGNMuCSKXNAOHBTBHx8aU9XnvsO4dk=",
-        "mirrors": [],
-        "path": "artifacts/75/14/57/8a993fd63e549c0dca946dce2c5b47334d0a5b6a18245af0f9684c645c/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/c2/cd/fc7152414561ff78f9c61a4a627025f65fd244abaefc99ac4e75c6169b33/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-YliKJ3v7Wd7wUqvZQHA/o1EHFSv0eXgah4YX1g+vj7U=",
-        "mirrors": [],
-        "path": "artifacts/67/ac/b3/b040109aec93ceb0ce43905cf2c3f35936daf2bc45ab1e01af52f32130/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/71/71/fb379e399b1013962716a059d551e03bd80b3e02f05d81246886af6c0958/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-RL1Puynfvrpg59K9AAxZ5LId2zzFORKxQEjTcJJwbXw=",
-        "mirrors": [],
-        "path": "artifacts/4a/21/a4/cac75ed76e669d4715223ccd26834f29b4eb0aaaa933c3876a3a60d1f9/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/33/4f/aeadccd6d20882909eb2597ec40eccc05d505e2262f14dc76d7620700657/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-MPzRILcyqnkxfwje4E194IR4IuTPfuDp9EW7lYgyJSw=",
-        "mirrors": [],
-        "path": "artifacts/08/0c/4f/abc9ee0112bee8d6d7751e99721d3e5fc4344ed97836400f81ca7c588a/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/b9/7b/e8a92613236b257d3b75d532496eb21f68ad8231d7d56df94497e460112e/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-UOOt+5b8GJ6yexz2LTtZi4m0uwQg2To9PkLhN0CQEb4=",
-        "mirrors": [],
-        "path": "artifacts/6c/ed/48/8236dcf6f05474b98823a2045d2a902e18004a35e7aa9629f0c0db1ab0/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/ff/ac/21d5c6b972285c5f095ff78afdc99f3539e3985dfcf7ff1cfbe9e772f529/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-tzY1PApiW71fzsEIV24jhds0lvT3cfeF/zLhCNPDvEU=",
-        "mirrors": [],
-        "path": "artifacts/fc/79/ab/3c4bcb9525136ebda596f0e5481850276b9e0eb4971b91b209b60301ed/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/59/72/263491ec1494a194b16fcbff88a0220f2af633738c79e92b4d7189226322/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-9YM60jG+XrZVPeUkpw9I1xsshWMQF1BTHguAGE4XXNQ=",
-        "mirrors": [],
-        "path": "artifacts/39/a6/1f/6cf7646b1af23b3fa1d228e5b8ae5d3f83c6c7df4725d1cd2c20c5c1d3/charset_normalizer-3.5.2-cp310-cp310-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/38/7a/81f1186c57e406233969ae96b5fd0c907254ab8b6e47da8ae24cd20fb9d7/charset_normalizer-3.5.2-cp310-cp310-win32.whl"
-      },
-      {
-        "hash": "sha256-FGGsOWxP25g6Z18gqlVWJPDuGKyD2DK5JE//89gFUnU=",
-        "mirrors": [],
-        "path": "artifacts/e2/93/ba/5d85a7030577903470fc65ff2bab9c0e0b27a8b7df4aeaf174c887a7c2/charset_normalizer-3.5.2-cp310-cp310-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/ae/ab/fb8b5178fdf7bf68efa61cbe892286bc9f73846f26147d4725fb89388475/charset_normalizer-3.5.2-cp310-cp310-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-xnCHFavPPHO5lQglPpYamWfwL+U2Uyg0FJV07abeDRw=",
-        "mirrors": [],
-        "path": "artifacts/4c/11/4f/dc46d6135e7493bc95ad350c73a71a4b8969a96c439e9d37a260c2d426/charset_normalizer-3.5.2-cp310-cp310-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/36/40/e270b74e0d3f583d78d902960845a149e80eb7c737ee5613ccc6efc7264b/charset_normalizer-3.5.2-cp310-cp310-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-PSG4sTx1ktsqxeVEptgxh7mVJXRysMnoNRttUHrjftY=",
-        "mirrors": [],
-        "path": "artifacts/e8/e9/af/5443226ee63d1ecc1b6ae9ae0a43f58115a5d0cd79caed4d0a8fcee777/charset_normalizer-3.5.2-cp311-cp311-macosx_10_9_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/22/67/6a0b94a7960d5e1b5eacd2fb529f3fccc47db4644f7f0a7cfdcfc3be578a/charset_normalizer-3.5.2-cp311-cp311-macosx_10_9_universal2.whl"
-      },
-      {
-        "hash": "sha256-12D+Kk18OyJsuQJtaoQoaNUqeQG9mEIOG68U6A2oXPU=",
-        "mirrors": [],
-        "path": "artifacts/74/f3/b5/9e5f337756abeb38d700d187890c3048b8957819810926614405463c64/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/fb/94/01009e13b94041599004edf32e56e382c24e570f60f79bab8efe45cfe1eb/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-yXkEZIQvhfQ327tUQX7aHg5r/FLdjSLW/RyZS3Oy3HQ=",
-        "mirrors": [],
-        "path": "artifacts/f3/0f/19/7896ba9fa0295b843a39825fe20c14e393829194f1aa9d22772182b778/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/66/85/3b5358f60a13210f0b67d3755c168ef758701b021e655d88d4da28554467/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-RoWQLPJu3wE+16PaD0Juu6egDruVQThtg1r78ALBHKs=",
-        "mirrors": [],
-        "path": "artifacts/55/08/59/7717fc24486db8d654cc4282557e9bf69ae7184e8ef429336581ab4797/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/74/75/77c1c479b09ecd751d1e767b251ea5c14d4d50ff757bf404afab2692f600/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-RJXFACp7KFV+fiIud+C2YRg+Qyt9bS54gQHj8kDgW4w=",
-        "mirrors": [],
-        "path": "artifacts/e4/be/21/e58d462ec763f3c5931acffd15945e08de2d1ed83f5ac7941ee75f2ee4/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/0b/0d/363f78cacb70f58f15f4b083961bbd9d292f335d3f5c66fc4f1cfe69cb90/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-IR1aPravj1E7jUyhmowbesyrG18NMXX5gmsDwakg3B8=",
-        "mirrors": [],
-        "path": "artifacts/66/2e/d9/73029d9f8a06399d7b2499a196cb64ebabf930362e99139068e4195097/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/e4/ed/cf505d3011ffceb12c2067a7a5d3cfe92b875d4d44bb0ff0d69375e2c184/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-70/L8zJzgs1Mn1QLq9YSSCCK97k+7E3jl7TV9YoJ4og=",
-        "mirrors": [],
-        "path": "artifacts/4c/40/7d/d4ba9195f670d1d375d2b33af0c3595553077d7797e577ac609495f4ee/charset_normalizer-3.5.2-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/15/d8/f0a93a431d170e7ca681d4f6650fee3de934d18560e474e7267eb4b0f987/charset_normalizer-3.5.2-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-vRaqvkoCopfCNBeqF6ximdvYxJ9nO81kW0kpsR9aRAA=",
-        "mirrors": [],
-        "path": "artifacts/6c/f9/c7/8f71a15040759252d6c7517def07a35eaf3f01b29588c9dd6b64d363b2/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/86/bd/9b2bd1c5b7af02462c9752d33994834ff972a96b4c483eefde9e594488e2/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-+55o3wYpN2H5/mat5gqbxtD15CuKzyk5qRWK+Gqw5b0=",
-        "mirrors": [],
-        "path": "artifacts/c5/4c/0a/065b5238530072149a5a6e660d15683640f20b3d28dafff68c26d7877d/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/76/a5/cac540ab0fd61f3fec88ad3dbb64509e71424593d73cfdfff5ab3e4db279/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-WfY5AbADHDE2z2RwTcsh3gu65iziyVKbw50nZlRj3jc=",
-        "mirrors": [],
-        "path": "artifacts/16/41/a2/116552cb7ebdcfb84b0e06a356baaff82025c4a5cf9e5638015f762197/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/71/7a/ff467301deef2089fad87f72df9e000a26a78fec7acbb18e1999371b8369/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-ME1UY+ZaNde7CFBVDgeAOVOV9vz0UvBNt9XKfOzEJaw=",
-        "mirrors": [],
-        "path": "artifacts/97/2a/33/4e099b0a882a4568cc6c17d69df7d7499fbe741ddcb20ba4a4ca5a4954/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/ad/77/22d7e785d1e210afc2e2f58600dd1799d17a35665faf84383f002826c5f8/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-nPmxqFfiXEus7rNiTpKlbfNmjzmMSsunThdNgftNHTo=",
-        "mirrors": [],
-        "path": "artifacts/a6/15/56/456dbc28bacd1eb8a81e09e6148689a35ea300353997949530115b4b0b/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/ae/91/e8e946267f1c2d9e2bd651726e2fbd2addf02c4d36cea5069e32ca9d7bb5/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-EU5NDJLWGECe2CqZ4itcXnaP6ZXylz94Jl9FJPSdRkA=",
-        "mirrors": [],
-        "path": "artifacts/20/95/77/90811d2c5fa13fa1af22d646747bd6bf16808475599da46791a129001e/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/4e/88/7561d8a88d555e7df6623abe7c0070b4baf47549b9408783a2ae0a1a6cf7/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-JiU4jGx1RSDDerrztB6zTRzEo3P0V4mPCGBsjjYriR0=",
-        "mirrors": [],
-        "path": "artifacts/76/e9/d6/33ec3a6166b26fe04c60db0be1dd53deccec4fe1905f60f03abeee5f56/charset_normalizer-3.5.2-cp311-cp311-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/35/7e/578c702301ec036f01455f30744a08d2b42f6ab35b9b2d4bf8cae0ef2a80/charset_normalizer-3.5.2-cp311-cp311-win32.whl"
-      },
-      {
-        "hash": "sha256-h+UKPny5CvWGtsX68j4wKpcEFaxzvXvZClFaBLQn75Y=",
-        "mirrors": [],
-        "path": "artifacts/41/da/d8/f51e1369ccc434757032c2051ac56ae8300814404deab65a49a8d13b9c/charset_normalizer-3.5.2-cp311-cp311-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/e8/fc/fdf8cf52ff21cd5bf158f20978991cf985325842f74283eb6df26c8a39d8/charset_normalizer-3.5.2-cp311-cp311-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-JU60i5+l7piYo8RFglofNA/lNxKgmJBLObC926jqPLE=",
-        "mirrors": [],
-        "path": "artifacts/5a/a7/9f/b99373a319161c98e8e77a5ccc87828443ed6a7ae60209a8c91d3b63c6/charset_normalizer-3.5.2-cp311-cp311-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/97/66/3e45a506d8110b632541faf9a9470185aa9878f1ed44020f31346c1c5e5b/charset_normalizer-3.5.2-cp311-cp311-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-7SojnA6iE6zBkIFQowNyVwg8fAgxKPGkzsLsS5fcpJE=",
-        "mirrors": [],
-        "path": "artifacts/85/d6/eb/8ad160780b8a4f1b68994697020974de9d8c1828629eab08ddebf0dc7e/charset_normalizer-3.5.2-cp312-cp312-macosx_10_13_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/e7/c8/693809898870237d82785a03f3b2b58fe4c9f14669f84a7d4e623c92a59e/charset_normalizer-3.5.2-cp312-cp312-macosx_10_13_universal2.whl"
-      },
-      {
-        "hash": "sha256-uRNjIHvZ3JZqaR6Vm7R/ZLMPesSwcr6ZaLNmmC99t3w=",
-        "mirrors": [],
-        "path": "artifacts/5d/85/77/d22523dbfd5dc0e9630c9f20395a4a6c13e57bd23c7dfe5832b038fd9b/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/c9/87/2fea8c13dc24b3ca9c6f803a5b2dfdeae73eb4f9e12c7885ed908ff0433c/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-OKhzmH875phJTaiy4wheKdoC2ntjPc5z55xpmhE9e/A=",
-        "mirrors": [],
-        "path": "artifacts/f3/77/a2/bf6b584f816d3cf358124b12375dea9c4d8d78a64320e2f3f492999af4/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/a8/9e/09efac30b937722f46d3110ba30b875b24b2e3a266ed746cc4e376a94d80/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-NVrYARCB3sVBIkDAh6mgydTVA58+0Ro/E+GMKym1bFE=",
-        "mirrors": [],
-        "path": "artifacts/87/c4/ca/5d3fae61756b59ea76c3548a60f3860b757d3414e4665856faa659d790/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/9e/18/70d76670b13686237863a379928d60bd10e021f17d243ab3d7014c4a5f4e/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-7iHijwQwvW3JCGxuUl1egYpEpa0ZcgyKDvdmeS8+teU=",
-        "mirrors": [],
-        "path": "artifacts/6c/18/a5/7f77ef3b7db06d0f7913111dd326c4a3d52dfcf2f38e44763713d3b6cb/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/54/e2/77a8b09d5adc013ed07b95b01b8b8fa5441c4e810e83ee7e4aae2fa4d91a/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-PTEphEkJCrjUe3sbKlVf9zysftQ4oIt6wWCYDH6+1kk=",
-        "mirrors": [],
-        "path": "artifacts/cd/ff/8a/8f8d432dd976d8aeb3f84bedeaa4b289acd0c2f23ed88602c0b3f048fc/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/7f/c5/38806a25ab5e65fc178f39affeda20858efafede2fce1ffc2556cfc9fe73/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-XN53a3zGbk9smWEs6kqnJpqmWGP3oVhBssJk8QOCL04=",
-        "mirrors": [],
-        "path": "artifacts/cc/52/df/2746fbb064e21f7dd2c2642d05bbd0545b7ea748ad0ad9cd9b2d168278/charset_normalizer-3.5.2-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/ae/8d/213565184708fdb263ae55e2c04ee1ff748129dd65d48ed0e3502da9c85a/charset_normalizer-3.5.2-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-rk9f6luLjM/4gjjMhWkwPl7pXvrmf6YpIqMROXpx80Y=",
-        "mirrors": [],
-        "path": "artifacts/4c/20/44/7b0ce8da5981f8055611907a70b081327a168a9585d1442ac44cf3dc62/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/7e/24/76d2cefc25472531e4c5c7dfff68865eb1c39b78482f0fdc15b46f047830/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-99SGyDhCQiut1RGGj9ipog6UB6znFWS2r0fOfmCjNsE=",
-        "mirrors": [],
-        "path": "artifacts/fb/4a/77/c61c53ca91579716e1832980fe894e544ead439371210d962be8a90eb8/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/7d/dc/65a801b66ab4c197e22c433ab25e7ac24324ac6f45a2269aca42cce309bf/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-EaTWim7NoyksseUCOeERVDul1wm7Yqa06hr8+nKdiHU=",
-        "mirrors": [],
-        "path": "artifacts/d0/7f/e4/b5fac559106c30c47157e45267ac5f5b38601424f5f4abb77041df983a/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/a7/95/ca9b5eabde673002c6f1e7ada1b223916fe18f6d661da7aabd4d643718f1/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-1nNNLvilD7+ERcE5R32kAfUNYqBga/AOIOxth3c/77E=",
-        "mirrors": [],
-        "path": "artifacts/80/98/fe/a3fbcf6c16479c849640071fd1e1ee5dcad16965cdefb076e2c3cfc579/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/2d/8b/803b4d2a3f6e1740f63f1e87b04d14b42f3d4fdfe6ed7d4db2d34102b14f/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-qBV3W2w41OD/e8/766Z/7e2QICu2oia43TXxyFUhdBM=",
-        "mirrors": [],
-        "path": "artifacts/77/4f/e6/81091f5013cd66d742300f5b1a4e507eac22f070f5c164f15bd9ce90fc/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/a9/55/93c0e5dbd085ae0471346026abbe7e0db9ea2d6fea74e51f0b5a46f233a7/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-I4UftOG4XtP2wqJ7d3zf4uGftbOEKaj684x1QrdmWGk=",
-        "mirrors": [],
-        "path": "artifacts/2b/a4/bf/2a3da5986bb6548d90ca972362ad6ca92ea7b3af9f449469ddae3a3c3d/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/95/69/0dbd0e0b9b16cfa816cdfcb3e2e3854a1f680dc07fb1245ea125e7448060/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-2xnQfi4BKel0oOZdAGT8IipEbNUSLC/UGE0q+fxzSp4=",
-        "mirrors": [],
-        "path": "artifacts/c6/93/a2/4da388c985fc74910926d0fff3a71f47ce5ad321441555814548d47562/charset_normalizer-3.5.2-cp312-cp312-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/58/9d/e7b88e7b1bf403590c3b573277b5e1e488c68c7a6fbacca310a2c324e90c/charset_normalizer-3.5.2-cp312-cp312-win32.whl"
-      },
-      {
-        "hash": "sha256-eA++fKspe4Ha2fuNxesAPARo/7DZ5fZQaMU6NGYalrw=",
-        "mirrors": [],
-        "path": "artifacts/ea/03/58/6dfd7968c3bfe219dc0824b45080c90640acffb1068aa1c096e76dd69b/charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/eb/e6/e6e083884cbcfd49c64865af05027fe7011be7b2d9179524f099a1b611f3/charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-4q86rVeKpr0ThLz0dQ/CheWp3lP0C31B5aC/dI7esrM=",
-        "mirrors": [],
-        "path": "artifacts/d1/2f/30/6cc40884263010229df4754598a75fda027fb54c7311e06f4e48c1d880/charset_normalizer-3.5.2-cp312-cp312-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/c4/e3/017aea0911ada7405a825c7d937eb3a13009664e2f5b38e8c4bbf2abf894/charset_normalizer-3.5.2-cp312-cp312-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-7ZBZdasUBWouXrHDdssuHrxTlrr4QWOTnFGFVvzN6fU=",
-        "mirrors": [],
-        "path": "artifacts/c9/e4/10/04a4f638295e39dfce1f4dc6ca07ab5f6120c2c9f108fcdbcdd5d06e52/charset_normalizer-3.5.2-cp313-cp313-android_24_arm64_v8a.whl",
-        "url": "https://files.pythonhosted.org/packages/c5/34/68292d68512768591aaff07c59bb53ee31341c87759433a859c4641a50c2/charset_normalizer-3.5.2-cp313-cp313-android_24_arm64_v8a.whl"
-      },
-      {
-        "hash": "sha256-pmw7xasfD/IWT8mWXd1hH/CAIXP0udJFVMVj9qt+HW4=",
-        "mirrors": [],
-        "path": "artifacts/b4/d1/76/66284183fbf002e1b19735d88d0a2a12403f5176bda3f9d3b4dd6f140a/charset_normalizer-3.5.2-cp313-cp313-android_24_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/e3/80/bee0b01b90ccd5322ae1d0abb33fab1bd95b7c2eadaf02aeccf22e04ee83/charset_normalizer-3.5.2-cp313-cp313-android_24_x86_64.whl"
-      },
-      {
-        "hash": "sha256-0jdLYoeKuwDNgwmzKvbAtxXNAt7AynTvEuUGm9xkFEo=",
-        "mirrors": [],
-        "path": "artifacts/4f/55/b8/97cc073df29a4bb0ad877bf3819ee63351800d705316da956d5399f96d/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphoneos.whl",
-        "url": "https://files.pythonhosted.org/packages/78/6e/60ce52a85a7fd631ae8482ae6d74521014ca2f255892679484dc04d7ef56/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphoneos.whl"
-      },
-      {
-        "hash": "sha256-03a70os6iZnbGhA7OziK7m8d3rPlG8IXKZPv3NhuBk0=",
-        "mirrors": [],
-        "path": "artifacts/2d/f3/06/04905e26a092ac23bd138cc6649a816914144fd21b7dc7d8611c8c9e94/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl",
-        "url": "https://files.pythonhosted.org/packages/36/8c/71aafad23f971afc84c2b295bc0c560739ce1dac558aad9fec22e39f3639/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl"
-      },
-      {
-        "hash": "sha256-YEU3PVqJpexxr95TXbmHyijnbfonbC1MgYJls3XUsFU=",
-        "mirrors": [],
-        "path": "artifacts/e3/32/54/f7af019afa167fa8172797fca62ef24e055e230ec52597fa2429d6fc8b/charset_normalizer-3.5.2-cp313-cp313-macosx_10_13_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/91/da/3c5a7798c046df7d2d68ad653cf5b6c5a8bfee225055a843c6f2f42aac1a/charset_normalizer-3.5.2-cp313-cp313-macosx_10_13_universal2.whl"
-      },
-      {
-        "hash": "sha256-hJ32ToibLhcjDVhBCgPboxGmWxY1CP0zZ5src31LeFg=",
-        "mirrors": [],
-        "path": "artifacts/76/4f/d7/6e79237c1ae05b3a8430b2bf62faa7f102160d2d6828293fd9280c1fed/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/e1/16/710ac3de2ee354e2bd1a9c94efe45a2d27b5c6ad39b2d6a905be2c094b6c/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-FcRPft/Ud7BvUXpcwxf8Fwftud4shl9D1LZROQdHMjQ=",
-        "mirrors": [],
-        "path": "artifacts/78/53/1f/ec829910c6c8f2692ff6e574db278ac2208e4a0987151e2414853ae549/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/d6/39/45c7439f5b63d24f7d5b2a1d760f34af7628782d7144b4cc8ded45c2d4bc/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-qJAS1tVHbuES0g2ZhXDtWN8iYKhSr7F1iAnNaQBBHSE=",
-        "mirrors": [],
-        "path": "artifacts/a9/21/81/45313a97091a2979362954ffd880199f28ae5a32bf9c0c9873caa83908/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/4d/34/38f3154785ce92e9f56eb226f4d35bdfae6b008480dd055f58837a89c810/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-DJUdXm3Zwv9gYJR2dSvuSdpCBq3elg68JHdmk39y5xg=",
-        "mirrors": [],
-        "path": "artifacts/b8/b7/1d/8c405fe39b6b95891913d212bab9c4e094f86dfa2b746464342cc272ec/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/04/f3/859f74e7babc977705026b30593b3be04049632a522fb7000f83c033d747/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-chjo8ysJVs/NBI/ULZ1XeYCXRcodhhE8pW9m564VScQ=",
-        "mirrors": [],
-        "path": "artifacts/03/f1/92/d835525f51f6e268d495b4ed8a53533ea03eef4052becf4d5405e61c84/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/4b/85/41d27f234b82e47c167a5f6c0f62501dc0c640585ff4aba79e08a390336a/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-oZpzETj8J9VoInfTud8ihVzqEjm85/zsX3j0LvLR88M=",
-        "mirrors": [],
-        "path": "artifacts/be/81/63/0e6c3b7ea73665b63705ce90d66f7525af6ca4aa39e2790b9d76c03ca1/charset_normalizer-3.5.2-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/58/ca/5d1a997587febe5b26d8daffe363b5c1a091cece19828eec6502fd09c5ef/charset_normalizer-3.5.2-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-YmA9uafKoIAuqijBxG/s17OiY6d0Bpwkw8KMMCRIchw=",
-        "mirrors": [],
-        "path": "artifacts/9c/62/61/fd4aeafc97102c47439c1fc0aed0010cc95f0518419b2edb2c0f61d65e/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/b3/1f/d1e78246f7ed60c8c8d606b4ac27f66ce49cc3e95f24893ccbeba9f77302/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-toVlVMT0TXn8IwfVdohUMQqPAJblAcdWN1QsgikrBCk=",
-        "mirrors": [],
-        "path": "artifacts/e1/fb/21/864598c6eafc9868d435b37709d887dbe2e04ab9051697099d80b568ce/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/8e/37/eba316edd4f0c4d3a5d945924c4eeeae59abac4056aa815d8a4268f863a2/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-G8C69e+Wtu3lfUf0uP5NnYQBnDv8vrIKQe3Gpu40Hx8=",
-        "mirrors": [],
-        "path": "artifacts/78/b0/fa/9173091348a08c9c276029b4abe8730c975b4cdd3f09c9a118ef04e419/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/c8/8e/aaa037d40ca9ef045977f1a661048b1aa33f223adfce3452fe9be9f79d14/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-VrwgCjZe+zc4O3hS5MxYmNOy2lmHKJtUOVbPjK1xAYo=",
-        "mirrors": [],
-        "path": "artifacts/20/3b/8f/a0e2e53d29830632435a787831566a709790ab82a5cdb043e63142b0df/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/26/19/1c1c9f75974adf523b87f34b8a2adc5a435cd65916812bcbd0dfa45f9a29/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-LJrRmmz81epcDUEWHSL53x3MJ36b7ydRORM0VGoxTAA=",
-        "mirrors": [],
-        "path": "artifacts/4d/a6/77/c3f9d4addb85d4f926cff99a5cd1dea8491e7c8993dd986e97f13f64a5/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/bc/90/0660ef18e18df0a4d2a1a0edff7dfbba42d4e50ef2425557a5bb7051f77b/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-4kO9EyFyNfxykMYhlBw/XMi2bkhySVvoIddDa6L7g40=",
-        "mirrors": [],
-        "path": "artifacts/bb/5d/4d/a1107163a3e13a6a13fb0a066d38d0c8696396ac555131d83ce3633f9f/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/79/ba/57adc269824e8658f1a0f97a9e514c247445a9632b3419b97e0ba37f16dc/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-oJC7LGjfhUUFAuPiDWZeOlr5xlqE1lCO1He63UkWb9M=",
-        "mirrors": [],
-        "path": "artifacts/04/49/54/1c6a953a78cc04f483b576ebdf40c0b9349a5fc2d947419694b4d968f5/charset_normalizer-3.5.2-cp313-cp313-pyemscripten_2025_0_wasm32.whl",
-        "url": "https://files.pythonhosted.org/packages/9a/85/33abd4315c052d3d4f54c92b1ee49bfbc0dc7115a981e462a793b6d2ab87/charset_normalizer-3.5.2-cp313-cp313-pyemscripten_2025_0_wasm32.whl"
-      },
-      {
-        "hash": "sha256-K3s7v7T+jvQGAHktdi+6qQV1WfnT+tIJUlt6Irmekf0=",
-        "mirrors": [],
-        "path": "artifacts/a6/35/ef/33a61f2269b5925f4a40d65bb80a18d2146dcea1f26a38b49300923b90/charset_normalizer-3.5.2-cp313-cp313-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/4f/de/6435e18d1aaa5d910b896d551411c96af1f42a0c56c29afc2016c61ccc2e/charset_normalizer-3.5.2-cp313-cp313-win32.whl"
-      },
-      {
-        "hash": "sha256-eEVqdH3o3Fg2D/pYHzCgArr1qijLJiU2VF6R8RPtdjk=",
-        "mirrors": [],
-        "path": "artifacts/1a/93/af/885a47b29fd4f319a3748f33604610d4872632bf67ab38756fb8b14f1d/charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/9c/76/b8ec57f4e9ee3253541abf95e4a462c0175fe8032dcd070f1f2421240942/charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-EZEuS7FLqufF2HkapVugo6A+xnKQczB7D1cnCrqnE9M=",
-        "mirrors": [],
-        "path": "artifacts/79/45/62/b97e5d287a182d0861b9a7c62fa4fe176c2351b473201963fb506ad8bb/charset_normalizer-3.5.2-cp313-cp313-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/3e/60/c647c6ae47480221e875ea5d743ff94946f7416e3c69415ab772928e8d32/charset_normalizer-3.5.2-cp313-cp313-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-GvuXW9XWjVzp9rbUT98vfjS4laNelXCKepGyCjtR0Yc=",
-        "mirrors": [],
-        "path": "artifacts/f1/c2/3c/70335af815ea934843a131eb11c4ef37b00e54578c3baa853dd28551c0/charset_normalizer-3.5.2-cp314-cp314-android_24_arm64_v8a.whl",
-        "url": "https://files.pythonhosted.org/packages/58/ca/7aa91362a2f77ac8e9e28a9b902a74f7d0e11a851ef0d27a74308da8cd90/charset_normalizer-3.5.2-cp314-cp314-android_24_arm64_v8a.whl"
-      },
-      {
-        "hash": "sha256-u7/I4ogW8Z18DxgWZkmAwKmHXQGyfN+O7d22OdnhCK0=",
-        "mirrors": [],
-        "path": "artifacts/78/87/8a/95737635091a302a6fa7c089c8e49b26edce684e0d44fe3683f23e906c/charset_normalizer-3.5.2-cp314-cp314-android_24_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/a8/cf/ac8878d0322cf88a1aad4c7b147db32ca0bd806eb0060957b2e31486dbe6/charset_normalizer-3.5.2-cp314-cp314-android_24_x86_64.whl"
-      },
-      {
-        "hash": "sha256-eWfQjPBt7nhEO4dPmMmANvYk86TnPhH59k9b5NJTk88=",
-        "mirrors": [],
-        "path": "artifacts/51/2a/16/16e16a64466a2781e7d4db8648084a3cb4c05d6d4f1e80d59091aec0bb/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphoneos.whl",
-        "url": "https://files.pythonhosted.org/packages/c9/6d/9a08d7e0b29b7208e2c6c01dc56c8e0520e7c7beadbbfb024b58fd69c8a5/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphoneos.whl"
-      },
-      {
-        "hash": "sha256-TCtQMfY+Mx44ObQK7S3W8ZHpwH7b3jA+eHaEbqGUaZU=",
-        "mirrors": [],
-        "path": "artifacts/a0/33/3a/5e3cd41d331e4f7dfbb1e079a06d5105d66eb9fe86e1fc6f112bfac414/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphonesimulator.whl",
-        "url": "https://files.pythonhosted.org/packages/82/44/b0aa350280e6ff5a5492d17cf10460dd39d5ee848f872f7ba2df10607f60/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphonesimulator.whl"
-      },
-      {
-        "hash": "sha256-/P9jIT6Obkd3BUGkYHF1QE9Hy7Pr6ntgWMyC1SSg5CQ=",
-        "mirrors": [],
-        "path": "artifacts/aa/25/92/12ed85c48d26ab5e0f56a4197d2ce707c8a4f0f88478176acb167f7714/charset_normalizer-3.5.2-cp314-cp314-macosx_10_15_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/7c/8a/40db9aa9f5907bb0e6f8b6d64064bf8852fb33d4b813ff9414911df7647c/charset_normalizer-3.5.2-cp314-cp314-macosx_10_15_universal2.whl"
-      },
-      {
-        "hash": "sha256-jYbW/GB0PckW63ni6x7EgY4h5CdzFUOvQKMCGFEXShM=",
-        "mirrors": [],
-        "path": "artifacts/1b/fe/86/77023ae683c5f94137b8d636b34d44b5ab78915b13c65ae34d914d3b57/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/7f/72/9c5e7707b57c8ddfa9ddf7b0b1d009d7fbab9e9e887d5b721060f37e307d/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-eogZMapHCAjflKjDgO7Su7x2zZ3GIjEPmWZWWMgh620=",
-        "mirrors": [],
-        "path": "artifacts/6d/f4/6b/17ef65b9e382939f5ef9c9cb5e04edc3f1cf36aa779b6d0bde9c530b90/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/83/09/71e453691e927de4ddf792770cfaab3f49d494e222f66ea5e404bbd5e39c/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-gCTQDD+vP8DBbgemn0QF6OrHzAqxX2X+bPQ4J8TPcrQ=",
-        "mirrors": [],
-        "path": "artifacts/46/56/6d/29b11f4cf9672a7d1f1d07353a6f26db2866a003fac3aefc11d49b222f/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/9f/86/85c84e4da8b27dd409577d9437926ff581c5f9d3c66038dc68c1a526de51/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-TUjy0Iud5YZOLIdE1EYbhi+xSaGCdKvItpjEWXVXNDg=",
-        "mirrors": [],
-        "path": "artifacts/82/54/8a/19fbb02c49a29276172cf4ae5a0f861502a2b14a4e51336c24f2c3480c/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/92/08/564955a4b5f2ccb410ab480bbe8c6a18063ff27f2d35458731c4a5335df9/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-NCdv15YEC/CZOrM6NpqlcuaXnHqrIlqIiTZnrY6sj3o=",
-        "mirrors": [],
-        "path": "artifacts/e9/97/df/4d042ce972dd0da89a27c65bbe9b989eca8f3626c944dcf84da11eb0ea/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/18/24/bad3ac4271589df29cf5ce2f5ae490518a5739358052bd0d61209e6fea54/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-BSHFZliAsz1gNxfe+nbAlASJAAEIl5CZUjl/6zA52lY=",
-        "mirrors": [],
-        "path": "artifacts/0c/fe/d6/25df227e5c2f91c678f57ec58e9959894b91b5927952c8ad7d756e0a45/charset_normalizer-3.5.2-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/d6/3e/350d89ad49916b86554d6f5f2d03ec1152148f87e5ff735106c6a03b1a36/charset_normalizer-3.5.2-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-7/Csnb5xGkruab8EqDiWqpuF8ZZBJkBTqfbUhXOrt90=",
-        "mirrors": [],
-        "path": "artifacts/78/20/b5/a1529fcee73fcd851b7d61a3205fa7e4d83e66d3b13635a90386d2f8f9/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/56/5b/4970a2d154df502e133402906dd04e3ae7cada7b3011283c88d0479a2585/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-FQO8y+s21VJ3kMOTAydwTDmvIt4xEvGxZmqfPOFe4gQ=",
-        "mirrors": [],
-        "path": "artifacts/ed/9b/a8/2852832c6cd0eebd156bde179ab3876a38d894c4a4de29ba90d3baed4a/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/88/8c/f1a91bddc8fb47c2889e29ea7ea49a194eb0d9868675d786806519c00d76/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-UqppknAJlq8x83XeDGus1AKwCX/kC1PEJrn1GpDrq8c=",
-        "mirrors": [],
-        "path": "artifacts/86/bf/88/985968e29f8b3ac34ea2c03a453309384a147586f922d79868b1bda7b3/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/24/0e/bb5dace3cc7e79068425386a6589c19b5a2ab5fefc2a46abea6919683332/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-4Jo5Quy97lzOc+qdQtqCuBtyrBvwMc4Gm5O1rfTqyM0=",
-        "mirrors": [],
-        "path": "artifacts/9c/68/53/e03e9de678e59f528e7fe88f0fdee5fa1a20ac23d9b7635708646fd79d/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/9d/79/b849ad523017ea9f5a45581bbebed91439e0cf42fd2860a6f64e358eb5a6/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-x8mrcjzehB/vs077rZHofwCmdLH+HNB4T950K/LBVNw=",
-        "mirrors": [],
-        "path": "artifacts/b1/a1/5c/c6633ab76872fad68070481d75c63ce56cf9b0bb1bd797cdbd1d52f8bb/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/89/8c/75469d690cf47200bce8f6cad7655724fc23148e147abfc5ce78b5f65863/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-3cfazI7OOhgufxXLhi0f1ha0bQdssa6d0jKyw4tlWHQ=",
-        "mirrors": [],
-        "path": "artifacts/2e/13/a4/b8e87f02448f98189e05be474e5231acd4dcbfc0470ed491b585c7d1d3/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/26/cd/6d52d3c7437cdcf2e310ce9f28f282e733d4ef60ed19105d1819c356255f/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-7kPBexc9RqMhK6purTriWO6r2uSMJjoBzPAhjDZt1lU=",
-        "mirrors": [],
-        "path": "artifacts/70/37/f9/40d28031d01f864dc754d380e1c076aa2eca4fd2906886c835d98bf0ac/charset_normalizer-3.5.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
-        "url": "https://files.pythonhosted.org/packages/f7/4c/070b38bdb5f49a70199fce923ec0726a49536a63ab262abbfcaaf351110b/charset_normalizer-3.5.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl"
-      },
-      {
-        "hash": "sha256-3KmrmAcqWlTrrOvcRfU+ZFM2syDGZ0ELBhvhyliK5wk=",
-        "mirrors": [],
-        "path": "artifacts/38/56/d2/5db5f5d4238803553ada11afdad44da8fa0199f855a4f7c40cd55f8722/charset_normalizer-3.5.2-cp314-cp314t-macosx_10_15_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/c1/48/c5dd00d5ef7791f02666de250a5bb6071e29b7e133cf4b835800b6d3bc27/charset_normalizer-3.5.2-cp314-cp314t-macosx_10_15_universal2.whl"
-      },
-      {
-        "hash": "sha256-8KqGkRLviEKa4Xgg2Zw92VBMnpxnHTwkbz10QssFEIQ=",
-        "mirrors": [],
-        "path": "artifacts/74/39/8b/3078446e9bd7a8a68f3628f42c0b5190955e4360ebcb539a7daa9ca118/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/12/c8/8379554b42e8368161d898476686947a0fdbd3e8865170d7909dcabfdee8/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-wK/GgAulfMw1A3TFvWFQQZkV2VzpPNurLXg9derzDss=",
-        "mirrors": [],
-        "path": "artifacts/7e/90/f2/cd9593f8a503a0d84bbde6e2dfa530ade4d0ebd9a4f5e79f9fe6dfc3d4/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/4a/eb/2ddb1035d17320caa9f41682935123a9a250277b261c3efc86b2d2a21343/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-fc2ILade+a35SQOx47lBnoqo+0xzloIrg0ue9/uWlU8=",
-        "mirrors": [],
-        "path": "artifacts/9a/5b/21/14532385cbef9e9404913ca97d8a24cb67ec54c5ad1554e626dc5dfbc9/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/4a/24/2ecb4bde104322cd7859d6594fcfa74649f8d90b3221c9feecbef149875b/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-LgajqY+RbdQdJ/MQXgLnpAGByYyUuRWHM9A6b4BQbAk=",
-        "mirrors": [],
-        "path": "artifacts/37/e8/95/b3929385eb4cf065c3a60203bdef48fc4574ddeb8e4bd16bc0838d7c92/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/3f/98/9d5f6ebc3aee9fef5d30b4aff11fb2ab7a1222b4064f8ef2c7c87cde217a/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-a9Eo8gandSrh8qtsYb+KJLookToQ34sUwmN7lz/5eoA=",
-        "mirrors": [],
-        "path": "artifacts/f1/d5/28/41edabef519ff463e6698febeb506c8605c578fb9ec9e22d2e6fe229b4/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/09/e1/a3b06a10461b1b7628853c934c644e03bc28e42767116afb52f19a56519b/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-yPPWeur1XwF5grc2g/DnNCui9mNaePac6J67JqpBHlw=",
-        "mirrors": [],
-        "path": "artifacts/18/3a/42/e8be4077bfe20e09080813fab9c672454cb2b1c5486e132f8e45958a22/charset_normalizer-3.5.2-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/fd/d3/6f561f74a296cf27d61775a1dc665ad13f3bff6a798810ca05907f37a7c4/charset_normalizer-3.5.2-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-/pdT3+4BXFcNc992+JnxhETUE4i//N4JfeulHE+tu58=",
-        "mirrors": [],
-        "path": "artifacts/a3/d5/af/bb1090d6f8b1a97e94d86477c8b3ff63d3dacb2c256fc09f2b90da8ac2/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/26/9f/69e13ca3b18f43e0eafcd34c04a45b732ae22a43b54a5fc9e119103356eb/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-koiLsxh8W6UFALALOzEMnyxlFwnSgDYHdoDLUlVFCgM=",
-        "mirrors": [],
-        "path": "artifacts/27/ed/59/c79515899fa0e1abbb9e4e8c2839f0c5f3b22640b78adc6abc20fceb6f/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/73/a9/ace29806a0dae18939919c76ba526472d83214afa101105fabff2cf30625/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-0AjZCn8kcVGa7wyQ375zs+bk1eZqxI4ZFUwX6J6YtgQ=",
-        "mirrors": [],
-        "path": "artifacts/76/94/f6/c397cab816941e768ce0f947a192d419879cc898e7c932af426f278c65/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/f8/c1/6116d52a2e3311ec80f21f5fb5e17b27405f10b9608af8f6e69516841a1b/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-MfOTBwBAjSEfEzeMy+HECEXY2lS9BoH6w6m1qugceqg=",
-        "mirrors": [],
-        "path": "artifacts/27/5f/52/9cb338e05a1de40372c32d58e59087c4523a053444af05d6a4c2437de4/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/19/aa/9955c7e93bba10a9c7e8f7a5031b7ced66f3a1883a55c00712b8d5850ff3/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-KpJYiVNLN0gwLa5d6tB8wTSA3h2sOuqAqUG3KbRx75M=",
-        "mirrors": [],
-        "path": "artifacts/b4/fd/90/a989364c3db4703a1af422c68f669a7cfe6f288361154bff871173af72/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/bb/33/2a6ae7fdc1b10cb581cef91addd8cdfc5f40d50abb5702309369d5834579/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-9exhFkrc7ERviWmjNY7D+bJrvaO5IT5VhtIZr6jfKRU=",
-        "mirrors": [],
-        "path": "artifacts/96/2f/cf/e45c59b1691e07969371ddf18442be21a858e914a5155ee8c1211abdd0/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/a2/22/80992720a0282cd39bba1db35868e6b9c22f41281160143a836544bc1d8a/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-WYoRosfrqlM0v2mL8pVoycOQq6xqFU2BcP7ezRzqOMU=",
-        "mirrors": [],
-        "path": "artifacts/04/b4/f9/f70f25e90a58b3d25303eabbed4ff40abc42a3fbc4ef6fc14ccfa4ab87/charset_normalizer-3.5.2-cp314-cp314t-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/92/9f/181fd07e1bffea1d95cd80c84ac537354f50699c22cfc4d3c02b6fc16208/charset_normalizer-3.5.2-cp314-cp314t-win32.whl"
-      },
-      {
-        "hash": "sha256-f93iyf2ePspAYx4CRmTPJYQnLMj5YwjL5f38kw9R2Lw=",
-        "mirrors": [],
-        "path": "artifacts/25/6b/00/d0fb916b72efee7f00286981f877775c8ed26c89ce56919ad99ffd93dd/charset_normalizer-3.5.2-cp314-cp314t-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/49/1c/25d8415ec1c4f2f41f1680435e4c87cfb378ff2f677d950946f2a45d0632/charset_normalizer-3.5.2-cp314-cp314t-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-0b7+7XRtJHyBEnuxTencPTDttuWXbTT4P4btJisdkQU=",
-        "mirrors": [],
-        "path": "artifacts/12/73/5f/25175cb60201e34910c1f04a5cdddd722d87f82f9244f427e50d4ff998/charset_normalizer-3.5.2-cp314-cp314t-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/3e/b4/46b48f013dadfc0d0d33b375438e31bdf5a989dc68389c6bf627054d4df9/charset_normalizer-3.5.2-cp314-cp314t-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-T4eWDVf+q/thjk4K9uc3FkX6JqJ3hgc51uXW4AEskvA=",
-        "mirrors": [],
-        "path": "artifacts/62/93/1b/72927b11c443ae5ca6f6b4ff92f78fac9a5577c668c4f09d991cfb20b0/charset_normalizer-3.5.2-cp314-cp314-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/81/84/9ebfc8ed6c8c4fcd8e726ff6bf220cc8deb3966e31dce9be8dd8aa017e64/charset_normalizer-3.5.2-cp314-cp314-win32.whl"
-      },
-      {
-        "hash": "sha256-5OgeCcFXi432AuPbCLCz6gppR61hL1K/jcXqjUdpHww=",
-        "mirrors": [],
-        "path": "artifacts/7d/22/66/014109deaa1a252bf598259df60068b3fce1c4e48acac14581fad29e58/charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/d1/78/5ed86f743d4bc350db307e7636419a0a5ee1d91806d30c7f667bd5c80dae/charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-gNArbwTpJgGggd2Xsj0xKAMwmL/10105LdzAR26hElM=",
-        "mirrors": [],
-        "path": "artifacts/03/a2/d2/9be03b9fd896fd9baa3ea603b697a3e77b0775585fd17df5b330763fa6/charset_normalizer-3.5.2-cp314-cp314-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/53/94/a3a7698e9b1a395e1eb99ccd9a324be9347973bff4e72db2a06496d7cd27/charset_normalizer-3.5.2-cp314-cp314-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-h0dfq8jZmW/Zwn3rs5XmQujIONeKALbpMiJ6Dga4HiY=",
-        "mirrors": [],
-        "path": "artifacts/b7/89/fd/e7231d7a4cab2b5f853a77fc59d199da08130ce3bc1d1aabe2c5d09059/charset_normalizer-3.5.2-cp315-cp315-macosx_10_15_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/ca/e9/34e597dee616d0b8ee4b34d29399e85c2204ade174157a48505d42baa4ff/charset_normalizer-3.5.2-cp315-cp315-macosx_10_15_universal2.whl"
-      },
-      {
-        "hash": "sha256-lAmovzXPeDU5QlBLJKV949dbcImXoeS9jbcayGM842Q=",
-        "mirrors": [],
-        "path": "artifacts/2b/44/d3/06aaacc0f6f6a180f24949b8dfdd40091d4e98f0fde8769b176515bdb4/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/60/9f/a5d1c91c0263745e2cd344c5a4415d787c575501ab1d449f1148ac6b495d/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-SY3DGIygWmgjGsP9v8f1frZ+E0PDDg/qF/ghjBWZslM=",
-        "mirrors": [],
-        "path": "artifacts/ab/30/9d/298e30c1cccf4c1a8ed4c8e3fd807cdca0efd9d57b33a2867166502c61/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/26/79/e697f77464748a3ee3cf490c83d592459400d4898380d66c38366b03080c/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-4kK7HF526X36nn8gmnHpOgHX8Z/91c+7Li1VtPCPirA=",
-        "mirrors": [],
-        "path": "artifacts/5a/8e/f1/5445c0d77d064fa20461c51d7758d74ad460badb05360e155c5f34644f/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/ca/87/3d42a42e18ea066e2513936fd678a00696e77878b5ae04528976abdbcb83/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-3vefo17wzvjSrM7AJPT9x+rTAS/wL1IVx4PznwPvjPw=",
-        "mirrors": [],
-        "path": "artifacts/c4/2f/68/613ba2f0f8dffcfd8562f73d3163ea78870d893aada6c8bd9fd3d0764e/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/c3/76/8a28136f3938ba9836f84280ce0c4d61ed1cf15a036b2034900c62634162/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-PfBB3oiHlUViybJhy6hcoOne10BI2vEl9F7c+qSDIik=",
-        "mirrors": [],
-        "path": "artifacts/39/3f/54/0e99c17f76fa75d4343c8e5ca45cdb86538397fad2a8417cadebaf1c5f/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/a0/a1/4fbf5d0f0f1b2a080474c1cf9a2f12c4c6531bb0e8ba591055e846d2b4e9/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-BIUfc65yuEE93a2xaknf7pUmNVN0H9QtVG99ZpB+a+U=",
-        "mirrors": [],
-        "path": "artifacts/c9/50/de/c00dccc27f30d023005b3b0dd9a4bc4804e68cf1533f0513dc6b48c5dc/charset_normalizer-3.5.2-cp315-cp315-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/ba/a2/8b50aa320adb880ad579518e6f718f24944804b42a88b83d267d5d444125/charset_normalizer-3.5.2-cp315-cp315-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-GDuIEnrNtPq+WdlRq0JPrxr3tjzbtfd2GGweov/K7Zg=",
-        "mirrors": [],
-        "path": "artifacts/d2/05/51/8c882c37af6ee6c6d68ded5189551d5292f38a51d77db8f4517b7b4394/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/a5/57/50e3fed84e175f40349bd0da7a4fce94c87f0378f52d74f511d89e0bdc20/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-FvoOzPgTBLecXNh/knHDuF3Z3ZkkXkQirpwN1F4PmdM=",
-        "mirrors": [],
-        "path": "artifacts/76/01/c1/c5263eb8e00b7aa40b0cdc444b5f74a75202f94ca380e72a75f302d5c6/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/d6/54/f7fbb3493c9f49091213b9c2d6dd65800696f1ce1a3f196a4205f50417b1/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-dEHXVberlPjU6z5D7AVILXYIQv0mPQA6mRAtdCzYNeI=",
-        "mirrors": [],
-        "path": "artifacts/30/f2/92/fd165e874da8088642a9e08f8d612827f6192b40fd61fec7180398c4e5/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/d9/37/b3a6385acc5a1e45b39ae9c90bfb9cf838a09b9dd37ef2740ab4c6b4a2eb/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-ykA9fkeY9SX9/HjiWIIEGcu9Dw7Lq53nhA48AXz2uM8=",
-        "mirrors": [],
-        "path": "artifacts/49/8a/de/c3271a708fc1cabba42c85b7072ac5e1677f5667c8ede725b7435eb7b5/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/89/44/809913e2cfd279e635a9294fdbbfb1b1dc62a8189d473d561f649fce98d8/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-3ymgpxB/cBHnf07r3d7ExzMeJNeHoLIaRtY733RF2pU=",
-        "mirrors": [],
-        "path": "artifacts/c9/0d/93/af362b065dbb68bf62e6a5a831107ff16de2d946a15eff522fcf2474a2/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/af/a2/f28400ab13359d91bd39179df8e149376b9bf36588e739a3a4f9de2b84b2/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-88lvYzglcz9zXFqc8h0holfY4e3wsc7goGS5xCTKD30=",
-        "mirrors": [],
-        "path": "artifacts/b2/d9/0c/13c708b9705a687d03d0ac845d1ec785fcfc57ae5b544a0d776c4ba57a/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/e9/89/9bab37955edf0adb3b66f8a3a6617d9f2f487e0d56f295a6a286cb640aa6/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-kVVjll1Bj5hufhRazMWS6unhob41Zv+YoF16nsQqduE=",
-        "mirrors": [],
-        "path": "artifacts/c0/97/1c/4c6dcad962bc5f4386254dd272d9feeddd9e59814c7fcbf57a9bd1bbf8/charset_normalizer-3.5.2-cp315-cp315t-macosx_10_15_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/ee/f9/00ee0195db1013d8f7c416fd770fbeb560bb46eb2e36b054d05cb56f6cfa/charset_normalizer-3.5.2-cp315-cp315t-macosx_10_15_universal2.whl"
-      },
-      {
-        "hash": "sha256-Zc1yvu7KnTquoSAeWSOFnzCPlS+ccd6T8GBjx58Pejs=",
-        "mirrors": [],
-        "path": "artifacts/19/20/fd/200ba2b4f81a3a1a5b7fd177485e3520bc81f2e676031879cbb9a397d2/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/04/3a/c00b50e94c964cf934c7899cd47c97952fc11dad71cc5884b3c61795b09b/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-t/0AWnPZ5lcnO3oQ3HGp4DyPue5pmXmNaRjOCVuBrH8=",
-        "mirrors": [],
-        "path": "artifacts/08/bc/e4/44617f17d5fee30ef637f0006a464ba7001ed181b4ba8b8cb9645bf084/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/50/27/d102dc880bbcffd0479ab64dfc1fb96777a854355a55e2bda72a71efadcb/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-5U2kuvBXIAMtUnh01Atl+k1+XGxqQ9DDrb7/yvJ1orM=",
-        "mirrors": [],
-        "path": "artifacts/f1/de/2c/e1cd10854b060a0c50b5472e5bf3c23a3cd346e669867af7741fd06e8c/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/a5/4a/bf7ef45794dd293fab5f98a9309817977fbb845b9998f171b8cc5d8437a3/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-Ek+/Go/5Zth64Fu4vUWnH5ZgVe2LujINDHz0ULxfTQ4=",
-        "mirrors": [],
-        "path": "artifacts/93/f0/b3/b2e43a01f57a24368f2852839a3e18a3d54a8e03d756402594f289ded1/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/e8/ee/008a2837737991474c5754bb3191010007663860979701990982a502cbaf/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-KLTw1m+4NP+Q8oIJrHvOd4aMRdjJPib5BnCdm3wuGvk=",
-        "mirrors": [],
-        "path": "artifacts/b1/70/a1/2ea131254890b5620d00545a62d247c2477d430256f3a4e94b27fe59ea/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/93/ad/bd74a283940dc910c5b14f8e4f80a248082bc9c0fcbe1f54530cb6d9cc5e/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-WMo3Ve5/9/WbV3ieyYM8nenqJ1QFzdJA7aHxkxEuOYo=",
-        "mirrors": [],
-        "path": "artifacts/1a/e6/04/9812c9f314fc272672c60291ff414bc75b1ae4962b98ec1950b20069f5/charset_normalizer-3.5.2-cp315-cp315t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/8a/7b/ed341c66f69f688723501fac752be3d63c7159ca0d0d4174fc611e5710bb/charset_normalizer-3.5.2-cp315-cp315t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-RD6uK/MYq+r28V14UTj3H9bedw6ZqSFYuLgUJl4HkRU=",
-        "mirrors": [],
-        "path": "artifacts/03/b0/f0/cad13bbd63061a7041cedfdd43609d92f93b3ac1e5a3974762dd5f9f8b/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/cc/9d/e41588b777965e5031a43128a1e96173ebb35ac75fc53ec3b517e7c21cd4/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-WPNh3Lq2mc+PQts/R8jn/RA28TjCOl0I3p/eX0Jacww=",
-        "mirrors": [],
-        "path": "artifacts/9b/80/fa/e066bc2b9a11f946aa0c21a0d651528ff3b6c02d6ec79f9ef6cf5dc19a/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/81/35/b761eb6d8c1eb218b9b42b9b4d5ac902afdc399fb6dac6f9a9aac7bda589/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-G0y8fDSRzLSqF/zYFlZJ0Bzzn3beFpbahjG19xuFQB0=",
-        "mirrors": [],
-        "path": "artifacts/05/03/ed/710979f46cdb87d5d0ea9ca361950aeda1ce33215e4687e0fc2558e350/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/4d/2c/147169a041b747759f37405c0a97157e8e92de967968373101ff14915cba/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-ugsdJiDt+Gl4nDh5Ij9Svyr8XTGzy0fMV7OhLAXiqp0=",
-        "mirrors": [],
-        "path": "artifacts/7b/67/94/a027b75746eb0926422128545231be232130e9701ae70a1b36c90655dd/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/f0/2d/0ff8db0d373ba8538db686db11cd7e8912031490b9e4f383b41912e8d594/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-XitrV+lzPTnwyf0xhe+muOKWUsTNj+lBgCcs9u2aeMQ=",
-        "mirrors": [],
-        "path": "artifacts/4f/72/31/2544fd6ff677d98b3b431be9cc0762e71a1de9303e8c909f506176e575/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/8a/8e/b4a085fb47c9d3a7e43576a4784fdd8fe23f907514a972de8086edaf7a48/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-Uc9FImqbWI0NK0iAxi1oaTS2OrC9ecojqw6XYusnRBs=",
-        "mirrors": [],
-        "path": "artifacts/5a/64/f8/2ada609ecad72a3769f915c29c1b14c406161052abb6de14f737524068/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/83/1c/d8d8d7322a7c3eecdf3237a4a419cf41d2eaad8e006ce7dfdd9d4c8fa2eb/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-X7KfuM0aRsJ6G/lhOtXsJZkxDUa0Al2VVkBKa2opKAA=",
-        "mirrors": [],
-        "path": "artifacts/7e/a8/dc/ffe2ed13ed60906aacd8aa6bdef23a288b611f9745eec2e6468deed94f/charset_normalizer-3.5.2-cp315-cp315t-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/a0/16/0e4c6ba9b44e97a2da150e52d331e8f9c968b21b358fbffa6c856cebcd89/charset_normalizer-3.5.2-cp315-cp315t-win32.whl"
-      },
-      {
-        "hash": "sha256-oZLixABw2Sw8z3d+OlxP9RVXPNK7ftDFN/2tu+xbvyE=",
-        "mirrors": [],
-        "path": "artifacts/d7/47/46/23021878a42541a070f271a251dddfae832287fdb22dd19dcc4b465951/charset_normalizer-3.5.2-cp315-cp315t-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/be/33/e90bc2b1374f7f36ef106f56620de5a783907e19ca857efe2277e31cac3e/charset_normalizer-3.5.2-cp315-cp315t-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-dJ6X4bMjE3F6Vlq74yG8IZC8izXxpn5M28fFbI2P/lg=",
-        "mirrors": [],
-        "path": "artifacts/65/ca/90/6469fc3b3a09058f8b1047f530d74631a0e7b3bb1a00827ddf345d3a91/charset_normalizer-3.5.2-cp315-cp315t-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/66/89/dfa6dcb08c200b7830ab56439e8c1890f2971d51aafbb3937894a2e7fcfc/charset_normalizer-3.5.2-cp315-cp315t-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-KBy5EDYkhAD0zJV0lczNRMJ1wuDFhU9+Raxc99wZOEc=",
-        "mirrors": [],
-        "path": "artifacts/cd/6c/ad/4b0bf1993acd7ac49530b1e970b385f2077183609c4c751a9fa90af5e1/charset_normalizer-3.5.2-cp315-cp315-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/23/b5/4459e08d45a679f903d50fea08bc52cfa728cca4d7bd02c757b5e5abda2e/charset_normalizer-3.5.2-cp315-cp315-win32.whl"
-      },
-      {
-        "hash": "sha256-ibU/PNppgxkJiI4ElPT6C801N+PhONq+tiC9atlGuug=",
-        "mirrors": [],
-        "path": "artifacts/42/d4/2f/85a262a53c59d38467cc8ba75eeb4b674328219bc4ae49867236dcb3f4/charset_normalizer-3.5.2-cp315-cp315-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/98/e8/55d5fd3935b4bce6da4fe0df61898e8c82653e317e677bd58aceb9c60f13/charset_normalizer-3.5.2-cp315-cp315-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-a+SIoQK4zyjQOR2MS6d0iTiuKLeK2QH4WFUg/KM+rRo=",
-        "mirrors": [],
-        "path": "artifacts/cc/58/86/8d6e9dda6e06cf9e73d5d41058951cd052a6bbe3824a6382410120d83d/charset_normalizer-3.5.2-cp315-cp315-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/a9/5b/974423c2fd8e524c7a7f64318c1e02240ef954912fa2b4d70344107b9c68/charset_normalizer-3.5.2-cp315-cp315-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-QnWBGTbi8G/v9eWY+0Kht66FLajjlgUhGJK1a4GjTv0=",
-        "mirrors": [],
-        "path": "artifacts/2b/9e/fc/2fb67a14be771dc81e1ca63863e16c9438acae9f6e1f674533bf9aefb9/charset_normalizer-3.5.2-cp37-abi3-macosx_10_9_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/8c/ab/176fbfd5b64939c55d652366aa5b9ef1d767af207a3aa6ebeb0d226c484d/charset_normalizer-3.5.2-cp37-abi3-macosx_10_9_universal2.whl"
-      },
-      {
-        "hash": "sha256-HFD+KLvCztMzhvKYZQ2RIYB2wFQg5svXkLkTrcQWWec=",
-        "mirrors": [],
-        "path": "artifacts/dc/da/60/1cfeca61cf17f5777b5d294c492aaa9c2b64c532ec3fba88fc2798ef72/charset_normalizer-3.5.2-cp37-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/7e/84/371eac6b30bdbcbf2d632a1a01809103459216fcaae61b8b8d922c1bfb8a/charset_normalizer-3.5.2-cp37-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl"
-      },
-      {
-        "hash": "sha256-0Z+9mBpIjiLNBIg2WcprCPULWXT5/XyVZV72oEPliT8=",
-        "mirrors": [],
-        "path": "artifacts/00/6d/66/f2466e49450e7aa25a3af8cccf058867ab0a67a95aab1209ec159daf64/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/43/6f/c4fbae58febff71709c51bc7e18fdfa55341dc382704740f9f0cbf03817b/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-D+0dBmFfAi7jsTyvXosYDP6jK7LFre2KnUQnevwED5M=",
-        "mirrors": [],
-        "path": "artifacts/24/ce/38/a56ba9e60399c590a38425021c6e35325c4174fe35e8b643014f817162/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/61/71/458c3f42164a07d0c5210798e9e704b39e540a6793b05aba67f3a35243a9/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-g43MkAY1aaBEgSBVRZGh1sSk/+Ebq/BIkIeTFUq4at4=",
-        "mirrors": [],
-        "path": "artifacts/c4/2a/49/be30e5660cd577fe34805fdb94ae77da70ae6045b4c3b1ee0983bf5a16/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/09/54/ab9e89367076f6331bb6c65c4bf14a5361fa5191cb6561bf534f18504e1b/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-LORcZieyLEfjkLyRpBw9EwMhkuaZ+gvqlulnGzc9abA=",
-        "mirrors": [],
-        "path": "artifacts/7f/b1/d1/1193e73151ad95ba138a1f84b7612abbc7803ac55b38a048c7a848d2a3/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/7c/c1/061431ecc688d9d76602502cb57cc01e691e682c18f1beb45f9673b5bbd2/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-B3S/m/YgJJ/uPguLn9MGXeITvjDzqpTOJJSztjiUniY=",
-        "mirrors": [],
-        "path": "artifacts/fb/1f/f5/4670e0bf33f5651f8e6bd85ada9fa10f7d4fb3b387c9979a0c0525c702/charset_normalizer-3.5.2-cp37-abi3-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/8d/1f/20c8949f0676f7ab811abdeb7f4d7f1cbc6e61ff20bef08b44edeb092bc8/charset_normalizer-3.5.2-cp37-abi3-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-HbOPTFSWgnwaUBhG1k0Uw7gMfmcU5AbNfcNqmJn6EBE=",
-        "mirrors": [],
-        "path": "artifacts/7c/76/ea/4ac18e223c27d0cc92281289088414c2005551ba68654c92d391b82ca2/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/2b/9e/46f2fa4c431fc98c4ae76a8cb5bdca54e0341e3cfc3fcfd8e82740250818/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-ME2OTUk69yNTY5Pu4MaJ63gT9KR0yLR53uY/H92Y9iE=",
-        "mirrors": [],
-        "path": "artifacts/29/9f/e2/b44582e86b7b2ee82c6ee011a067f869a4ac5a0a0cdce8a56044d11391/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/bd/39/559be29a0c0f086e0bba6922babd38916cc5e0b58ced4de13ee01ea05508/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-m39Bb/CXji8iSTMFJ/Ctb6AvSTLmGZaS07UtogSMGeQ=",
-        "mirrors": [],
-        "path": "artifacts/7b/77/72/3338d2a36d948ead38568ac489d9ce9d6319e357a66173ea97b29cfb1a/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/ff/6c/387b0e4f756a282831c1d9fc6aeb6c51ca4507ca202767c8de15ce9b12e2/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-AQdzkLA/eYjxHXAKIZTmmxGXQahrGmOLHbiIkePs7Y4=",
-        "mirrors": [],
-        "path": "artifacts/0b/9c/c3/b0efa1e562699e41cbd7d22e29497b1f43d5d1ed83752e1b08f51cef52/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/96/92/1fdf015f09ef449f50d3ac4b67c90887c9c318b727daa95cc4f866e6521d/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-foQfuQEINsmSyfEvy9Q6gx3pOl9yb8HM2ModAmjFAUw=",
-        "mirrors": [],
-        "path": "artifacts/02/a9/c3/a3b1ec3168431d0e495bd44329a0f67324b5b37ea802a1156e8e4b6f8c/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/dc/3c/8e7b8a5671ad5d433669fb2a76f1a0164df2d9b1718b0206bc2a16d840cc/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-nK6IWZxyGQBdh5+Y5e1TNB6aEir1heEJEgA1ijAD0qA=",
-        "mirrors": [],
-        "path": "artifacts/fb/fd/46/4546ddc282622974ebb5f88f959c74ae3a3dbc73452f5cba6f73da3bc9/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/b4/f0/45b579df5cabc1d5d53ea1cc35e8437d3ca768c0acccc7041517cb6fbb32/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-AbDA0iYqnijoSEonjH4bXWUOOsjPJoPSln4liZ8gi98=",
-        "mirrors": [],
-        "path": "artifacts/62/4d/00/e61f80dfac0b9de3026b34a3c4c331768c0c3bc36abb71675810609482/charset_normalizer-3.5.2-cp37-abi3-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/31/68/fdec18a343f5fb3f310588dd478b09ac4799e0b187dbade3a8cd776f03ef/charset_normalizer-3.5.2-cp37-abi3-win32.whl"
-      },
-      {
-        "hash": "sha256-n1b3IFCCb2Pc7np/VbCncWjLO/xVP9QF5/j57OdaQDY=",
-        "mirrors": [],
-        "path": "artifacts/c2/29/e4/bed59baef672e17204dbf6ce42f7845ace3ce8f0702c7b6f8abf920d6b/charset_normalizer-3.5.2-cp37-abi3-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/9d/8a/b618149cc5207943a0242068d7a27897f56a62947b5a039085f2a22029f8/charset_normalizer-3.5.2-cp37-abi3-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-QKtr/6Aq4QoFgebBmL59LYylwqDGTk7TRl12bfRXVz4=",
-        "mirrors": [],
-        "path": "artifacts/75/d4/3f/5f059f52fb3e2fd956fe5910017345ad6f9571d28ebb60b43fd4d6fbf7/charset_normalizer-3.5.2-cp37-abi3-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/03/cf/4c66866fa9e2b1c78e3c911516d1de497a677b7ac60f1eceda74ce777ca3/charset_normalizer-3.5.2-cp37-abi3-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-daPO7Qck1iXWS4bKIKuhguTfRi4EwkFPyUHA9SPwaqw=",
-        "mirrors": [],
-        "path": "artifacts/42/5a/d0/54032bded1a511be08056e60395435bd5e7ef5f56025a4a14017c45087/charset_normalizer-3.5.2-cp39-cp39-macosx_10_9_universal2.whl",
-        "url": "https://files.pythonhosted.org/packages/0b/f6/c57b072e0f764c29bc2bda17baaa01ea1a8d36874d9efbc0cfa2efb1b0e1/charset_normalizer-3.5.2-cp39-cp39-macosx_10_9_universal2.whl"
-      },
-      {
-        "hash": "sha256-CJG505A8VXHAN3HKZppLDsVhjKcipclX09Kc1OUGKEg=",
-        "mirrors": [],
-        "path": "artifacts/0f/1b/18/0deeff6d400258d918eea50bb9230d6463d892b1e6669b0888e6578532/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/7a/44/a9ddc117221405ab41ba66653013f0e78e5c2cb9a5b22060ca1e7dccb1ea/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl"
-      },
-      {
-        "hash": "sha256-/BSgMvgTv1/mJNmRlg6oPpcVrcJ+TBgwojYesdAqw0E=",
-        "mirrors": [],
-        "path": "artifacts/35/a4/db/3120d5c45c699affe4463fe8c359865863fda1e25e537cdc2f83c57bfe/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/05/22/6adc5456b690c7ec9316df39a7fe741c6d81ec91b9f9f8a798211e642784/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl"
-      },
-      {
-        "hash": "sha256-iyv6uGqnGuE6pBpqJqqzOODbK4vHVDSwWuqJ4BH/NaQ=",
-        "mirrors": [],
-        "path": "artifacts/86/0a/42/3f6ea65d31387afae3734e5ece16860454be36af174300acdc4d50b493/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/52/4b/26dba4f3354ce6328c8cb13628b17202305f2172a352a32e10d677edb130/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-m96FWZG342LBRlNeMTalC/r/wEh9OLM8p+Xt78biOEk=",
-        "mirrors": [],
-        "path": "artifacts/93/d9/05/bb9aaf9c7a971c9806c900ac79e7a54ed356f75aeb030b00aa9d93eb2d/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/e8/6f/127c3697761666e246f44ab52d8c88ababf80c61fb70b3261b53a94c0d5c/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl"
-      },
-      {
-        "hash": "sha256-VeqZrLF7kyVhjeFVoM1qLo9dEL4AgRPh1DO7tY21Q7I=",
-        "mirrors": [],
-        "path": "artifacts/10/eb/7d/870817d8db21f945047fc7f1799cb5919fc301e80325dccefd8a7a2584/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/96/dd/dddf3848de54804e5543750f390fce1f9bc3fa5404f58f87be262199bf6e/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
-      },
-      {
-        "hash": "sha256-aOsZLYWrjl9uxpwrxqwBefvwSlrBVp0S++90iD/hAtA=",
-        "mirrors": [],
-        "path": "artifacts/c0/39/10/9c9194387e37f3b81f178c356132d43af3b83de760a8d0780686c7d3ef/charset_normalizer-3.5.2-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/9f/de/21dd363e7ffac0f02caee93cc9bdb63b04adaf9bf7ce46dea742c9a51aad/charset_normalizer-3.5.2-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl"
-      },
-      {
-        "hash": "sha256-2RPeSV2QQHzYWdJjvuLl0aTtPrZXPATnDZ7GGafL7X8=",
-        "mirrors": [],
-        "path": "artifacts/4c/9c/7f/4c12c46b1d53a4fc3aea14716ff760441eaedb5ff3e9a41813df767182/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_aarch64.whl",
-        "url": "https://files.pythonhosted.org/packages/6f/9f/bab04a5bcecc5c3fda3130b80131608e3f801de97753b2f1348b7c4ebdf7/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_aarch64.whl"
-      },
-      {
-        "hash": "sha256-PdrNJ0WMRb2s1r1ttkS/tzDvv56DAxAYbjBFycW+j7I=",
-        "mirrors": [],
-        "path": "artifacts/d2/d3/27/1c987b4a4c49a1c216e690d6f33f54756abab4edb75437e54a83baa9cd/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_armv7l.whl",
-        "url": "https://files.pythonhosted.org/packages/6e/31/b1e0a89e6cd464adbb8ebc674635834746bb8fa22631a243676121fbaf60/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_armv7l.whl"
-      },
-      {
-        "hash": "sha256-WIRhwug4TTCb1j5YJgGbaXe8ZtYpuZrIc3u3ldeyy1o=",
-        "mirrors": [],
-        "path": "artifacts/f0/4c/1e/898bd662fbd0b38cdd6bc33ee430c7ff65cde8b9aef431aa6932ce91c4/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_ppc64le.whl",
-        "url": "https://files.pythonhosted.org/packages/5d/3b/7bd36236e57d4266ffad810c62b40a08001622d95195e575d60e78201f69/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_ppc64le.whl"
-      },
-      {
-        "hash": "sha256-6A5sL1Vla0gk1yBlq7Td1qUlx0vXigqrXZ/Cz0+1r1A=",
-        "mirrors": [],
-        "path": "artifacts/67/5f/31/25165d2441548d13f61b61cffc0e224778a4fc2cc01475092555f4cbbd/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_riscv64.whl",
-        "url": "https://files.pythonhosted.org/packages/90/8a/cee8e3024a1179723f9a96eafa6242e574527abc7e0492a2fa65fa988987/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_riscv64.whl"
-      },
-      {
-        "hash": "sha256-1KcxnzBKd0vtIhFbyJFhjkX4UGWrROpqzQfSdOdQUZo=",
-        "mirrors": [],
-        "path": "artifacts/8f/c8/f9/28c2951ddb2de3f2d04b88981c6544b5041f0a1eeefc7f456126f55f3b/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_s390x.whl",
-        "url": "https://files.pythonhosted.org/packages/7e/3e/53e12f2d5fda61dec0265e57b6abc17468381bfb77d78ad4b11cd1f5c45c/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_s390x.whl"
-      },
-      {
-        "hash": "sha256-/R++DxFrblXad6yixt3N3PrCGGy/eL3r9A/BVu/KOJ0=",
-        "mirrors": [],
-        "path": "artifacts/c1/a4/0f/40555d14560ee3c9a737809bbf099e8c60b8a755141515e6158081c645/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_x86_64.whl",
-        "url": "https://files.pythonhosted.org/packages/c3/86/7b5cdf05e635c17c5a3f1e1b1ffc142b60e6f37b64af2e1979bd00ca8570/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_x86_64.whl"
-      },
-      {
-        "hash": "sha256-kyI63JUDPdRxM6Rsz8MWoBORdv15CFdi4nIC7FYBjwM=",
-        "mirrors": [],
-        "path": "artifacts/b2/29/30/77cf4b381683f5e55c47832a5f921164416dc60b8062a0a5b70127a87a/charset_normalizer-3.5.2-cp39-cp39-win32.whl",
-        "url": "https://files.pythonhosted.org/packages/8e/cb/489a7ae61ca4603a813c0a297b3a0dfa891597cbaf6ca13e428ab3ce80d4/charset_normalizer-3.5.2-cp39-cp39-win32.whl"
-      },
-      {
-        "hash": "sha256-FbtABa9jINJZ3HWTyoSjjX/gakIdvPe5EK4jl5EB54c=",
-        "mirrors": [],
-        "path": "artifacts/2c/3d/92/a019cc371be23ea96ae770ee835f5fb9a399972d50bb44867831108907/charset_normalizer-3.5.2-cp39-cp39-win_amd64.whl",
-        "url": "https://files.pythonhosted.org/packages/8d/44/94b15f1d938bc4b8411c483f947ba32952b71154c5550924be7031407d33/charset_normalizer-3.5.2-cp39-cp39-win_amd64.whl"
-      },
-      {
-        "hash": "sha256-LMlhsXGz80QPQQSJqzVz6GrqhzYTTru0DqEzi38IMbw=",
-        "mirrors": [],
-        "path": "artifacts/1a/e3/67/c825d7a8627def72773ca8d38be7cb066ee7ee0a73b32e1b991118e8e9/charset_normalizer-3.5.2-cp39-cp39-win_arm64.whl",
-        "url": "https://files.pythonhosted.org/packages/a8/a1/b983b62df4aedd9a740d2ae1eee43d48e2dc7f68695a1fbed9b773ccea23/charset_normalizer-3.5.2-cp39-cp39-win_arm64.whl"
-      },
-      {
-        "hash": "sha256-trdRJ0rLadd7MyPWt9uqPH/fweuCm362HSYvMuGvloU=",
-        "mirrors": [],
-        "path": "artifacts/56/79/f0/9465426cb6d7f574e80ab9ff9b4e8670312e2f76c2b6e76f99211c109d/charset_normalizer-3.5.2-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/fc/ad/d07d7862a62ffa6d79d68074d14823243dd235a77c45262acbf6adeb28bf/charset_normalizer-3.5.2-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-Od4qJZ/JVEVcVydNyUx51YQndOEkegFq/zC8Dv7Q9O8=",
-        "mirrors": [],
-        "path": "artifacts/53/61/7a/6be6e778c488975b45cde146af8a513172b181afcd01b510076d5cc70c/charset_normalizer-3.5.2.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
-      }
-    ],
-    "colorama==0.4.6": [
-      {
-        "hash": "sha256-Tx2ZkfWswMoRn51ENiC3f51rM3A+UQEcFrr1evsoX8Y=",
-        "mirrors": [],
-        "path": "artifacts/53/d5/8c/6cecb6b3e47543ac146772c559342cb1fad1f79eb52dce2d4251a5822c/colorama-0.4.6-py2.py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-CGlfXLftbgUxogVyaXKXJzxHuMrlpj/8bW7VwgG+bkQ=",
-        "mirrors": [],
-        "path": "artifacts/d1/62/b6/36173a09a06cc39a18bfc01f6def7d153a81382e9c413237ffde2376e7/colorama-0.4.6.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz"
-      }
-    ],
-    "docopt==0.6.2": [
-      {
-        "hash": "sha256-SbOoJSgL1ms6qDWF71nEqMgvLIpSLb51SovI0IyFxJE=",
-        "mirrors": [],
-        "path": "artifacts/7a/6a/39/5d7738fca41fba6483fdeaad1d5dd96b24bc86a03d90cc93dc0b0bed7a/docopt-0.6.2.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz"
-      }
-    ],
-    "git-package-example==0.2.0a1": [
-      {
-        "git": {
-          "commitObject": null,
-          "leaveDotGit": false,
-          "rev": "0be1215c90fffe37c5629cf2764615e9d9530e67",
-          "submodules": true,
-          "url": "https://github.com/python-poetry/test-fixture-vcs-repository.git"
-        },
-        "hash": "sha256-vHHR9k+Nuu119DqZ4cmK4RefzX4PxdYYGYp7UrzuwNQ=",
-        "path": "purifier-git/9847830c8fdca57c-0be1215c90fffe37c5629cf2764615e9d9530e67"
-      }
-    ],
-    "hatch-fancy-pypi-readme==25.1.0": [
-      {
-        "hash": "sha256-zgE0xA1j2HSsSPSMzGeLjztiuOUOkxhSDSv/x1Lu2vM=",
-        "mirrors": [],
-        "path": "artifacts/08/f6/04/2b58f1a88f3328a3f78f154d93731cffda0a442701efd7a955775f9ee9/hatch_fancy_pypi_readme-25.1.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/58/b4/ad71e051b34f1935783de37beffee16e343ff2514b204dc515f9e939d4af/hatch_fancy_pypi_readme-25.1.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-nFjtPf+Q1R9DQUzjcAmtHVsPCP/J/CFpmKBjgPAcAEU=",
-        "mirrors": [],
-        "path": "artifacts/a5/6a/1b/8ed17faf1c0557ee4a0981e09cc9a4234ae4bb9846ff08568d44005441/hatch_fancy_pypi_readme-25.1.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/f3/0f/aed57c301f339936eb91cb4d8c1e5088a101081854bd3ec18a889df32365/hatch_fancy_pypi_readme-25.1.0.tar.gz"
-      }
-    ],
-    "hatch-vcs==0.5.0": [
-      {
-        "hash": "sha256-tJZ329xZdGDMItAbJ6s2lvXhaiHs8nAPsBvCjh8qBKc=",
-        "mirrors": [],
-        "path": "artifacts/6c/74/05/faef795426bbd32d9adfb50d6435df73199d5a2c0e9106268abf849c1e/hatch_vcs-0.5.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/5f/48/1f85cee4b7b4f40b9b814b1febbc661bda6ced9649e410a0b74f6e415dd0/hatch_vcs-0.5.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-A5X6EmlANAIVCQw0Siv04qd7y+faqxb0Gze5jJWAn/k=",
-        "mirrors": [],
-        "path": "artifacts/dd/f2/42/89920b1d57f88e40fc2d8550cb1fb03624712ac56764d92eef45c6e2c5/hatch_vcs-0.5.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/6b/b0/4cc743d38adbee9d57d786fa496ed1daadb17e48589b6da8fa55717a0746/hatch_vcs-0.5.0.tar.gz"
-      }
-    ],
-    "hatchling==1.33.0": [
-      {
-        "hash": "sha256-QVKQuE9GTSiEMD/KiXTTjnuFV5Bp+rAqFdsIKPuxRG0=",
-        "mirrors": [],
-        "path": "artifacts/05/b8/0c/5ca0220bbb2a0c3913e346e96da8fe322cb89e75b889030e87605c4b62/hatchling-1.33.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-TEIr1NVU/P9d5bc+lZb4XkHp+X9+VT2PdZXssxpie+8=",
-        "mirrors": [],
-        "path": "artifacts/3b/c4/d5/487e98601566c06953b9e19d6add0381de909111edefd8647882b43dc8/hatchling-1.33.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/7a/f1/e47b937226ae3b093bbd0132eb0b7ee5bfad12c2b5324afd10ae49946b05/hatchling-1.33.0.tar.gz"
-      }
-    ],
-    "idna==3.20": [
-      {
-        "hash": "sha256-q3rnEil0VTNw8L25GeGpYLLNG8HvAnZBbYltuBwUWCw=",
-        "mirrors": [],
-        "path": "artifacts/70/19/6a/3c0db1979a434128baf404a237bade4e976b683de9c80c7bf93f6b1e26/idna-3.20-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-p9uFACW5Xe0eropGGBoabFbJLJbw4rAF2f+NwCEMq0Q=",
-        "mirrors": [],
-        "path": "artifacts/4d/39/2c/7f0c02071d03aa7ff754f3f5dfb375a399c132f5bfeea80aa0397eb6fb/idna-3.20.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz"
-      }
-    ],
-    "iniconfig==2.3.1": [
-      {
-        "hash": "sha256-kSHiwf2zVSMklb4xlMjf6HzMLV3uRZR7eOaPSZeQ16c=",
-        "mirrors": [],
-        "path": "artifacts/92/e0/46/e8e15c0aea5e9395d28e8e37386bbf35d15089d8ff7b69dc6a2902ff1c/iniconfig-2.3.1-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/56/43/4ca9e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/iniconfig-2.3.1-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-Z/S5xQ2g3t9SrzSed0moCpBXpQMRmXkbkGw7s66HiWA=",
-        "mirrors": [],
-        "path": "artifacts/d8/b7/99/96174b43f1653794b19e89c569b0ca83a0581f6e6bd5ec6e6ba1b86616/iniconfig-2.3.1.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/01/e1/2069291243c926a2ff1cd706c7f3eeb9b62144bf60f77c9fb9ff2fb26bd3/iniconfig-2.3.1.tar.gz"
-      }
-    ],
-    "packaging==26.3": [
-      {
-        "hash": "sha256-1xk/fI5Ok/RE/eAmK/kK8w4W+grQrUTLVTyHM5sjzRw=",
-        "mirrors": [],
-        "path": "artifacts/02/1c/2c/1ed3b4936762e0f2e39ef08e338815afe83403424e10d4a7a17267bf59/packaging-26.3-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-lO3CVkJK84di6zEwbu0ovrnw78UKiDdJLJ1v1gBK7Xk=",
-        "mirrors": [],
-        "path": "artifacts/e4/5d/67/f5abbdfad0c695f991d1ee0c877b21168c63d5c9e6c85a88b290467a63/packaging-26.3.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
-      }
-    ],
-    "pathspec==1.1.1": [
-      {
-        "hash": "sha256-oAzmQvV3v39HOTIxgFYhK8T4v99TEox4u9WvC5sgsYk=",
-        "mirrors": [],
-        "path": "artifacts/8e/59/72/6facf35b70783eb949c65f477a68a523be2b85ff16f1fdfa9b893b19cf/pathspec-1.1.1-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-F9tezVJBBKEg4XOBTJA2epapjQfEWy4QwvORn/+Rv1o=",
-        "mirrors": [],
-        "path": "artifacts/66/45/3a/984e08857290d4a31eda87b2da896866007bbaa9876454e4a0a95f9dcc/pathspec-1.1.1.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/5a/82/42f767fc1c1143d6fd36efb827202a2d997a375e160a71eb2888a925aac1/pathspec-1.1.1.tar.gz"
-      }
-    ],
-    "pluggy==1.7.0": [
-      {
-        "hash": "sha256-fdew2IMro8tjLDBpJt7RI0KSEbg2QbNdxcQa0tNPm+w=",
-        "mirrors": [],
-        "path": "artifacts/09/63/03/b83f617ff1eccb3b00832094c376372b2298e2ce46b47a91adf199bc28/pluggy-1.7.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-0eqkbrtZWJG4YKsIa00JyFiK9l69Q2G46PS7iSC5C6g=",
-        "mirrors": [],
-        "path": "artifacts/d3/11/9b/a26a37abaca86a42cbb0364c413570f189e7e9ca84cc80dbd9140b6a1e/pluggy-1.7.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/bf/db/7fc19e6f2dc92a966727031389fc2e08b558f0f25eb7403c1119ad4713cd/pluggy-1.7.0.tar.gz"
-      }
-    ],
-    "poetry-core==2.5.0": [
-      {
-        "hash": "sha256-mO5GW2b34Uu5++aPteANDP8YTwNpk+yUYQrktWEvOt0=",
-        "mirrors": [],
-        "path": "artifacts/6e/8a/b0/9b664148c897dc0956094ae771c851ee100f51dc90886956990899c4dc/poetry_core-2.5.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/b7/25/7ed0a2ea4fe12f7fd0394387b5debbcd6fdbd06e5ac9daab96ba11471da8/poetry_core-2.5.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-gdBMklOxnQYEcYJo14GGfI97ISjlslu/HoQUHuxricQ=",
-        "mirrors": [],
-        "path": "artifacts/de/b4/2e/19e9830b77a1bb96cddfca69269bb5c0effe093e37e0baa57bc1bffee7/poetry_core-2.5.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/42/b5/50f1fda26c4fe5b1d6ce5cdf0391bdfa1ca12fdcb8ad68344d5cf678fc90/poetry_core-2.5.0.tar.gz"
-      }
-    ],
-    "pygments==2.21.0": [
-      {
-        "hash": "sha256-I2PGm2HEqXyDjaOxMNzWRo9ISJkrIagvKmPsNDdxN9k=",
-        "mirrors": [],
-        "path": "artifacts/c4/f6/f1/97e2887200ac98ef7db2d6dedb3c6744f4900d95269143b346c7412c96/pygments-2.21.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-YQynUcm8JJKzjrmjin+8k+27stcYLtrzTmauST3uXIw=",
-        "mirrors": [],
-        "path": "artifacts/c0/4f/89/816785de537e84590660bb31eb8933f0bd1c186daa111b833e11133f16/pygments-2.21.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz"
-      }
-    ],
-    "pytest==8.4.2": [
-      {
-        "hash": "sha256-hy+IDeP8OlvciKEbOclxDDSXpUfPqTILw8XmL78nLnk=",
-        "mirrors": [],
-        "path": "artifacts/77/46/a5/de72db84a657c53e162880c4d930442c4e5a0425dc58b276b6e4e79812/pytest-8.4.2-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/a8/a4/20da314d277121d6534b3a980b29035dcd51e6744bd79075a6ce8fa4eb8d/pytest-8.4.2-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-hsDQuTMGuWHVjWKk20h58n/iVRPUuWnfNRq93bPDDgE=",
-        "mirrors": [],
-        "path": "artifacts/d1/6f/89/1fd7b5d9a831269464735270b09c267acbe29c824be8f21bd42e0c1277/pytest-8.4.2.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/a3/5c/00a0e072241553e1a7496d638deababa67c5058571567b92a7eaa258397c/pytest-8.4.2.tar.gz"
-      }
-    ],
-    "requests==2.34.2": [
-      {
-        "hash": "sha256-Kg1gwXL4OsarMeRVSQbA87NYjTe1y5ObHAYfSQfieOA=",
-        "mirrors": [],
-        "path": "artifacts/93/91/29/c747ec62573a238996650c74f27bab8fb1a90b209b6db59edb82053224/requests-2.34.2-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-8oiSTK5OKUY2mNbWC8ak2mnIkYWtHgvMQQT1hOlgue0=",
-        "mirrors": [],
-        "path": "artifacts/3d/b8/71/20765ee96c6585164b3d61c28ad834a8df41cc1bb67264d7b2ca766abe/requests-2.34.2.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz"
-      }
-    ],
-    "setuptools-scm==10.3.4": [
-      {
-        "hash": "sha256-gvNMPjCE/CtX05cgBjfME/IzgAQFLS/uR7ql8OkCRk4=",
-        "mirrors": [],
-        "path": "artifacts/7c/51/f4/db131a86c8e356589ecc17554e79f39ea9566c5b62f6850f91f93e0111/setuptools_scm-10.3.4-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/da/f5/54538a1f17ea753c42b0928dc2e62986d463f8c393340b9a1e602f2d4dd9/setuptools_scm-10.3.4-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-pp8ov8JFYIeBIF6RL6rkN8KyFldzr6TnuXnXdEemndI=",
-        "mirrors": [],
-        "path": "artifacts/bf/a2/d5/740f71c4a91b34a02b8a5d26c023b2a9496a4898eabcc942a76e2850c4/setuptools_scm-10.3.4.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/85/d8/fc143f88819ccf10ba2388ba86732ee2de193e578234e25a783f6cc14bf7/setuptools_scm-10.3.4.tar.gz"
-      }
-    ],
-    "setuptools==84.2.1": [
-      {
-        "hash": "sha256-yhQLRdUyWpR4+IDjUUhPYv7xXzNkYuRJygwDyHPVicI=",
-        "mirrors": [],
-        "path": "artifacts/05/59/ad/b3ef192fa045107c7ad5a7e1f62d20846010ceb935448bf3f0353f5cd8/setuptools-84.2.1-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-P/iztUkqCqZpYPRBk2Woa4TgEwcNQxPk1KaJT11k1rw=",
-        "mirrors": [],
-        "path": "artifacts/7f/df/bb/646ea094977fc04ce141736846f6facc16c1f80c3ec180e336afbab51e/setuptools-84.2.1.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz"
-      }
-    ],
-    "six==1.17.0": [
-      {
-        "hash": "sha256-/3AzXUaOfrbsZblbmdOig2VGBj9jrMUXHeNn6DSTKoE=",
-        "mirrors": [],
-        "path": "artifacts/fb/2d/5c/16009bcf7a363e8a7b77e6ccd7c964aeba22398981c3167bd93685237b/six-1.17.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
-      }
-    ],
-    "tomlkit==0.15.2": [
-      {
-        "hash": "sha256-BVYkEhY6MDe5RJc4X7f5IExje8YFr3pIGZ5BzyJy9Dc=",
-        "mirrors": [],
-        "path": "artifacts/49/18/a7/9cef7acd884fae371159bd9a48c3e384d8f9cd0e13c00cbe7558869a06/tomlkit-0.15.2-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-g+MnVbodINk0C9Bp7pfp9iMrojRrY//LpCXeAffjJ6Y=",
-        "mirrors": [],
-        "path": "artifacts/3f/17/91/f460ec904b6f26232cf2e0ae45105a1b42d2b9fc01878957d6258f34e8/tomlkit-0.15.2.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/08/72/fc01563df95c189a9f65850096bdc205bc2fe37da6c740cd64afaf18d07e/tomlkit-0.15.2.tar.gz"
-      }
-    ],
-    "trove-classifiers==2026.9.21.13": [
-      {
-        "hash": "sha256-ix/0+cGRsQQLccN/HkRauZcykR482R3lKDhFOoVNehc=",
-        "mirrors": [],
-        "path": "artifacts/ba/8f/b0/3269447c12519f49d19d8e6a86b629b1d7e47816dd5dfcfc133ee21c1a/trove_classifiers-2026.9.21.13-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-Cp68jU4vPooihIxSWAMwNb7BejASrD/qFtuqdkSJ63E=",
-        "mirrors": [],
-        "path": "artifacts/73/16/7a/e93534aab0f47a1b17f50a41130bf40f604b804ce61ba669db417cafe3/trove_classifiers-2026.9.21.13.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/bf/93/af436dfaa845cab5d96f0adbc1e4f3730532d37fa249e4eb796fb1d7fc82/trove_classifiers-2026.9.21.13.tar.gz"
-      }
-    ],
-    "urllib3==2.8.0": [
-      {
-        "hash": "sha256-DPPK5WjTaqlXayjfs18RMo8cuXTKdkfZR167hsdaxuM=",
-        "mirrors": [],
-        "path": "artifacts/3d/f8/9f/4886a85a391481ac6c75dded9ffe83ab86109c9db6f18b9f2e3f9c15bd/urllib3-2.8.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-Y78urUyHlCbr8i7yp4HutKo7SueYoENVBvhof9W7m2M=",
-        "mirrors": [],
-        "path": "artifacts/4f/90/83/bc986a87fd632def7a22f34b0277dc4d52526339e66b980bba7470ae3a/urllib3-2.8.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
-      }
-    ],
-    "vcs-versioning==2.6.0": [
-      {
-        "hash": "sha256-+L69EwLrwS5nzrMPx91pjslpQUtvpDsww/FKybHnLEE=",
-        "mirrors": [],
-        "path": "artifacts/07/27/48/b5d7c5cc098438994a5931d41b11ce23a4e12c4395890952dcc1282528/vcs_versioning-2.6.0-py3-none-any.whl",
-        "url": "https://files.pythonhosted.org/packages/73/1d/ad4064bf12f4503bf61e65d74c93c523672776d25ee0a06aaf42ae09ef3f/vcs_versioning-2.6.0-py3-none-any.whl"
-      },
-      {
-        "hash": "sha256-IukVkoji2Lyi+m9sMcNMnGauwVf2Dp5Sb10WDSUW1g8=",
-        "mirrors": [],
-        "path": "artifacts/73/de/d6/5dfd55e51c81135d5283d307749f8b17703fca5358138142fdb7b56ae8/vcs_versioning-2.6.0.tar.gz",
-        "url": "https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz"
-      }
-    ]
+  "git": {
+    "https://github.com/python-attrs/attrs.git@9a98e00a7c078360add417c5d62db820d4645ab1": "sha256-gvcMkujTwKDSOCtM3XQA3vXvw1rPjC7Fi6eokPXEFxs=",
+    "https://github.com/python-poetry/test-fixture-vcs-repository.git@0be1215c90fffe37c5629cf2764615e9d9530e67": "sha256-vHHR9k+Nuu119DqZ4cmK4RefzX4PxdYYGYp7UrzuwNQ="
   },
-  "poetry": "2.5.1",
-  "python": "3.14"
+  "inputsHash": "f1679c7fe7e10dd2bdd33ef1fe5151a16a69c1eefc9703fcfa50eeda398eb56b",
+  "python": "3.14",
+  "urls": {
+    "certifi-2026.10.23-py3-none-any.whl": "https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl",
+    "certifi-2026.10.23.tar.gz": "https://files.pythonhosted.org/packages/fd/11/b524cbd9bbdaca58608e4cf4053fd463417549e1959fa8d3aa18319f9555/certifi-2026.10.23.tar.gz",
+    "charset_normalizer-3.5.2-cp310-cp310-macosx_10_9_universal2.whl": "https://files.pythonhosted.org/packages/98/77/46e87bcfc45d25ab4db7cfc9bb544bfa3ffd302289ed31ae93f5433eb899/charset_normalizer-3.5.2-cp310-cp310-macosx_10_9_universal2.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/52/fc/e518013affcc43c9f919c3ba41bffe9b4ee4aceb0a6462a6243efcca5f2d/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/d5/ad/2a895c945ee61988dfd9ccee64f0b78dc09f29c9b34d1dd545246d78e0ad/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/c9/05/5d958bc8ea503e26be25ada5430fd409cfb45dc22ff33f9f96e649613c99/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/55/e2/06bad57dfdb49cad92c0ba85b6b4fa5827a67df37897287cfef0553843c2/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/c4/9f/9f52d2886d52645987d603425482c63c5045a3005db1354a7097e5ed1ae9/charset_normalizer-3.5.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/4a/41/e05e19578b7b87e7db2c3ecb884bd09d065274ab41e1f535542e8bae9b06/charset_normalizer-3.5.2-cp310-cp310-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/c2/cd/fc7152414561ff78f9c61a4a627025f65fd244abaefc99ac4e75c6169b33/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/71/71/fb379e399b1013962716a059d551e03bd80b3e02f05d81246886af6c0958/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/33/4f/aeadccd6d20882909eb2597ec40eccc05d505e2262f14dc76d7620700657/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/b9/7b/e8a92613236b257d3b75d532496eb21f68ad8231d7d56df94497e460112e/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/ff/ac/21d5c6b972285c5f095ff78afdc99f3539e3985dfcf7ff1cfbe9e772f529/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/59/72/263491ec1494a194b16fcbff88a0220f2af633738c79e92b4d7189226322/charset_normalizer-3.5.2-cp310-cp310-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-win32.whl": "https://files.pythonhosted.org/packages/38/7a/81f1186c57e406233969ae96b5fd0c907254ab8b6e47da8ae24cd20fb9d7/charset_normalizer-3.5.2-cp310-cp310-win32.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-win_amd64.whl": "https://files.pythonhosted.org/packages/ae/ab/fb8b5178fdf7bf68efa61cbe892286bc9f73846f26147d4725fb89388475/charset_normalizer-3.5.2-cp310-cp310-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp310-cp310-win_arm64.whl": "https://files.pythonhosted.org/packages/36/40/e270b74e0d3f583d78d902960845a149e80eb7c737ee5613ccc6efc7264b/charset_normalizer-3.5.2-cp310-cp310-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-macosx_10_9_universal2.whl": "https://files.pythonhosted.org/packages/22/67/6a0b94a7960d5e1b5eacd2fb529f3fccc47db4644f7f0a7cfdcfc3be578a/charset_normalizer-3.5.2-cp311-cp311-macosx_10_9_universal2.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/fb/94/01009e13b94041599004edf32e56e382c24e570f60f79bab8efe45cfe1eb/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/66/85/3b5358f60a13210f0b67d3755c168ef758701b021e655d88d4da28554467/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/74/75/77c1c479b09ecd751d1e767b251ea5c14d4d50ff757bf404afab2692f600/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/0b/0d/363f78cacb70f58f15f4b083961bbd9d292f335d3f5c66fc4f1cfe69cb90/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/e4/ed/cf505d3011ffceb12c2067a7a5d3cfe92b875d4d44bb0ff0d69375e2c184/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/15/d8/f0a93a431d170e7ca681d4f6650fee3de934d18560e474e7267eb4b0f987/charset_normalizer-3.5.2-cp311-cp311-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/86/bd/9b2bd1c5b7af02462c9752d33994834ff972a96b4c483eefde9e594488e2/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/76/a5/cac540ab0fd61f3fec88ad3dbb64509e71424593d73cfdfff5ab3e4db279/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/71/7a/ff467301deef2089fad87f72df9e000a26a78fec7acbb18e1999371b8369/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/ad/77/22d7e785d1e210afc2e2f58600dd1799d17a35665faf84383f002826c5f8/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/ae/91/e8e946267f1c2d9e2bd651726e2fbd2addf02c4d36cea5069e32ca9d7bb5/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/4e/88/7561d8a88d555e7df6623abe7c0070b4baf47549b9408783a2ae0a1a6cf7/charset_normalizer-3.5.2-cp311-cp311-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-win32.whl": "https://files.pythonhosted.org/packages/35/7e/578c702301ec036f01455f30744a08d2b42f6ab35b9b2d4bf8cae0ef2a80/charset_normalizer-3.5.2-cp311-cp311-win32.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-win_amd64.whl": "https://files.pythonhosted.org/packages/e8/fc/fdf8cf52ff21cd5bf158f20978991cf985325842f74283eb6df26c8a39d8/charset_normalizer-3.5.2-cp311-cp311-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp311-cp311-win_arm64.whl": "https://files.pythonhosted.org/packages/97/66/3e45a506d8110b632541faf9a9470185aa9878f1ed44020f31346c1c5e5b/charset_normalizer-3.5.2-cp311-cp311-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-macosx_10_13_universal2.whl": "https://files.pythonhosted.org/packages/e7/c8/693809898870237d82785a03f3b2b58fe4c9f14669f84a7d4e623c92a59e/charset_normalizer-3.5.2-cp312-cp312-macosx_10_13_universal2.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/c9/87/2fea8c13dc24b3ca9c6f803a5b2dfdeae73eb4f9e12c7885ed908ff0433c/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/a8/9e/09efac30b937722f46d3110ba30b875b24b2e3a266ed746cc4e376a94d80/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/9e/18/70d76670b13686237863a379928d60bd10e021f17d243ab3d7014c4a5f4e/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/54/e2/77a8b09d5adc013ed07b95b01b8b8fa5441c4e810e83ee7e4aae2fa4d91a/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/7f/c5/38806a25ab5e65fc178f39affeda20858efafede2fce1ffc2556cfc9fe73/charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/ae/8d/213565184708fdb263ae55e2c04ee1ff748129dd65d48ed0e3502da9c85a/charset_normalizer-3.5.2-cp312-cp312-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/7e/24/76d2cefc25472531e4c5c7dfff68865eb1c39b78482f0fdc15b46f047830/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/7d/dc/65a801b66ab4c197e22c433ab25e7ac24324ac6f45a2269aca42cce309bf/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/a7/95/ca9b5eabde673002c6f1e7ada1b223916fe18f6d661da7aabd4d643718f1/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/2d/8b/803b4d2a3f6e1740f63f1e87b04d14b42f3d4fdfe6ed7d4db2d34102b14f/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/a9/55/93c0e5dbd085ae0471346026abbe7e0db9ea2d6fea74e51f0b5a46f233a7/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/95/69/0dbd0e0b9b16cfa816cdfcb3e2e3854a1f680dc07fb1245ea125e7448060/charset_normalizer-3.5.2-cp312-cp312-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-win32.whl": "https://files.pythonhosted.org/packages/58/9d/e7b88e7b1bf403590c3b573277b5e1e488c68c7a6fbacca310a2c324e90c/charset_normalizer-3.5.2-cp312-cp312-win32.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl": "https://files.pythonhosted.org/packages/eb/e6/e6e083884cbcfd49c64865af05027fe7011be7b2d9179524f099a1b611f3/charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp312-cp312-win_arm64.whl": "https://files.pythonhosted.org/packages/c4/e3/017aea0911ada7405a825c7d937eb3a13009664e2f5b38e8c4bbf2abf894/charset_normalizer-3.5.2-cp312-cp312-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-android_24_arm64_v8a.whl": "https://files.pythonhosted.org/packages/c5/34/68292d68512768591aaff07c59bb53ee31341c87759433a859c4641a50c2/charset_normalizer-3.5.2-cp313-cp313-android_24_arm64_v8a.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-android_24_x86_64.whl": "https://files.pythonhosted.org/packages/e3/80/bee0b01b90ccd5322ae1d0abb33fab1bd95b7c2eadaf02aeccf22e04ee83/charset_normalizer-3.5.2-cp313-cp313-android_24_x86_64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphoneos.whl": "https://files.pythonhosted.org/packages/78/6e/60ce52a85a7fd631ae8482ae6d74521014ca2f255892679484dc04d7ef56/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphoneos.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl": "https://files.pythonhosted.org/packages/36/8c/71aafad23f971afc84c2b295bc0c560739ce1dac558aad9fec22e39f3639/charset_normalizer-3.5.2-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-macosx_10_13_universal2.whl": "https://files.pythonhosted.org/packages/91/da/3c5a7798c046df7d2d68ad653cf5b6c5a8bfee225055a843c6f2f42aac1a/charset_normalizer-3.5.2-cp313-cp313-macosx_10_13_universal2.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/e1/16/710ac3de2ee354e2bd1a9c94efe45a2d27b5c6ad39b2d6a905be2c094b6c/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/d6/39/45c7439f5b63d24f7d5b2a1d760f34af7628782d7144b4cc8ded45c2d4bc/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/4d/34/38f3154785ce92e9f56eb226f4d35bdfae6b008480dd055f58837a89c810/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/04/f3/859f74e7babc977705026b30593b3be04049632a522fb7000f83c033d747/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/4b/85/41d27f234b82e47c167a5f6c0f62501dc0c640585ff4aba79e08a390336a/charset_normalizer-3.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/58/ca/5d1a997587febe5b26d8daffe363b5c1a091cece19828eec6502fd09c5ef/charset_normalizer-3.5.2-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/b3/1f/d1e78246f7ed60c8c8d606b4ac27f66ce49cc3e95f24893ccbeba9f77302/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/8e/37/eba316edd4f0c4d3a5d945924c4eeeae59abac4056aa815d8a4268f863a2/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/c8/8e/aaa037d40ca9ef045977f1a661048b1aa33f223adfce3452fe9be9f79d14/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/26/19/1c1c9f75974adf523b87f34b8a2adc5a435cd65916812bcbd0dfa45f9a29/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/bc/90/0660ef18e18df0a4d2a1a0edff7dfbba42d4e50ef2425557a5bb7051f77b/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/79/ba/57adc269824e8658f1a0f97a9e514c247445a9632b3419b97e0ba37f16dc/charset_normalizer-3.5.2-cp313-cp313-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-pyemscripten_2025_0_wasm32.whl": "https://files.pythonhosted.org/packages/9a/85/33abd4315c052d3d4f54c92b1ee49bfbc0dc7115a981e462a793b6d2ab87/charset_normalizer-3.5.2-cp313-cp313-pyemscripten_2025_0_wasm32.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-win32.whl": "https://files.pythonhosted.org/packages/4f/de/6435e18d1aaa5d910b896d551411c96af1f42a0c56c29afc2016c61ccc2e/charset_normalizer-3.5.2-cp313-cp313-win32.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl": "https://files.pythonhosted.org/packages/9c/76/b8ec57f4e9ee3253541abf95e4a462c0175fe8032dcd070f1f2421240942/charset_normalizer-3.5.2-cp313-cp313-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp313-cp313-win_arm64.whl": "https://files.pythonhosted.org/packages/3e/60/c647c6ae47480221e875ea5d743ff94946f7416e3c69415ab772928e8d32/charset_normalizer-3.5.2-cp313-cp313-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-android_24_arm64_v8a.whl": "https://files.pythonhosted.org/packages/58/ca/7aa91362a2f77ac8e9e28a9b902a74f7d0e11a851ef0d27a74308da8cd90/charset_normalizer-3.5.2-cp314-cp314-android_24_arm64_v8a.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-android_24_x86_64.whl": "https://files.pythonhosted.org/packages/a8/cf/ac8878d0322cf88a1aad4c7b147db32ca0bd806eb0060957b2e31486dbe6/charset_normalizer-3.5.2-cp314-cp314-android_24_x86_64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphoneos.whl": "https://files.pythonhosted.org/packages/c9/6d/9a08d7e0b29b7208e2c6c01dc56c8e0520e7c7beadbbfb024b58fd69c8a5/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphoneos.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphonesimulator.whl": "https://files.pythonhosted.org/packages/82/44/b0aa350280e6ff5a5492d17cf10460dd39d5ee848f872f7ba2df10607f60/charset_normalizer-3.5.2-cp314-cp314-ios_13_0_arm64_iphonesimulator.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-macosx_10_15_universal2.whl": "https://files.pythonhosted.org/packages/7c/8a/40db9aa9f5907bb0e6f8b6d64064bf8852fb33d4b813ff9414911df7647c/charset_normalizer-3.5.2-cp314-cp314-macosx_10_15_universal2.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/7f/72/9c5e7707b57c8ddfa9ddf7b0b1d009d7fbab9e9e887d5b721060f37e307d/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/83/09/71e453691e927de4ddf792770cfaab3f49d494e222f66ea5e404bbd5e39c/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/9f/86/85c84e4da8b27dd409577d9437926ff581c5f9d3c66038dc68c1a526de51/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/92/08/564955a4b5f2ccb410ab480bbe8c6a18063ff27f2d35458731c4a5335df9/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/18/24/bad3ac4271589df29cf5ce2f5ae490518a5739358052bd0d61209e6fea54/charset_normalizer-3.5.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/d6/3e/350d89ad49916b86554d6f5f2d03ec1152148f87e5ff735106c6a03b1a36/charset_normalizer-3.5.2-cp314-cp314-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/56/5b/4970a2d154df502e133402906dd04e3ae7cada7b3011283c88d0479a2585/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/88/8c/f1a91bddc8fb47c2889e29ea7ea49a194eb0d9868675d786806519c00d76/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/24/0e/bb5dace3cc7e79068425386a6589c19b5a2ab5fefc2a46abea6919683332/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/9d/79/b849ad523017ea9f5a45581bbebed91439e0cf42fd2860a6f64e358eb5a6/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/89/8c/75469d690cf47200bce8f6cad7655724fc23148e147abfc5ce78b5f65863/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/26/cd/6d52d3c7437cdcf2e310ce9f28f282e733d4ef60ed19105d1819c356255f/charset_normalizer-3.5.2-cp314-cp314-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl": "https://files.pythonhosted.org/packages/f7/4c/070b38bdb5f49a70199fce923ec0726a49536a63ab262abbfcaaf351110b/charset_normalizer-3.5.2-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-win32.whl": "https://files.pythonhosted.org/packages/81/84/9ebfc8ed6c8c4fcd8e726ff6bf220cc8deb3966e31dce9be8dd8aa017e64/charset_normalizer-3.5.2-cp314-cp314-win32.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl": "https://files.pythonhosted.org/packages/d1/78/5ed86f743d4bc350db307e7636419a0a5ee1d91806d30c7f667bd5c80dae/charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314-win_arm64.whl": "https://files.pythonhosted.org/packages/53/94/a3a7698e9b1a395e1eb99ccd9a324be9347973bff4e72db2a06496d7cd27/charset_normalizer-3.5.2-cp314-cp314-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-macosx_10_15_universal2.whl": "https://files.pythonhosted.org/packages/c1/48/c5dd00d5ef7791f02666de250a5bb6071e29b7e133cf4b835800b6d3bc27/charset_normalizer-3.5.2-cp314-cp314t-macosx_10_15_universal2.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/12/c8/8379554b42e8368161d898476686947a0fdbd3e8865170d7909dcabfdee8/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/4a/eb/2ddb1035d17320caa9f41682935123a9a250277b261c3efc86b2d2a21343/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/4a/24/2ecb4bde104322cd7859d6594fcfa74649f8d90b3221c9feecbef149875b/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/3f/98/9d5f6ebc3aee9fef5d30b4aff11fb2ab7a1222b4064f8ef2c7c87cde217a/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/09/e1/a3b06a10461b1b7628853c934c644e03bc28e42767116afb52f19a56519b/charset_normalizer-3.5.2-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/fd/d3/6f561f74a296cf27d61775a1dc665ad13f3bff6a798810ca05907f37a7c4/charset_normalizer-3.5.2-cp314-cp314t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/26/9f/69e13ca3b18f43e0eafcd34c04a45b732ae22a43b54a5fc9e119103356eb/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/73/a9/ace29806a0dae18939919c76ba526472d83214afa101105fabff2cf30625/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/f8/c1/6116d52a2e3311ec80f21f5fb5e17b27405f10b9608af8f6e69516841a1b/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/19/aa/9955c7e93bba10a9c7e8f7a5031b7ced66f3a1883a55c00712b8d5850ff3/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/bb/33/2a6ae7fdc1b10cb581cef91addd8cdfc5f40d50abb5702309369d5834579/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/a2/22/80992720a0282cd39bba1db35868e6b9c22f41281160143a836544bc1d8a/charset_normalizer-3.5.2-cp314-cp314t-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-win32.whl": "https://files.pythonhosted.org/packages/92/9f/181fd07e1bffea1d95cd80c84ac537354f50699c22cfc4d3c02b6fc16208/charset_normalizer-3.5.2-cp314-cp314t-win32.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-win_amd64.whl": "https://files.pythonhosted.org/packages/49/1c/25d8415ec1c4f2f41f1680435e4c87cfb378ff2f677d950946f2a45d0632/charset_normalizer-3.5.2-cp314-cp314t-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp314-cp314t-win_arm64.whl": "https://files.pythonhosted.org/packages/3e/b4/46b48f013dadfc0d0d33b375438e31bdf5a989dc68389c6bf627054d4df9/charset_normalizer-3.5.2-cp314-cp314t-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-macosx_10_15_universal2.whl": "https://files.pythonhosted.org/packages/ca/e9/34e597dee616d0b8ee4b34d29399e85c2204ade174157a48505d42baa4ff/charset_normalizer-3.5.2-cp315-cp315-macosx_10_15_universal2.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/60/9f/a5d1c91c0263745e2cd344c5a4415d787c575501ab1d449f1148ac6b495d/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/26/79/e697f77464748a3ee3cf490c83d592459400d4898380d66c38366b03080c/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/ca/87/3d42a42e18ea066e2513936fd678a00696e77878b5ae04528976abdbcb83/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/c3/76/8a28136f3938ba9836f84280ce0c4d61ed1cf15a036b2034900c62634162/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/a0/a1/4fbf5d0f0f1b2a080474c1cf9a2f12c4c6531bb0e8ba591055e846d2b4e9/charset_normalizer-3.5.2-cp315-cp315-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/ba/a2/8b50aa320adb880ad579518e6f718f24944804b42a88b83d267d5d444125/charset_normalizer-3.5.2-cp315-cp315-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/a5/57/50e3fed84e175f40349bd0da7a4fce94c87f0378f52d74f511d89e0bdc20/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/d6/54/f7fbb3493c9f49091213b9c2d6dd65800696f1ce1a3f196a4205f50417b1/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/d9/37/b3a6385acc5a1e45b39ae9c90bfb9cf838a09b9dd37ef2740ab4c6b4a2eb/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/89/44/809913e2cfd279e635a9294fdbbfb1b1dc62a8189d473d561f649fce98d8/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/af/a2/f28400ab13359d91bd39179df8e149376b9bf36588e739a3a4f9de2b84b2/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/e9/89/9bab37955edf0adb3b66f8a3a6617d9f2f487e0d56f295a6a286cb640aa6/charset_normalizer-3.5.2-cp315-cp315-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-win32.whl": "https://files.pythonhosted.org/packages/23/b5/4459e08d45a679f903d50fea08bc52cfa728cca4d7bd02c757b5e5abda2e/charset_normalizer-3.5.2-cp315-cp315-win32.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-win_amd64.whl": "https://files.pythonhosted.org/packages/98/e8/55d5fd3935b4bce6da4fe0df61898e8c82653e317e677bd58aceb9c60f13/charset_normalizer-3.5.2-cp315-cp315-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315-win_arm64.whl": "https://files.pythonhosted.org/packages/a9/5b/974423c2fd8e524c7a7f64318c1e02240ef954912fa2b4d70344107b9c68/charset_normalizer-3.5.2-cp315-cp315-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-macosx_10_15_universal2.whl": "https://files.pythonhosted.org/packages/ee/f9/00ee0195db1013d8f7c416fd770fbeb560bb46eb2e36b054d05cb56f6cfa/charset_normalizer-3.5.2-cp315-cp315t-macosx_10_15_universal2.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/04/3a/c00b50e94c964cf934c7899cd47c97952fc11dad71cc5884b3c61795b09b/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/50/27/d102dc880bbcffd0479ab64dfc1fb96777a854355a55e2bda72a71efadcb/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/a5/4a/bf7ef45794dd293fab5f98a9309817977fbb845b9998f171b8cc5d8437a3/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/e8/ee/008a2837737991474c5754bb3191010007663860979701990982a502cbaf/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/93/ad/bd74a283940dc910c5b14f8e4f80a248082bc9c0fcbe1f54530cb6d9cc5e/charset_normalizer-3.5.2-cp315-cp315t-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/8a/7b/ed341c66f69f688723501fac752be3d63c7159ca0d0d4174fc611e5710bb/charset_normalizer-3.5.2-cp315-cp315t-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/cc/9d/e41588b777965e5031a43128a1e96173ebb35ac75fc53ec3b517e7c21cd4/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/81/35/b761eb6d8c1eb218b9b42b9b4d5ac902afdc399fb6dac6f9a9aac7bda589/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/4d/2c/147169a041b747759f37405c0a97157e8e92de967968373101ff14915cba/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/f0/2d/0ff8db0d373ba8538db686db11cd7e8912031490b9e4f383b41912e8d594/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/8a/8e/b4a085fb47c9d3a7e43576a4784fdd8fe23f907514a972de8086edaf7a48/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/83/1c/d8d8d7322a7c3eecdf3237a4a419cf41d2eaad8e006ce7dfdd9d4c8fa2eb/charset_normalizer-3.5.2-cp315-cp315t-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-win32.whl": "https://files.pythonhosted.org/packages/a0/16/0e4c6ba9b44e97a2da150e52d331e8f9c968b21b358fbffa6c856cebcd89/charset_normalizer-3.5.2-cp315-cp315t-win32.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-win_amd64.whl": "https://files.pythonhosted.org/packages/be/33/e90bc2b1374f7f36ef106f56620de5a783907e19ca857efe2277e31cac3e/charset_normalizer-3.5.2-cp315-cp315t-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp315-cp315t-win_arm64.whl": "https://files.pythonhosted.org/packages/66/89/dfa6dcb08c200b7830ab56439e8c1890f2971d51aafbb3937894a2e7fcfc/charset_normalizer-3.5.2-cp315-cp315t-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-macosx_10_9_universal2.whl": "https://files.pythonhosted.org/packages/8c/ab/176fbfd5b64939c55d652366aa5b9ef1d767af207a3aa6ebeb0d226c484d/charset_normalizer-3.5.2-cp37-abi3-macosx_10_9_universal2.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl": "https://files.pythonhosted.org/packages/7e/84/371eac6b30bdbcbf2d632a1a01809103459216fcaae61b8b8d922c1bfb8a/charset_normalizer-3.5.2-cp37-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/43/6f/c4fbae58febff71709c51bc7e18fdfa55341dc382704740f9f0cbf03817b/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/61/71/458c3f42164a07d0c5210798e9e704b39e540a6793b05aba67f3a35243a9/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/09/54/ab9e89367076f6331bb6c65c4bf14a5361fa5191cb6561bf534f18504e1b/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/7c/c1/061431ecc688d9d76602502cb57cc01e691e682c18f1beb45f9673b5bbd2/charset_normalizer-3.5.2-cp37-abi3-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/8d/1f/20c8949f0676f7ab811abdeb7f4d7f1cbc6e61ff20bef08b44edeb092bc8/charset_normalizer-3.5.2-cp37-abi3-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/2b/9e/46f2fa4c431fc98c4ae76a8cb5bdca54e0341e3cfc3fcfd8e82740250818/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/bd/39/559be29a0c0f086e0bba6922babd38916cc5e0b58ced4de13ee01ea05508/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/ff/6c/387b0e4f756a282831c1d9fc6aeb6c51ca4507ca202767c8de15ce9b12e2/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/96/92/1fdf015f09ef449f50d3ac4b67c90887c9c318b727daa95cc4f866e6521d/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/dc/3c/8e7b8a5671ad5d433669fb2a76f1a0164df2d9b1718b0206bc2a16d840cc/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/b4/f0/45b579df5cabc1d5d53ea1cc35e8437d3ca768c0acccc7041517cb6fbb32/charset_normalizer-3.5.2-cp37-abi3-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-win32.whl": "https://files.pythonhosted.org/packages/31/68/fdec18a343f5fb3f310588dd478b09ac4799e0b187dbade3a8cd776f03ef/charset_normalizer-3.5.2-cp37-abi3-win32.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-win_amd64.whl": "https://files.pythonhosted.org/packages/9d/8a/b618149cc5207943a0242068d7a27897f56a62947b5a039085f2a22029f8/charset_normalizer-3.5.2-cp37-abi3-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp37-abi3-win_arm64.whl": "https://files.pythonhosted.org/packages/03/cf/4c66866fa9e2b1c78e3c911516d1de497a677b7ac60f1eceda74ce777ca3/charset_normalizer-3.5.2-cp37-abi3-win_arm64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-macosx_10_9_universal2.whl": "https://files.pythonhosted.org/packages/0b/f6/c57b072e0f764c29bc2bda17baaa01ea1a8d36874d9efbc0cfa2efb1b0e1/charset_normalizer-3.5.2-cp39-cp39-macosx_10_9_universal2.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl": "https://files.pythonhosted.org/packages/7a/44/a9ddc117221405ab41ba66653013f0e78e5c2cb9a5b22060ca1e7dccb1ea/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl": "https://files.pythonhosted.org/packages/05/22/6adc5456b690c7ec9316df39a7fe741c6d81ec91b9f9f8a798211e642784/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl": "https://files.pythonhosted.org/packages/52/4b/26dba4f3354ce6328c8cb13628b17202305f2172a352a32e10d677edb130/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl": "https://files.pythonhosted.org/packages/e8/6f/127c3697761666e246f44ab52d8c88ababf80c61fb70b3261b53a94c0d5c/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": "https://files.pythonhosted.org/packages/96/dd/dddf3848de54804e5543750f390fce1f9bc3fa5404f58f87be262199bf6e/charset_normalizer-3.5.2-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl": "https://files.pythonhosted.org/packages/9f/de/21dd363e7ffac0f02caee93cc9bdb63b04adaf9bf7ce46dea742c9a51aad/charset_normalizer-3.5.2-cp39-cp39-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_aarch64.whl": "https://files.pythonhosted.org/packages/6f/9f/bab04a5bcecc5c3fda3130b80131608e3f801de97753b2f1348b7c4ebdf7/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_aarch64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_armv7l.whl": "https://files.pythonhosted.org/packages/6e/31/b1e0a89e6cd464adbb8ebc674635834746bb8fa22631a243676121fbaf60/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_armv7l.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_ppc64le.whl": "https://files.pythonhosted.org/packages/5d/3b/7bd36236e57d4266ffad810c62b40a08001622d95195e575d60e78201f69/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_ppc64le.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_riscv64.whl": "https://files.pythonhosted.org/packages/90/8a/cee8e3024a1179723f9a96eafa6242e574527abc7e0492a2fa65fa988987/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_riscv64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_s390x.whl": "https://files.pythonhosted.org/packages/7e/3e/53e12f2d5fda61dec0265e57b6abc17468381bfb77d78ad4b11cd1f5c45c/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_s390x.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_x86_64.whl": "https://files.pythonhosted.org/packages/c3/86/7b5cdf05e635c17c5a3f1e1b1ffc142b60e6f37b64af2e1979bd00ca8570/charset_normalizer-3.5.2-cp39-cp39-musllinux_1_2_x86_64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-win32.whl": "https://files.pythonhosted.org/packages/8e/cb/489a7ae61ca4603a813c0a297b3a0dfa891597cbaf6ca13e428ab3ce80d4/charset_normalizer-3.5.2-cp39-cp39-win32.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-win_amd64.whl": "https://files.pythonhosted.org/packages/8d/44/94b15f1d938bc4b8411c483f947ba32952b71154c5550924be7031407d33/charset_normalizer-3.5.2-cp39-cp39-win_amd64.whl",
+    "charset_normalizer-3.5.2-cp39-cp39-win_arm64.whl": "https://files.pythonhosted.org/packages/a8/a1/b983b62df4aedd9a740d2ae1eee43d48e2dc7f68695a1fbed9b773ccea23/charset_normalizer-3.5.2-cp39-cp39-win_arm64.whl",
+    "charset_normalizer-3.5.2-py3-none-any.whl": "https://files.pythonhosted.org/packages/fc/ad/d07d7862a62ffa6d79d68074d14823243dd235a77c45262acbf6adeb28bf/charset_normalizer-3.5.2-py3-none-any.whl",
+    "charset_normalizer-3.5.2.tar.gz": "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz",
+    "colorama-0.4.6-py2.py3-none-any.whl": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl",
+    "colorama-0.4.6.tar.gz": "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz",
+    "docopt-0.6.2.tar.gz": "https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz",
+    "idna-3.20-py3-none-any.whl": "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl",
+    "idna-3.20.tar.gz": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz",
+    "iniconfig-2.3.1-py3-none-any.whl": "https://files.pythonhosted.org/packages/56/43/4ca9e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/iniconfig-2.3.1-py3-none-any.whl",
+    "iniconfig-2.3.1.tar.gz": "https://files.pythonhosted.org/packages/01/e1/2069291243c926a2ff1cd706c7f3eeb9b62144bf60f77c9fb9ff2fb26bd3/iniconfig-2.3.1.tar.gz",
+    "packaging-26.3-py3-none-any.whl": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+    "packaging-26.3.tar.gz": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz",
+    "pluggy-1.7.0-py3-none-any.whl": "https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl",
+    "pluggy-1.7.0.tar.gz": "https://files.pythonhosted.org/packages/bf/db/7fc19e6f2dc92a966727031389fc2e08b558f0f25eb7403c1119ad4713cd/pluggy-1.7.0.tar.gz",
+    "pygments-2.21.0-py3-none-any.whl": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl",
+    "pygments-2.21.0.tar.gz": "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz",
+    "pytest-8.4.2-py3-none-any.whl": "https://files.pythonhosted.org/packages/a8/a4/20da314d277121d6534b3a980b29035dcd51e6744bd79075a6ce8fa4eb8d/pytest-8.4.2-py3-none-any.whl",
+    "pytest-8.4.2.tar.gz": "https://files.pythonhosted.org/packages/a3/5c/00a0e072241553e1a7496d638deababa67c5058571567b92a7eaa258397c/pytest-8.4.2.tar.gz",
+    "requests-2.34.2-py3-none-any.whl": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl",
+    "requests-2.34.2.tar.gz": "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz",
+    "urllib3-2.8.0-py3-none-any.whl": "https://files.pythonhosted.org/packages/92/9d/c4e665119135114480843e7ab388fa94d8480650450e6f8e26b70d323a4c/urllib3-2.8.0-py3-none-any.whl",
+    "urllib3-2.8.0.tar.gz": "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
+  },
+  "version": 8
 }

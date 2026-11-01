@@ -1,9 +1,12 @@
 # SPDX-License-Identifier: MIT
 #
-# Interactive use: Nix fetches the files the lockfile names for this system,
-# and the plugin links each one into Poetry's own artifact cache at the path
-# Poetry looks for it. The Nix result is a garbage-collector root in the
-# project's .poetry-purifier directory, which keeps the linked files alive.
+# Fetching the locked files outside the Nix sandbox, for `poetry purifier
+# prefetch` and for interactive use. Nix fetches the files the lockfile
+# names for this system, and the interpreter the lock was made with, and the
+# plugin links each file into Poetry's own artifact cache at the path Poetry
+# looks for it. The Nix result is a garbage-collector root in the project's
+# .poetry-purifier directory, which keeps the files and the interpreter
+# alive.
 from __future__ import annotations
 
 import platform
@@ -21,11 +24,17 @@ if TYPE_CHECKING:
     from cleo.io.io import IO
 
 
-def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None:
+def gc_root(root: Path) -> Path:
+    return root / ".poetry-purifier" / "prefetch"
+
+
+def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> Path:
+    """Fetches the locked files and the interpreter, links the files into
+    Poetry's cache, and returns the directory with `files` and `python`."""
     lock = lockfile.read(lock_path)
-    gc_root = root / ".poetry-purifier" / "files"
-    gc_root.parent.mkdir(exist_ok=True)
-    (gc_root.parent / ".gitignore").write_text("*\n")
+    out_link = gc_root(root)
+    out_link.parent.mkdir(exist_ok=True)
+    (out_link.parent / ".gitignore").write_text("*\n")
     build = subprocess.run(
         [
             "nix-build",
@@ -33,6 +42,9 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None
             "--arg",
             "lockFile",
             str(lock_path),
+            "--arg",
+            "poetryLock",
+            str(root / "poetry.lock"),
             "--argstr",
             "pythonVersion",
             lock["python"],
@@ -43,7 +55,7 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None
             "glibcVersion",
             platform.libc_ver()[1],
             "--out-link",
-            str(gc_root),
+            str(out_link),
         ],
         capture_output=True,
         text=True,
@@ -53,7 +65,8 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None
         raise RuntimeError(
             f"Nix could not fetch the files of {lock_path}:\n{build.stderr}"
         )
-    tree = Path(build.stdout.strip())
+    realized = Path(build.stdout.strip())
+    tree = realized / "files"
 
     cache_dir = Path(Config.create().get("cache-dir")).expanduser()
     linked = 0
@@ -72,3 +85,4 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None
         io.write_error_line(
             f"Linked {linked} locked files into Poetry's cache at {cache_dir}."
         )
+    return realized

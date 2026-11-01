@@ -1,0 +1,13 @@
+[project]
+name = "update-fixture"
+version = "0.1.0"
+description = "The fixture of the conformance-update check. poetry.lock holds idna 3.7, an old version that the range allows."
+requires-python = ">=3.12"
+dependencies = ["idna>=3"]
+
+[tool.poetry]
+packages = [{ include = "update_fixture", from = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
