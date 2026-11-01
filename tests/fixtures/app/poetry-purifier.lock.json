@@ -22,7 +22,11 @@
       }
     ]
   },
-  "format": 3,
+  "dist": {
+    "sdist": "app-1.0.0.tar.gz",
+    "wheel": "app-1.0.0-py3-none-any.whl"
+  },
+  "format": 4,
   "inputsHash": "sha256-63rNn4GHRmXmk9MWEgFjx7brdjcTjw74dp6rCRanEMs=",
   "packages": {
     "certifi==2026.10.23": [

@@ -83,16 +83,19 @@ its `main` group, and with the project's scripts in `bin/`. Path
 dependencies in develop mode are installed as regular packages, because the
 build directory does not outlive the build.
 
-Nix reads the project's outputs from `pyproject.toml` when it evaluates the
-build, with no generated Nix files and no import-from-derivation, and the
-result has one attribute per output:
+Nix knows every output of the project by name when it evaluates the build,
+with no generated Nix files and no import-from-derivation, and the result
+has one attribute per output:
 
 - `bins.<script>` is a package with one script in `bin/`, for each script
   of `[project.scripts]`, `[project.gui-scripts]` and
-  `[tool.poetry.scripts]`. `nix run` runs it.
-- `artifacts.wheel` and `artifacts.sdist` each hold one file that
-  `poetry build` made. They are keyed by kind, because a wheel's file name
-  carries platform tags that only the build decides.
+  `[tool.poetry.scripts]` in `pyproject.toml`. `nix run` runs it.
+- `artifacts."<file name>"` is the path of the wheel or the sdist that
+  `poetry build` made. The lock run records their file names. A compiled
+  wheel gets the CPython tags of the build's Python and the platform tag of
+  the build's system: `linux_<cpu>` from setuptools-style backends, or
+  `manylinux_2_<glibc minor>_<cpu>` from poetry-core. The build fails if
+  `poetry build` makes other files.
 
 ```nix
 let
@@ -101,7 +104,6 @@ in
 {
   packages.default = app;
   packages.hello = app.bins.hello;
-  packages.wheel = app.artifacts.wheel;
 }
 ```
 
@@ -153,7 +155,8 @@ keeps the file, `mirrors` lists other URLs that serve the same file, and
 `mirrors` is empty in the entries the lock run writes. A git entry is
 `{ path, git = { url, rev, submodules }, hash }`, where `hash` is what
 `nix-prefetch-git` reports. `builds` maps each set of build requirements to
-the packages it resolves to, with their environment markers. `python` is the
+the packages it resolves to, with their environment markers. `dist` holds the
+file names of the wheel and sdist that the lock run built. `python` is the
 Python version of the lock run, and `inputsHash` covers `pyproject.toml` and
 `poetry.lock`.
 

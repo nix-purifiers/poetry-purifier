@@ -14,10 +14,10 @@
 # - `bins.<script>`: one package per script of `[project.scripts]`,
 #   `[project.gui-scripts]` and `[tool.poetry.scripts]`, with that script
 #   in `bin/`.
-# - `artifacts.wheel` and `artifacts.sdist`: the wheel and the sdist that
-#   `poetry build` made, each alone in its directory. They are keyed by
-#   kind, because a wheel's file name carries platform tags that only the
-#   build decides.
+# - `artifacts."<file name>"`: the wheel and the sdist that `poetry build`
+#   made. The lock run recorded their names, and wheel-name.nix rewrites a
+#   compiled wheel's tags for the system Nix builds for. The build fails if
+#   `poetry build` makes other files.
 {
   lib,
   pkgs,
@@ -55,12 +55,16 @@ let
   interpreter =
     if python != null then python else pkgs."python${lib.replaceStrings [ "." ] [ "" ] lock.python}";
 
-  files = import ./select.nix {
-    inherit lock;
+  system = {
     pythonVersion = lib.versions.majorMinor interpreter.version;
     arch = stdenv.hostPlatform.parsed.cpu.name;
     glibcVersion = stdenv.cc.libc.version;
   };
+  files = import ./select.nix ({ inherit lock; } // system);
+  distFiles = [
+    (import ./wheel-name.nix ({ inherit lib; } // system) lock.dist.wheel)
+    lock.dist.sdist
+  ];
   mkCache = import ./cache.nix { inherit fetchurl fetchgit linkFarm; };
   cache = mkCache "${projectName}-poetry-cache" files;
 
@@ -113,6 +117,12 @@ let
 
       installPhase = ''
         runHook preInstall
+        expected=${lib.escapeShellArg (lib.concatStringsSep " " (lib.sort lib.lessThan distFiles))}
+        built="$(ls "$TMPDIR/dist" | sort | tr '\n' ' ' | sed 's/ $//')"
+        if [ "$built" != "$expected" ]; then
+          echo "poetry-purifier: poetry build made $built, not $expected as poetry-purifier.lock.json records. Run \`poetry purifier lock\`." >&2
+          exit 1
+        fi
         mkdir -p "$dist"
         cp "$TMPDIR"/dist/* "$dist/"
         runHook postInstall
@@ -128,16 +138,7 @@ let
             ln -s ${environment}/bin/${script} "$out/bin/${script}"
           ''
         );
-        artifacts = {
-          wheel = runCommand "${projectName}-wheel" { } ''
-            mkdir "$out"
-            cp ${environment.dist}/*.whl "$out/"
-          '';
-          sdist = runCommand "${projectName}-sdist" { } ''
-            mkdir "$out"
-            cp ${environment.dist}/*.tar.gz "$out/"
-          '';
-        };
+        artifacts = lib.genAttrs distFiles (file: "${environment.dist}/${file}");
       }
       // args.passthru or { };
     }

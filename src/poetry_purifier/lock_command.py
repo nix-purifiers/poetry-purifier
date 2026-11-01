@@ -158,6 +158,14 @@ class PurifierLockCommand(Command):
         self._run_poetry(project, "env", "use", python, **record)
         self._run_poetry(project, "install", "--all-groups", "--all-extras", **record)
         self._run_poetry(project, "build", **record)
+        built = sorted(path.name for path in (project / "dist").iterdir())
+        wheels = [name for name in built if name.endswith(".whl")]
+        sdists = [name for name in built if name.endswith(".tar.gz")]
+        if len(wheels) != 1 or len(sdists) != 1:
+            raise RuntimeError(
+                f"`poetry build` made {built}, rather than one wheel and one sdist."
+            )
+        self._dist = {"wheel": wheels[0], "sdist": sdists[0]}
         return [json.loads(line) for line in record_path.read_text().splitlines()]
 
     def _compose(
@@ -205,6 +213,9 @@ class PurifierLockCommand(Command):
                 text=True,
             ).stdout.strip(),
             "inputsHash": lockfile.inputs_hash(root),
+            # The file names of the project's wheel and sdist, as `poetry
+            # build` made them on the system of the lock run.
+            "dist": self._dist,
             "packages": packages,
             "builds": builds,
         }

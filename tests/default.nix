@@ -39,20 +39,41 @@ in
     grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example' "$out"
   '';
 
-  # Nix knows the project's outputs from pyproject.toml when it evaluates
-  # the build: its one script, and the wheel and sdist of `poetry build`.
+  # Nix knows the project's outputs when it evaluates the build: its one
+  # script from pyproject.toml, and the wheel and sdist of `poetry build` by
+  # the file names the lock run recorded.
   outputs-by-name =
     assert lib.attrNames app.bins == [ "hello" ];
     assert
       lib.attrNames app.artifacts == [
-        "sdist"
-        "wheel"
+        "app-1.0.0-py3-none-any.whl"
+        "app-1.0.0.tar.gz"
       ];
     runCommand "outputs-by-name" { } ''
-      test -f ${app.artifacts.wheel}/app-1.0.0-py3-none-any.whl
-      test -f ${app.artifacts.sdist}/app-1.0.0.tar.gz
+      test -f ${app.artifacts."app-1.0.0-py3-none-any.whl"}
+      test -f ${app.artifacts."app-1.0.0.tar.gz"}
       touch "$out"
     '';
+
+  # A compiled wheel the lock run built on another system gets the tags of
+  # this one: its CPython tags, and the platform tag of setuptools-style
+  # backends and of poetry-core.
+  wheel-name =
+    let
+      name = import ../nix/lib/wheel-name.nix {
+        inherit lib;
+        pythonVersion = "3.13";
+        arch = "aarch64";
+        glibcVersion = "2.40";
+      };
+    in
+    assert name "app-1.0.0-py3-none-any.whl" == "app-1.0.0-py3-none-any.whl";
+    assert name "fast-1.0-cp314-cp314-linux_x86_64.whl" == "fast-1.0-cp313-cp313-linux_aarch64.whl";
+    assert
+      name "fast-1.0-cp314-cp314-manylinux_2_44_x86_64.whl"
+      == "fast-1.0-cp313-cp313-manylinux_2_40_aarch64.whl";
+    assert name "fast-1.0-cp311-abi3-linux_x86_64.whl" == "fast-1.0-cp311-abi3-linux_aarch64.whl";
+    pkgs.emptyFile;
 
   # The path dependency is in develop mode, and the Nix build installs it as
   # a regular package rather than as a link into the build directory.
@@ -121,7 +142,7 @@ in
         kill "$server"
         test -f "$TMPDIR/index/app-1.0.0-py3-none-any.whl"
         test -f "$TMPDIR/index/app-1.0.0.tar.gz"
-        cmp "$TMPDIR/index/app-1.0.0-py3-none-any.whl" ${app.dist}/app-1.0.0-py3-none-any.whl
+        cmp "$TMPDIR/index/app-1.0.0-py3-none-any.whl" ${app.artifacts."app-1.0.0-py3-none-any.whl"}
         touch "$out"
       '';
 }
