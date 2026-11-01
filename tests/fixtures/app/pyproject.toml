@@ -1,0 +1,18 @@
+[project]
+name = "app"
+version = "1.0.0"
+description = "A test project for poetry-purifier"
+requires-python = ">=3.11"
+# requests pulls in charset-normalizer, which has platform wheels. docopt
+# 0.6.2 is only an sdist, so installing it runs an isolated build.
+dependencies = ["requests>=2.32", "docopt==0.6.2"]
+
+[project.scripts]
+hello = "app.cli:main"
+
+[tool.poetry]
+packages = [{ include = "app", from = "src" }]
+
+[build-system]
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"
