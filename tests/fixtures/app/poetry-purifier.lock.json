@@ -1,5 +1,62 @@
 {
   "builds": {
+    "hatch-fancy-pypi-readme>=23.2.0\nhatch-vcs\nhatchling": [
+      {
+        "markers": "",
+        "name": "hatch-fancy-pypi-readme",
+        "version": "25.1.0"
+      },
+      {
+        "markers": "",
+        "name": "hatch-vcs",
+        "version": "0.5.0"
+      },
+      {
+        "markers": "",
+        "name": "hatchling",
+        "version": "1.33.0"
+      },
+      {
+        "markers": "",
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "markers": "",
+        "name": "pathspec",
+        "version": "1.1.1"
+      },
+      {
+        "markers": "",
+        "name": "pluggy",
+        "version": "1.7.0"
+      },
+      {
+        "markers": "",
+        "name": "setuptools",
+        "version": "84.2.1"
+      },
+      {
+        "markers": "",
+        "name": "setuptools-scm",
+        "version": "10.3.4"
+      },
+      {
+        "markers": "",
+        "name": "tomlkit",
+        "version": "0.15.2"
+      },
+      {
+        "markers": "",
+        "name": "trove-classifiers",
+        "version": "2026.9.21.13"
+      },
+      {
+        "markers": "",
+        "name": "vcs-versioning",
+        "version": "2.6.0"
+      }
+    ],
     "poetry-core": [
       {
         "markers": "",
@@ -27,8 +84,19 @@
     "wheel": "app-1.0.0-py3-none-any.whl"
   },
   "format": 4,
-  "inputsHash": "sha256-63rNn4GHRmXmk9MWEgFjx7brdjcTjw74dp6rCRanEMs=",
+  "inputsHash": "sha256-JOZ+vayJEHZLnQtGz/qZkPCVK5ijHsv3pQIJgYmWA8I=",
   "packages": {
+    "attrs==25.4.0": [
+      {
+        "git": {
+          "rev": "9a98e00a7c078360add417c5d62db820d4645ab1",
+          "submodules": true,
+          "url": "https://github.com/python-attrs/attrs.git"
+        },
+        "hash": "sha256-gvcMkujTwKDSOCtM3XQA3vXvw1rPjC7Fi6eokPXEFxs=",
+        "path": "purifier-git/4dd5c563558a4d42-9a98e00a7c078360add417c5d62db820d4645ab1"
+      }
+    ],
     "certifi==2026.10.23": [
       {
         "hash": "sha256-6bVN525TC7bPDM0DZ4cQOstY/UK6kw6ov5SN26ovYdE=",
@@ -1096,6 +1164,48 @@
         "path": "purifier-git/9847830c8fdca57c-0be1215c90fffe37c5629cf2764615e9d9530e67"
       }
     ],
+    "hatch-fancy-pypi-readme==25.1.0": [
+      {
+        "hash": "sha256-zgE0xA1j2HSsSPSMzGeLjztiuOUOkxhSDSv/x1Lu2vM=",
+        "mirrors": [],
+        "path": "artifacts/08/f6/04/2b58f1a88f3328a3f78f154d93731cffda0a442701efd7a955775f9ee9/hatch_fancy_pypi_readme-25.1.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/58/b4/ad71e051b34f1935783de37beffee16e343ff2514b204dc515f9e939d4af/hatch_fancy_pypi_readme-25.1.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-nFjtPf+Q1R9DQUzjcAmtHVsPCP/J/CFpmKBjgPAcAEU=",
+        "mirrors": [],
+        "path": "artifacts/a5/6a/1b/8ed17faf1c0557ee4a0981e09cc9a4234ae4bb9846ff08568d44005441/hatch_fancy_pypi_readme-25.1.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/f3/0f/aed57c301f339936eb91cb4d8c1e5088a101081854bd3ec18a889df32365/hatch_fancy_pypi_readme-25.1.0.tar.gz"
+      }
+    ],
+    "hatch-vcs==0.5.0": [
+      {
+        "hash": "sha256-tJZ329xZdGDMItAbJ6s2lvXhaiHs8nAPsBvCjh8qBKc=",
+        "mirrors": [],
+        "path": "artifacts/6c/74/05/faef795426bbd32d9adfb50d6435df73199d5a2c0e9106268abf849c1e/hatch_vcs-0.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/5f/48/1f85cee4b7b4f40b9b814b1febbc661bda6ced9649e410a0b74f6e415dd0/hatch_vcs-0.5.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-A5X6EmlANAIVCQw0Siv04qd7y+faqxb0Gze5jJWAn/k=",
+        "mirrors": [],
+        "path": "artifacts/dd/f2/42/89920b1d57f88e40fc2d8550cb1fb03624712ac56764d92eef45c6e2c5/hatch_vcs-0.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/6b/b0/4cc743d38adbee9d57d786fa496ed1daadb17e48589b6da8fa55717a0746/hatch_vcs-0.5.0.tar.gz"
+      }
+    ],
+    "hatchling==1.33.0": [
+      {
+        "hash": "sha256-QVKQuE9GTSiEMD/KiXTTjnuFV5Bp+rAqFdsIKPuxRG0=",
+        "mirrors": [],
+        "path": "artifacts/05/b8/0c/5ca0220bbb2a0c3913e346e96da8fe322cb89e75b889030e87605c4b62/hatchling-1.33.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/32/64/4afe5dd77b2939a93e8c9513f8082dbd049ecba9c1484a379a0f6ae29d6b/hatchling-1.33.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-TEIr1NVU/P9d5bc+lZb4XkHp+X9+VT2PdZXssxpie+8=",
+        "mirrors": [],
+        "path": "artifacts/3b/c4/d5/487e98601566c06953b9e19d6add0381de909111edefd8647882b43dc8/hatchling-1.33.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/7a/f1/e47b937226ae3b093bbd0132eb0b7ee5bfad12c2b5324afd10ae49946b05/hatchling-1.33.0.tar.gz"
+      }
+    ],
     "idna==3.20": [
       {
         "hash": "sha256-q3rnEil0VTNw8L25GeGpYLLNG8HvAnZBbYltuBwUWCw=",
@@ -1108,6 +1218,48 @@
         "mirrors": [],
         "path": "artifacts/4d/39/2c/7f0c02071d03aa7ff754f3f5dfb375a399c132f5bfeea80aa0397eb6fb/idna-3.20.tar.gz",
         "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz"
+      }
+    ],
+    "packaging==26.3": [
+      {
+        "hash": "sha256-1xk/fI5Ok/RE/eAmK/kK8w4W+grQrUTLVTyHM5sjzRw=",
+        "mirrors": [],
+        "path": "artifacts/02/1c/2c/1ed3b4936762e0f2e39ef08e338815afe83403424e10d4a7a17267bf59/packaging-26.3-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-lO3CVkJK84di6zEwbu0ovrnw78UKiDdJLJ1v1gBK7Xk=",
+        "mirrors": [],
+        "path": "artifacts/e4/5d/67/f5abbdfad0c695f991d1ee0c877b21168c63d5c9e6c85a88b290467a63/packaging-26.3.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz"
+      }
+    ],
+    "pathspec==1.1.1": [
+      {
+        "hash": "sha256-oAzmQvV3v39HOTIxgFYhK8T4v99TEox4u9WvC5sgsYk=",
+        "mirrors": [],
+        "path": "artifacts/8e/59/72/6facf35b70783eb949c65f477a68a523be2b85ff16f1fdfa9b893b19cf/pathspec-1.1.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-F9tezVJBBKEg4XOBTJA2epapjQfEWy4QwvORn/+Rv1o=",
+        "mirrors": [],
+        "path": "artifacts/66/45/3a/984e08857290d4a31eda87b2da896866007bbaa9876454e4a0a95f9dcc/pathspec-1.1.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/5a/82/42f767fc1c1143d6fd36efb827202a2d997a375e160a71eb2888a925aac1/pathspec-1.1.1.tar.gz"
+      }
+    ],
+    "pluggy==1.7.0": [
+      {
+        "hash": "sha256-fdew2IMro8tjLDBpJt7RI0KSEbg2QbNdxcQa0tNPm+w=",
+        "mirrors": [],
+        "path": "artifacts/09/63/03/b83f617ff1eccb3b00832094c376372b2298e2ce46b47a91adf199bc28/pluggy-1.7.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/40/9e/2b38731e0fc536806f16490e1a12d7f0dc2a1235aa8cc07bcc75416a7daa/pluggy-1.7.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-0eqkbrtZWJG4YKsIa00JyFiK9l69Q2G46PS7iSC5C6g=",
+        "mirrors": [],
+        "path": "artifacts/d3/11/9b/a26a37abaca86a42cbb0364c413570f189e7e9ca84cc80dbd9140b6a1e/pluggy-1.7.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/bf/db/7fc19e6f2dc92a966727031389fc2e08b558f0f25eb7403c1119ad4713cd/pluggy-1.7.0.tar.gz"
       }
     ],
     "poetry-core==2.5.0": [
@@ -1138,6 +1290,20 @@
         "url": "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz"
       }
     ],
+    "setuptools-scm==10.3.4": [
+      {
+        "hash": "sha256-gvNMPjCE/CtX05cgBjfME/IzgAQFLS/uR7ql8OkCRk4=",
+        "mirrors": [],
+        "path": "artifacts/7c/51/f4/db131a86c8e356589ecc17554e79f39ea9566c5b62f6850f91f93e0111/setuptools_scm-10.3.4-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/da/f5/54538a1f17ea753c42b0928dc2e62986d463f8c393340b9a1e602f2d4dd9/setuptools_scm-10.3.4-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-pp8ov8JFYIeBIF6RL6rkN8KyFldzr6TnuXnXdEemndI=",
+        "mirrors": [],
+        "path": "artifacts/bf/a2/d5/740f71c4a91b34a02b8a5d26c023b2a9496a4898eabcc942a76e2850c4/setuptools_scm-10.3.4.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/85/d8/fc143f88819ccf10ba2388ba86732ee2de193e578234e25a783f6cc14bf7/setuptools_scm-10.3.4.tar.gz"
+      }
+    ],
     "setuptools==84.2.1": [
       {
         "hash": "sha256-yhQLRdUyWpR4+IDjUUhPYv7xXzNkYuRJygwDyHPVicI=",
@@ -1160,6 +1326,34 @@
         "url": "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
       }
     ],
+    "tomlkit==0.15.2": [
+      {
+        "hash": "sha256-BVYkEhY6MDe5RJc4X7f5IExje8YFr3pIGZ5BzyJy9Dc=",
+        "mirrors": [],
+        "path": "artifacts/49/18/a7/9cef7acd884fae371159bd9a48c3e384d8f9cd0e13c00cbe7558869a06/tomlkit-0.15.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/da/46/7d84138a60a8bd796825b2d38ebe92d0d16501ca57d501b7c5d677401bbc/tomlkit-0.15.2-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-g+MnVbodINk0C9Bp7pfp9iMrojRrY//LpCXeAffjJ6Y=",
+        "mirrors": [],
+        "path": "artifacts/3f/17/91/f460ec904b6f26232cf2e0ae45105a1b42d2b9fc01878957d6258f34e8/tomlkit-0.15.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/08/72/fc01563df95c189a9f65850096bdc205bc2fe37da6c740cd64afaf18d07e/tomlkit-0.15.2.tar.gz"
+      }
+    ],
+    "trove-classifiers==2026.9.21.13": [
+      {
+        "hash": "sha256-ix/0+cGRsQQLccN/HkRauZcykR482R3lKDhFOoVNehc=",
+        "mirrors": [],
+        "path": "artifacts/ba/8f/b0/3269447c12519f49d19d8e6a86b629b1d7e47816dd5dfcfc133ee21c1a/trove_classifiers-2026.9.21.13-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/30/81/0da8afb52a71d0a4f2bd3152357b1a441e393b286374802b9d3addab4ab5/trove_classifiers-2026.9.21.13-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-Cp68jU4vPooihIxSWAMwNb7BejASrD/qFtuqdkSJ63E=",
+        "mirrors": [],
+        "path": "artifacts/73/16/7a/e93534aab0f47a1b17f50a41130bf40f604b804ce61ba669db417cafe3/trove_classifiers-2026.9.21.13.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/bf/93/af436dfaa845cab5d96f0adbc1e4f3730532d37fa249e4eb796fb1d7fc82/trove_classifiers-2026.9.21.13.tar.gz"
+      }
+    ],
     "urllib3==2.8.0": [
       {
         "hash": "sha256-DPPK5WjTaqlXayjfs18RMo8cuXTKdkfZR167hsdaxuM=",
@@ -1172,6 +1366,20 @@
         "mirrors": [],
         "path": "artifacts/4f/90/83/bc986a87fd632def7a22f34b0277dc4d52526339e66b980bba7470ae3a/urllib3-2.8.0.tar.gz",
         "url": "https://files.pythonhosted.org/packages/e3/05/b17359e1cefb4f909b5e40b1b90a496d987258916dbbf88e842c729f510e/urllib3-2.8.0.tar.gz"
+      }
+    ],
+    "vcs-versioning==2.6.0": [
+      {
+        "hash": "sha256-+L69EwLrwS5nzrMPx91pjslpQUtvpDsww/FKybHnLEE=",
+        "mirrors": [],
+        "path": "artifacts/07/27/48/b5d7c5cc098438994a5931d41b11ce23a4e12c4395890952dcc1282528/vcs_versioning-2.6.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/73/1d/ad4064bf12f4503bf61e65d74c93c523672776d25ee0a06aaf42ae09ef3f/vcs_versioning-2.6.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-IukVkoji2Lyi+m9sMcNMnGauwVf2Dp5Sb10WDSUW1g8=",
+        "mirrors": [],
+        "path": "artifacts/73/de/d6/5dfd55e51c81135d5283d307749f8b17703fca5358138142fdb7b56ae8/vcs_versioning-2.6.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/ad/e7/2a691db7d076b75d099fdba1a14cd966931f2aeb591e77f6d22f15097326/vcs_versioning-2.6.0.tar.gz"
       }
     ]
   },

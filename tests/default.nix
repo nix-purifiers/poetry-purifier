@@ -36,7 +36,7 @@ in
   # dependency, a URL sdist and a path dependency.
   app-runs = runCommand "app-runs" { } ''
     ${lib.getExe app.bins.hello} --name=nix | tee "$out"
-    grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example' "$out"
+    grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example.*attrs 25\.4\.0)' "$out"
   '';
 
   # Nix knows the project's outputs when it evaluates the build: its one

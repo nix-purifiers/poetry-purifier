@@ -9,12 +9,15 @@ requires-python = ">=3.11,<4"
 #   It comes from a second package index, which Poetry reads through the
 #   simple repository API.
 # - git-package-example comes from git, from a repository with a submodule.
+# - attrs comes from git too, and hatch-vcs reads its version from git when
+#   it builds.
 # - six comes from a URL to its sdist.
 # - greeting is a path dependency, installed in develop mode.
 dependencies = [
   "requests>=2.32",
   "docopt==0.6.2",
   "git-package-example @ git+https://github.com/python-poetry/test-fixture-vcs-repository.git@0be1215c90fffe37c5629cf2764615e9d9530e67",
+  "attrs @ git+https://github.com/python-attrs/attrs.git@9a98e00a7c078360add417c5d62db820d4645ab1",
   "six @ https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz",
   "greeting",
 ]

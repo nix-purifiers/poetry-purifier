@@ -63,10 +63,15 @@ interactive use. The test fixture has one of each.
 | `git`, with submodules | The checkout, as `fetchgit` fetches it | A copy of that checkout in place of a clone |
 | `directory` or `file` (a path) | Nothing: the files are in the project | The project |
 
-A checkout from Nix has no `.git` directory. For packages from git and from
-paths, the plugin sets `SETUPTOOLS_SCM_PRETEND_VERSION_FOR_<name>` to the
-version `poetry.lock` records, so build backends that read their version
-from git (setuptools-scm, hatch-vcs) still build.
+A checkout from Nix, and a project copied into the Nix sandbox, have no
+`.git` directory, so a build backend that reads its version from git
+(setuptools-scm, hatch-vcs) finds none. The plugin runs each build of a git
+checkout, a path dependency or the project itself with
+`SETUPTOOLS_SCM_PRETEND_VERSION` set to the version the lock records:
+`poetry.lock` for dependencies, and the sdist name of the lock run for the
+project. hatch-vcs does not pass setuptools-scm the distribution name, so
+the plugin sets the plain variable, and only for the build of that one
+source tree.
 
 ## Build
 

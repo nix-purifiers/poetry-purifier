@@ -21,7 +21,7 @@ export POETRY_VIRTUALENVS_IN_PROJECT=true
 
 "$poetry" install
 .venv/bin/hello --name=interactive | tee "$work/out"
-grep -q 'hello, interactive (requests 2\..*six 1\.17\.0, git-package-example' "$work/out"
+grep -q 'hello, interactive (requests 2\..*six 1\.17\.0, git-package-example.*attrs 25\.4\.0)' "$work/out"
 
 # The path dependency stays in develop mode outside Nix.
 grep -rq "$work/app/libs/greeting" .venv --include='__editable__*'

@@ -20,12 +20,12 @@
   symlinkJoin,
   writeText,
   path,
-  system,
+  stdenv,
 }:
 let
   inherit (pkgs) poetry;
   withPlugin = poetry.withPlugins (_: [ plugin ]);
-  nixpkgs = ''import ${path} { system = "${system}"; }'';
+  nixpkgs = ''import ${path} { system = "${stdenv.hostPlatform.system}"; }'';
 
   realize = writeText "poetry-purifier-realize.nix" ''
     { ... }@args:

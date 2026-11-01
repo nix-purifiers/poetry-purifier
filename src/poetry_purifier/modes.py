@@ -17,16 +17,21 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import shutil
+import threading
 import tomllib
 
 from collections.abc import Collection
+from collections.abc import Iterator
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
 from dulwich.repo import Repo
 from poetry.config.config import Config
+from poetry.console.commands import build as build_command
+from poetry.inspection import info as inspection_info
+from poetry.installation import chef as chef_module
 from poetry.core.packages.package import Package
 from poetry.core.packages.utils.link import Link
 from poetry.core.utils.helpers import canonicalize_name
@@ -93,18 +98,73 @@ def enable_record(record_path: Path) -> None:
     isolated_build.IsolatedEnv.install = install  # type: ignore[method-assign]
 
 
-def _pretend_versions(poetry_lock: Path) -> None:
-    """A checkout from Nix has no .git directory, so a build backend that
-    reads its version from git (setuptools-scm, hatch-vcs) gets the version
-    poetry.lock records instead."""
-    if not poetry_lock.exists():
-        return
-    for info in tomllib.loads(poetry_lock.read_text()).get("package", []):
-        if info.get("source", {}).get("type") in ("git", "directory"):
-            name = re.sub(r"[^A-Za-z0-9]", "_", info["name"]).upper()
-            os.environ.setdefault(
-                f"SETUPTOOLS_SCM_PRETEND_VERSION_FOR_{name}", info["version"]
-            )
+class _SourceVersions:
+    """The versions of the source trees Poetry builds offline.
+
+    A git checkout from Nix and a project copied into the Nix sandbox have no
+    .git directory, so a build backend that reads its version from git
+    (setuptools-scm, hatch-vcs) cannot find one. Each isolated build of such
+    a tree runs with SETUPTOOLS_SCM_PRETEND_VERSION set to the version the
+    lock records. The variable has no distribution name in it, because
+    hatch-vcs does not tell setuptools-scm the name, so it is set for one
+    build at a time: Poetry builds packages on parallel threads, and each
+    thread holds the version of the build it runs.
+    """
+
+    def __init__(self) -> None:
+        self._by_path: dict[Path, str] = {}
+        self._current = threading.local()
+
+    def add(self, path: Path, version: str) -> None:
+        self._by_path[path.resolve()] = version
+
+    def lookup(self, source: Path) -> str | None:
+        """The version of the deepest tree that holds `source`. A git
+        dependency can be a subdirectory of its checkout, and the project
+        can hold a checkout, in its virtual environment."""
+        source = source.resolve()
+        holders = [
+            path
+            for path in self._by_path
+            if source == path or path in source.parents
+        ]
+        if not holders:
+            return None
+        return self._by_path[max(holders, key=lambda path: len(path.parts))]
+
+    def install(self) -> None:
+        original_builder = isolated_build.isolated_builder
+
+        @contextmanager
+        def builder(source: Path, *args: Any, **kwargs: Any) -> Iterator[Any]:
+            previous = getattr(self._current, "version", None)
+            self._current.version = self.lookup(Path(source))
+            try:
+                with original_builder(source, *args, **kwargs) as result:
+                    yield result
+            finally:
+                self._current.version = previous
+
+        for module in (isolated_build, chef_module, build_command, inspection_info):
+            module.isolated_builder = builder  # type: ignore[attr-defined]
+
+        original_environ = isolated_build.IsolatedEnv.make_extra_environ
+        current = self._current
+
+        def make_extra_environ(env: isolated_build.IsolatedEnv) -> dict[str, str]:
+            environ = original_environ(env)
+            version = getattr(current, "version", None)
+            if version is not None:
+                environ["SETUPTOOLS_SCM_PRETEND_VERSION"] = version
+            return environ
+
+        isolated_build.IsolatedEnv.make_extra_environ = make_extra_environ  # type: ignore[method-assign]
+
+
+def _sdist_version(sdist: str) -> str:
+    """The version in an sdist file name, `<name>-<version>.tar.gz`, whose
+    name part has no hyphen."""
+    return sdist.removesuffix(".tar.gz").rsplit("-", 1)[1]
 
 
 def enable_offline(lock_path: Path, *, sandbox: bool = False) -> None:
@@ -117,7 +177,23 @@ def enable_offline(lock_path: Path, *, sandbox: bool = False) -> None:
         for entry in files
         if "git" in entry
     }
-    _pretend_versions(lock_path.parent / "poetry.lock")
+
+    # The project is the working directory in the Nix sandbox, where the
+    # lockfile is a store path, and the directory of the lockfile otherwise.
+    root = Path.cwd() if sandbox else lock_path.parent
+    versions = _SourceVersions()
+    versions.add(root, _sdist_version(lock["dist"]["sdist"]))
+    git_versions: dict[tuple[str, str], str] = {}
+    poetry_lock = root / "poetry.lock"
+    for info in tomllib.loads(poetry_lock.read_text()).get("package", []):
+        source = info.get("source", {})
+        if source.get("type") == "directory":
+            versions.add(root / source["url"], info["version"])
+        elif source.get("type") == "git":
+            git_versions[(source["url"], source["resolved_reference"])] = info[
+                "version"
+            ]
+    versions.install()
 
     def locked_files(name: str, version: str) -> list[dict[str, Any]]:
         key = lockfile.package_key(canonicalize_name(name), version)
@@ -178,6 +254,9 @@ def enable_offline(lock_path: Path, *, sandbox: bool = False) -> None:
         shutil.copytree(_cache_dir() / path, target, symlinks=False)
         for directory, _, _ in os.walk(target):
             os.chmod(directory, 0o755)
+        version = git_versions.get((url, revision or ""))
+        if version is not None:
+            versions.add(target, version)
         return Repo.init(str(target))
 
     Git.clone = classmethod(clone)  # type: ignore[method-assign,assignment]
