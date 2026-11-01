@@ -32,6 +32,9 @@ packages = [{ include = "app", from = "src" }]
 greeting = { path = "libs/greeting", develop = true }
 docopt = { source = "simple-index" }
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8"
+
 [[tool.poetry.source]]
 name = "simple-index"
 url = "https://pypi.org/simple/"

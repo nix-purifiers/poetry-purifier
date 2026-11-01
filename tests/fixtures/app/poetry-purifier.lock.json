@@ -79,12 +79,13 @@
       }
     ]
   },
+  "contentHash": "23c259816fcc61f2d15ab53b40efeb56106c3523bc8ba2f1109a6beca7f93320",
   "dist": {
     "sdist": "app-1.0.0.tar.gz",
     "wheel": "app-1.0.0-py3-none-any.whl"
   },
-  "format": 5,
-  "inputsHash": "sha256-JOZ+vayJEHZLnQtGz/qZkPCVK5ijHsv3pQIJgYmWA8I=",
+  "format": 6,
+  "inputsHash": "f1679c7fe7e10dd2bdd33ef1fe5151a16a69c1eefc9703fcfa50eeda398eb56b",
   "packages": {
     "attrs==25.4.0": [
       {
@@ -1147,6 +1148,20 @@
         "url": "https://files.pythonhosted.org/packages/33/1c/f41d4e74c28ab327ff3acd36053f7ea506c55872d7a90b0fa71aa3ab0c89/charset_normalizer-3.5.2.tar.gz"
       }
     ],
+    "colorama==0.4.6": [
+      {
+        "hash": "sha256-Tx2ZkfWswMoRn51ENiC3f51rM3A+UQEcFrr1evsoX8Y=",
+        "mirrors": [],
+        "path": "artifacts/53/d5/8c/6cecb6b3e47543ac146772c559342cb1fad1f79eb52dce2d4251a5822c/colorama-0.4.6-py2.py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-CGlfXLftbgUxogVyaXKXJzxHuMrlpj/8bW7VwgG+bkQ=",
+        "mirrors": [],
+        "path": "artifacts/d1/62/b6/36173a09a06cc39a18bfc01f6def7d153a81382e9c413237ffde2376e7/colorama-0.4.6.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz"
+      }
+    ],
     "docopt==0.6.2": [
       {
         "hash": "sha256-SbOoJSgL1ms6qDWF71nEqMgvLIpSLb51SovI0IyFxJE=",
@@ -1224,6 +1239,20 @@
         "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz"
       }
     ],
+    "iniconfig==2.3.1": [
+      {
+        "hash": "sha256-kSHiwf2zVSMklb4xlMjf6HzMLV3uRZR7eOaPSZeQ16c=",
+        "mirrors": [],
+        "path": "artifacts/92/e0/46/e8e15c0aea5e9395d28e8e37386bbf35d15089d8ff7b69dc6a2902ff1c/iniconfig-2.3.1-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/56/43/4ca9e49d27a1fcf6bece6f6aec0ea46bb9112489b93d4b688fb415457bdb/iniconfig-2.3.1-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-Z/S5xQ2g3t9SrzSed0moCpBXpQMRmXkbkGw7s66HiWA=",
+        "mirrors": [],
+        "path": "artifacts/d8/b7/99/96174b43f1653794b19e89c569b0ca83a0581f6e6bd5ec6e6ba1b86616/iniconfig-2.3.1.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/01/e1/2069291243c926a2ff1cd706c7f3eeb9b62144bf60f77c9fb9ff2fb26bd3/iniconfig-2.3.1.tar.gz"
+      }
+    ],
     "packaging==26.3": [
       {
         "hash": "sha256-1xk/fI5Ok/RE/eAmK/kK8w4W+grQrUTLVTyHM5sjzRw=",
@@ -1278,6 +1307,34 @@
         "mirrors": [],
         "path": "artifacts/de/b4/2e/19e9830b77a1bb96cddfca69269bb5c0effe093e37e0baa57bc1bffee7/poetry_core-2.5.0.tar.gz",
         "url": "https://files.pythonhosted.org/packages/42/b5/50f1fda26c4fe5b1d6ce5cdf0391bdfa1ca12fdcb8ad68344d5cf678fc90/poetry_core-2.5.0.tar.gz"
+      }
+    ],
+    "pygments==2.21.0": [
+      {
+        "hash": "sha256-I2PGm2HEqXyDjaOxMNzWRo9ISJkrIagvKmPsNDdxN9k=",
+        "mirrors": [],
+        "path": "artifacts/c4/f6/f1/97e2887200ac98ef7db2d6dedb3c6744f4900d95269143b346c7412c96/pygments-2.21.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/71/46/17f022dd3e953bf20a04a028a21ec746d942f8d2af30fa0f124fa0e6a684/pygments-2.21.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-YQynUcm8JJKzjrmjin+8k+27stcYLtrzTmauST3uXIw=",
+        "mirrors": [],
+        "path": "artifacts/c0/4f/89/816785de537e84590660bb31eb8933f0bd1c186daa111b833e11133f16/pygments-2.21.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/49/2e/ced460408999b33da6b31b0021b0f37d329e202d4169aeb164493778f25b/pygments-2.21.0.tar.gz"
+      }
+    ],
+    "pytest==8.4.2": [
+      {
+        "hash": "sha256-hy+IDeP8OlvciKEbOclxDDSXpUfPqTILw8XmL78nLnk=",
+        "mirrors": [],
+        "path": "artifacts/77/46/a5/de72db84a657c53e162880c4d930442c4e5a0425dc58b276b6e4e79812/pytest-8.4.2-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/a8/a4/20da314d277121d6534b3a980b29035dcd51e6744bd79075a6ce8fa4eb8d/pytest-8.4.2-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-hsDQuTMGuWHVjWKk20h58n/iVRPUuWnfNRq93bPDDgE=",
+        "mirrors": [],
+        "path": "artifacts/d1/6f/89/1fd7b5d9a831269464735270b09c267acbe29c824be8f21bd42e0c1277/pytest-8.4.2.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/a3/5c/00a0e072241553e1a7496d638deababa67c5058571567b92a7eaa258397c/pytest-8.4.2.tar.gz"
       }
     ],
     "requests==2.34.2": [

@@ -24,7 +24,12 @@ export POETRY_VIRTUALENVS_IN_PROJECT=true
 grep -q 'hello, interactive (requests 2\..*six 1\.17\.0, git-package-example.*attrs 25\.4\.0)' "$work/out"
 
 # The path dependency stays in develop mode outside Nix.
-grep -rq "$work/app/libs/greeting" .venv --include='__editable__*'
+grep -rq "$work/app/libs/greeting" .venv --include='*.pth'
+
+# An editor's language server resolves every import from the environment
+# that offline mode installed.
+pyright="$(cd "$OLDPWD" && nix build --no-link --print-out-paths 'nixpkgs#pyright')/bin/pyright"
+"$pyright" --pythonpath .venv/bin/python src tests
 
 # `poetry build` runs offline too.
 "$poetry" build

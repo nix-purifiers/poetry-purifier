@@ -1,0 +1,4 @@
+# The path dependency builds as a plain path entry in its editable install,
+# which editors and type checkers such as pyright follow.
+[installer.build-config-settings.greeting]
+editable_mode = "compat"

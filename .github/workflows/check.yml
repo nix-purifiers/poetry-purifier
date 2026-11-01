@@ -1,10 +1,13 @@
 # SPDX-License-Identifier: MIT
 #
-# `check` runs every check of the flake on x86_64-linux and aarch64-linux:
-# the fixture builds offline in the Nix sandbox, the publish step uploads to
-# a local package index, and the formatting check. `interactive` installs
-# the fixture offline through the plugin outside the sandbox, and `lock-run`
-# locks the fixture against the real package index and GitHub.
+# Every job runs on x86_64-linux and aarch64-linux. `check` runs the flake's
+# checks: the unit tests, the lockfile mistakes, the fixture built offline
+# in the Nix sandbox with its tests, the publish step against a local
+# package index, and the formatting. `interactive` installs the fixture
+# offline through the plugin outside the sandbox and runs pyright on it.
+# `lock-run` relocks the fixture against the real package index and GitHub,
+# checks that the relock is byte for byte the committed lockfile, and locks
+# a copy from scratch.
 name: check
 
 on:
@@ -30,7 +33,10 @@ jobs:
       - run: nix flake check -L
 
   interactive:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -40,7 +46,10 @@ jobs:
       - run: tests/interactive.sh
 
   lock-run:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

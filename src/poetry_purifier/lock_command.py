@@ -77,12 +77,36 @@ class PurifierLockCommand(Command):
             f"Checks that {lockfile.FILE_NAME} is up to date with pyproject.toml"
             " and poetry.lock, without locking.",
         ),
+        option(
+            "force",
+            None,
+            f"Locks even when {lockfile.FILE_NAME} is up to date.",
+        ),
+        option(
+            "update-build-requirements",
+            None,
+            "Resolves the build requirements again, rather than keeping the"
+            " versions the current lockfile has for them.",
+        ),
     ]
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
+        target = root / lockfile.FILE_NAME
         if self.option("check"):
             return self._check(root)
+        if not self.option("force") and lockfile.is_fresh(target, root):
+            self.line(f"{target} is up to date.")
+            return 0
+        # A relock keeps the resolutions of build requirements that the
+        # current lockfile has, so that it changes only what its inputs
+        # changed.
+        self._previous: dict[str, Any] = {"builds": {}, "packages": {}}
+        if not self.option("update-build-requirements"):
+            try:
+                self._previous = lockfile.read(target)
+            except (OSError, lockfile.LockfileError):
+                pass
         locker = self.poetry.locker
         if not locker.is_locked() or not locker.is_fresh():
             self.line_error(
@@ -102,7 +126,6 @@ class PurifierLockCommand(Command):
             records = self._record(root, python)
             lock = self._compose(root, python, records)
 
-        target = root / lockfile.FILE_NAME
         lockfile.write(target, lock)
         self.line(f"Wrote {target}")
         return 0
@@ -110,11 +133,19 @@ class PurifierLockCommand(Command):
     def _check(self, root: Path) -> int:
         lock_path = root / lockfile.FILE_NAME
         if not lock_path.exists():
-            self.line_error(f"<error>{lock_path} is missing.</error>")
-            return 1
-        if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(root):
             self.line_error(
-                f"<error>{lock_path} is out of date. Run `poetry purifier lock`.</error>"
+                f"<error>{lock_path} is missing. Run `poetry purifier lock`.</error>"
+            )
+            return 1
+        try:
+            lock = lockfile.read(lock_path)
+        except lockfile.LockfileError as e:
+            self.line_error(f"<error>{e}</error>")
+            return 1
+        if lock["inputsHash"] != lockfile.inputs_hash(root):
+            self.line_error(
+                f"<error>{lock_path} is out of date with pyproject.toml or"
+                " poetry.lock. Run `poetry purifier lock`.</error>"
             )
             return 1
         self.line(f"{lock_path} is up to date.")
@@ -341,20 +372,31 @@ class PurifierLockCommand(Command):
             key = "\n".join(requirements)
             if key in builds:
                 continue
-            builds[key] = []
-            for package, marker in self._lock_requirements(requirements):
-                package_key = lockfile.package_key(
-                    canonicalize_name(package.name), package.version.text
-                )
-                builds[key].append(
+            reused = self._previous["builds"].get(key)
+            if reused is not None:
+                builds[key] = reused
+                resolved = [
+                    (Package(entry["name"], entry["version"]), entry["markers"])
+                    for entry in reused
+                ]
+            else:
+                resolved = self._lock_requirements(requirements)
+                builds[key] = [
                     {
                         "name": canonicalize_name(package.name),
                         "version": package.version.text,
                         "markers": marker,
                     }
+                    for package, marker in resolved
+                ]
+            for package, _ in resolved:
+                package_key = lockfile.package_key(
+                    canonicalize_name(package.name), package.version.text
                 )
                 if package_key not in packages:
-                    packages[package_key] = self._locked_files(package, self.poetry.pool)
+                    packages[package_key] = self._previous["packages"].get(
+                        package_key
+                    ) or self._locked_files(package, self.poetry.pool)
                     nested = self._sdist_requirements(packages[package_key])
                     if nested and "\n".join(nested) not in builds:
                         pending.add(nested)

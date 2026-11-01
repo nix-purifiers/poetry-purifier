@@ -20,6 +20,42 @@ let
     );
   charsetWheels = arch: lib.filter (lib.hasPrefix "charset_normalizer-") (selectFor arch);
 
+  # A lockfile changed by `change`, written to the store at evaluation time.
+  # `rehash` gives it a matching contentHash, as a lock written by another
+  # project or version of the plugin would have.
+  changedLock =
+    {
+      change,
+      rehash ? false,
+    }:
+    let
+      changed = change lock;
+      body = removeAttrs changed [ "contentHash" ];
+      final =
+        if rehash then
+          changed // { contentHash = builtins.hashString "sha256" (builtins.toJSON body); }
+        else
+          changed;
+    in
+    builtins.toFile "poetry-purifier.lock.json" (builtins.toJSON final);
+  # Whether reading `lockFile` against the fixture stops the evaluation.
+  refused =
+    lockFile:
+    !(builtins.tryEval (
+      builtins.deepSeq (import ../nix/lib/check-lock.nix {
+        inherit lockFile;
+        src = ./fixtures/app;
+      }) true
+    )).success;
+
+  # Poetry's own Python with pytest and the modules Poetry needs, for the
+  # plugin's unit tests. nixpkgs builds Poetry as an application, so its own
+  # modules come from its site-packages directory.
+  unitPython = pkgs.poetry.python.withPackages (
+    ps: [ ps.pytest ] ++ pkgs.poetry.requiredPythonModules
+  );
+  poetryModules = "${pkgs.poetry}/${pkgs.poetry.python.sitePackages}";
+
   # A copy of the fixture that Poetry can write to.
   withFixture = ''
     export HOME="$TMPDIR"
@@ -38,6 +74,58 @@ in
     ${lib.getExe app.bins.hello} --name=nix | tee "$out"
     grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example.*attrs 25\.4\.0)' "$out"
   '';
+
+  # `doCheck = true` runs the fixture's pytest suite in the sandbox, with
+  # the `dev` group installed offline beside the built wheel.
+  app-tests = app.overrideAttrs { doCheck = true; };
+
+  # The plugin's unit tests: the lockfile functions, the lock command's
+  # reading of sdists, and the versions of source trees.
+  unit =
+    runCommand "unit"
+      {
+        nativeBuildInputs = [ unitPython ];
+      }
+      ''
+        export HOME="$TMPDIR"
+        cp -r ${../src} src
+        cp -r ${./unit} unit
+        PYTHONPATH=src:${poetryModules} python -m pytest -p no:cacheprovider unit
+        touch "$out"
+      '';
+
+  # Each mistake in a lockfile stops the evaluation of the build, rather
+  # than failing inside it: a lock out of date with pyproject.toml or
+  # poetry.lock, an edited hash, a removed entry, and another format.
+  lock-errors =
+    assert refused (changedLock {
+      change = l: l // { inputsHash = lib.fixedWidthString 64 "0" ""; };
+      rehash = true;
+    });
+    assert refused (changedLock {
+      change =
+        l:
+        l
+        // {
+          packages = l.packages // {
+            "six==1.17.0" = map (
+              f: f // { hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; }
+            ) l.packages."six==1.17.0";
+          };
+        };
+    });
+    assert refused (changedLock {
+      change = l: l // { packages = removeAttrs l.packages [ "six==1.17.0" ]; };
+    });
+    assert refused (changedLock {
+      change = l: l // { format = l.format - 1; };
+      rehash = true;
+    });
+    assert
+      !refused (changedLock {
+        change = l: l;
+      });
+    pkgs.emptyFile;
 
   # Nix knows the project's outputs when it evaluates the build: its one
   # script from pyproject.toml, and the wheel and sdist of `poetry build` by

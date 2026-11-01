@@ -36,13 +36,17 @@
   python ? null,
   # The dependency groups to install beside the project.
   groups ? [ "main" ],
+  # With `doCheck = true`, the groups that the tests need besides `main`.
+  # The check phase runs in a separate environment with those groups and the
+  # built wheel, and its default command is `pytest`.
+  checkGroups ? [ "dev" ],
   # The fetcher of locked files, for a package index that needs credentials
   # or a mirror.
   fetchurl ? pkgs.fetchurl,
   ...
 }@args:
 let
-  lock = builtins.fromJSON (builtins.readFile lockFile);
+  lock = import ./check-lock.nix { inherit lockFile src; };
   pyproject = builtins.fromTOML (builtins.readFile (src + "/pyproject.toml"));
   poetrySection = pyproject.tool.poetry or { };
   projectName = pyproject.project.name or poetrySection.name;
@@ -73,6 +77,7 @@ let
       "lockFile"
       "python"
       "groups"
+      "checkGroups"
       "fetchurl"
     ]
     // {
@@ -111,9 +116,27 @@ let
         ${interpreter.interpreter} -m venv "$out"
         VIRTUAL_ENV="$out" poetry install --no-root --only ${lib.concatStringsSep "," groups}
         "$out/bin/python" -m pip install --no-deps --no-index --no-cache-dir "$TMPDIR"/dist/*.whl
-
+        # stdenv sets doCheck to 1 when the checks run, also when an
+        # override turns them on.
+        if [ "''${doCheck:-}" = 1 ]; then
+          ${interpreter.interpreter} -m venv "$TMPDIR/check-env"
+          VIRTUAL_ENV="$TMPDIR/check-env" poetry install --no-root \
+            --only ${lib.concatStringsSep "," ([ "main" ] ++ checkGroups)}
+          "$TMPDIR/check-env/bin/python" -m pip install --no-deps --no-index --no-cache-dir "$TMPDIR"/dist/*.whl
+        fi
         runHook postBuild
       '';
+
+      checkPhase =
+        args.checkPhase or ''
+          runHook preCheck
+          pytest
+          runHook postCheck
+        '';
+      preCheck = ''
+        export PATH="$TMPDIR/check-env/bin:$PATH"
+      ''
+      + args.preCheck or "";
 
       installPhase = ''
         runHook preInstall

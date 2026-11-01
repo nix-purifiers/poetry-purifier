@@ -11,6 +11,7 @@
   glibcVersion,
 }:
 let
+  # The plugin checks the lockfile before it builds this.
   lock = builtins.fromJSON (builtins.readFile lockFile);
 in
 import ./cache.nix { inherit (pkgs) fetchurl fetchgit linkFarm; } "poetry-purifier-files" (

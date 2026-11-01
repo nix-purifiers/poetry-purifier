@@ -22,7 +22,7 @@ import threading
 import tomllib
 
 from collections.abc import Collection
-from collections.abc import Iterator
+from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
@@ -136,7 +136,7 @@ class _SourceVersions:
         original_builder = isolated_build.isolated_builder
 
         @contextmanager
-        def builder(source: Path, *args: Any, **kwargs: Any) -> Iterator[Any]:
+        def builder(source: Path, *args: Any, **kwargs: Any) -> Generator[Any]:
             previous = getattr(self._current, "version", None)
             self._current.version = self.lookup(Path(source))
             try:
