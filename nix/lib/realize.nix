@@ -2,9 +2,10 @@
 #
 # What the plugin builds in interactive use: the cache directory of the
 # files that a lockfile names for the calling system. The Poetry wrapper
-# passes `pkgs`; the plugin passes the rest.
+# passes `pkgs` and the purifier library; the plugin passes the rest.
 {
   pkgs,
+  purifier,
   lockFile,
   pythonVersion,
   arch,
@@ -14,13 +15,11 @@ let
   # The plugin checks the lockfile before it builds this.
   lock = builtins.fromJSON (builtins.readFile lockFile);
 in
-import ./cache.nix { inherit (pkgs) fetchurl fetchgit linkFarm; } "poetry-purifier-files" (
-  import ./select.nix {
-    inherit
-      lock
-      pythonVersion
-      arch
-      glibcVersion
-      ;
-  }
-)
+purifier.tree {
+  inherit pkgs;
+  name = "poetry-purifier-files";
+  entries = import ./select.nix {
+    inherit lock;
+    installs = purifier.wheels { inherit pythonVersion arch glibcVersion; };
+  };
+}

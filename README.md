@@ -14,7 +14,9 @@ Poetry. sbt-nix-backend made Nix the dependency and build backend of sbt,
 with a lockfile of every download, a sandboxed build from it, an offline
 interactive mode, and a publish step that publishes what Nix built.
 poetry-purifier is part of the [nix-purifiers](https://nix-purifiers.github.io)
-family.
+family. It fetches the lockfile's download entries, and picks and names
+wheels, with the family's shared library,
+[purifier](https://github.com/nix-purifiers/purifier).
 
 ## Quickstart
 

@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: MIT
-{ pkgs, overlay }:
+{
+  pkgs,
+  overlay,
+  # The shared purifier library.
+  purifier,
+}:
 let
   inherit (pkgs) lib runCommand;
   purified = pkgs.extend overlay;
@@ -13,9 +18,12 @@ let
     arch:
     map (file: baseNameOf file.path) (
       import ../nix/lib/select.nix {
-        inherit lock arch;
-        pythonVersion = "3.14";
-        glibcVersion = "2.40";
+        inherit lock;
+        installs = purifier.wheels {
+          inherit arch;
+          pythonVersion = "3.14";
+          glibcVersion = "2.40";
+        };
       }
     );
   charsetWheels = arch: lib.filter (lib.hasPrefix "charset_normalizer-") (selectFor arch);
@@ -144,12 +152,11 @@ in
     '';
 
   # A compiled wheel the lock run built on another system gets the tags of
-  # this one: its CPython tags, and the platform tag of setuptools-style
-  # backends and of poetry-core.
+  # this one, from the shared library's wheelName: its CPython tags, and the
+  # platform tag of setuptools-style backends and of poetry-core.
   wheel-name =
     let
-      name = import ../nix/lib/wheel-name.nix {
-        inherit lib;
+      name = purifier.wheelName {
         pythonVersion = "3.13";
         arch = "aarch64";
         glibcVersion = "2.40";

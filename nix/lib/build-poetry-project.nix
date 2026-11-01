@@ -22,10 +22,10 @@
   lib,
   pkgs,
   stdenv,
-  fetchgit,
-  linkFarm,
   runCommand,
   poetry-purifier,
+  # The shared purifier library, `lib.purifier`.
+  purifier,
 }:
 {
   src,
@@ -64,13 +64,21 @@ let
     arch = stdenv.hostPlatform.parsed.cpu.name;
     glibcVersion = stdenv.cc.libc.version;
   };
-  files = import ./select.nix ({ inherit lock; } // system);
   distFiles = [
-    (import ./wheel-name.nix ({ inherit lib; } // system) lock.dist.wheel)
+    (purifier.wheelName system lock.dist.wheel)
     lock.dist.sdist
   ];
-  mkCache = import ./cache.nix { inherit fetchurl fetchgit linkFarm; };
-  cache = mkCache "${projectName}-poetry-cache" files;
+  # A directory laid out like Poetry's cache directory: each locked file at
+  # the path where Poetry's artifact cache keeps it, and each git checkout
+  # at the path the plugin copies it from.
+  cache = purifier.tree {
+    inherit pkgs fetchurl;
+    name = "${projectName}-poetry-cache";
+    entries = import ./select.nix {
+      inherit lock;
+      installs = purifier.wheels system;
+    };
+  };
 
   environment = stdenv.mkDerivation (
     removeAttrs args [
