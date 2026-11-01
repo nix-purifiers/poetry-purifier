@@ -167,13 +167,18 @@ has one attribute per output:
 
 - `src`: the project.
 - `lockFile`: the purifier lockfile. The default is the one in `src`.
+- `poetryLockFile`: the project's `poetry.lock`, for a source that does not
+  hold the one the lock was made from, such as a pinned upstream release
+  whose `poetry.lock` was relocked with a newer Poetry. The default is the
+  one in `src`.
 - `python`: the interpreter. The default is nixpkgs' `python3XY` for the
   version the lock was made with.
 - `groups`: the dependency groups to install. The default is `[ "main" ]`.
 - `doCheck` and `checkGroups`: with `doCheck = true`, the check phase runs in
   a separate environment with the `main` group, the `checkGroups` and the
   built wheel. The default `checkGroups` is `[ "dev" ]`, and the default
-  `checkPhase` runs `pytest`.
+  `checkPhase` runs `pytest`. A test that runs a system tool needs that
+  tool in `nativeCheckInputs`, because the sandbox has few of them.
 - `fetchurl`: the fetcher of locked files, for an index that needs
   credentials or a mirror.
 
@@ -249,6 +254,34 @@ Two hashes guard the file, and Nix checks both when it evaluates a build.
 SHA-256 of the lockfile without `contentHash`, as compact JSON with sorted
 keys.
 
+## Real-world projects
+
+[rich](https://github.com/Textualize/rich) v15.0.0, at commit
+`6ac483cbea39cab124dfd3483bba70ffafb71050`, is a Poetry project with the
+older `[tool.poetry.dev-dependencies]` table, an optional `jupyter` extra and
+a large pytest suite. These steps were run on it:
+
+1. Its `poetry.lock` was made by Poetry 2.1.3, so `poetry purifier lock`
+   asked for `poetry lock` first. With Poetry 2.5.1, `poetry lock` kept
+   every locked version and rewrote the file.
+2. The quickstart command, `nix run github:nix-purifiers/poetry-purifier --
+   purifier lock`, locked it in about 7 seconds.
+3. In interactive mode, with an empty Poetry cache and no network,
+   `poetry install` installed the project, `poetry install --extras jupyter`
+   installed the extra, and `poetry run pytest` passed. pyright resolved every
+   import from the environment.
+4. `poetry add --group dev pytest-timeout` left the purifier lockfile out of
+   date: `poetry purifier lock --check` and `poetry install` said so and named
+   `poetry purifier lock`, and the relock took about 8 seconds.
+5. `buildPoetryProject` builds it offline in the sandbox and runs its whole
+   test suite. The `real-world-rich` check does this in CI on both systems,
+   from the pinned commit.
+
+Because of rich, `buildPoetryProject` takes `poetryLockFile`, so a pinned
+release builds with a relocked `poetry.lock`. One test of rich runs `which`,
+which the sandbox lacks, so the check adds it with `nativeCheckInputs`, and
+the build section says so.
+
 ## Limitations
 
 - A build backend can add build requirements at build time, through the
@@ -291,6 +324,8 @@ The flake checks are these:
   for x86_64 and aarch64.
 - `lock-up-to-date` checks the committed lock, and `publish` publishes the
   Nix-built files to a local package index.
+- `real-world-rich` builds rich from its pinned commit offline and runs its
+  test suite.
 
 `tests/interactive.sh` installs and builds the fixture offline outside the
 sandbox, and runs pyright on the result. `tests/lock-run.sh` relocks the

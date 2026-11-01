@@ -87,6 +87,35 @@ in
   # the `dev` group installed offline beside the built wheel.
   app-tests = app.overrideAttrs { doCheck = true; };
 
+  # A real-world project: Textualize's rich at v15.0.0, pinned by commit. Its
+  # own poetry.lock was made by Poetry 2.1.3, so the lock was made after
+  # `poetry lock` with Poetry 2.5.1, which kept every locked version. The
+  # build runs rich's whole pytest suite in the sandbox.
+  real-world-rich =
+    let
+      rich = purified.buildPoetryProject {
+        src = builtins.fetchTarball {
+          url = "https://github.com/Textualize/rich/archive/6ac483cbea39cab124dfd3483bba70ffafb71050.tar.gz";
+          sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
+        };
+        poetryLockFile = ./real-world/rich/poetry.lock;
+        lockFile = ./real-world/rich/poetry-purifier.lock.json;
+        doCheck = true;
+        # test_brokenpipeerror runs `which python` and `which head`.
+        nativeCheckInputs = [ pkgs.which ];
+      };
+    in
+    assert
+      lib.attrNames rich.artifacts == [
+        "rich-15.0.0-py3-none-any.whl"
+        "rich-15.0.0.tar.gz"
+      ];
+    runCommand "real-world-rich" { } ''
+      ${rich}/bin/python -c 'import rich; rich.print("[bold]rich[/bold] from Nix")' | tee "$out"
+      grep -q 'rich from Nix' "$out"
+      test -f ${rich.artifacts."rich-15.0.0-py3-none-any.whl"}
+    '';
+
   # The plugin's unit tests: the lockfile functions, the lock command's
   # reading of sdists, and the versions of source trees.
   unit =

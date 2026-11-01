@@ -31,6 +31,10 @@
   src,
   # The lockfile. By default, the one in `src`.
   lockFile ? src + "/poetry-purifier.lock.json",
+  # The project's poetry.lock, for a source that does not hold the one the
+  # lock was made from, such as a pinned upstream release relocked with a
+  # newer Poetry. By default, the one in `src`.
+  poetryLockFile ? null,
   # The interpreter. By default, nixpkgs' interpreter of the Python version
   # the lock was made with.
   python ? null,
@@ -46,7 +50,9 @@
   ...
 }@args:
 let
-  lock = import ./check-lock.nix { inherit lockFile src; };
+  lock = import ./check-lock.nix (
+    { inherit lockFile src; } // lib.optionalAttrs (poetryLockFile != null) { inherit poetryLockFile; }
+  );
   pyproject = builtins.fromTOML (builtins.readFile (src + "/pyproject.toml"));
   poetrySection = pyproject.tool.poetry or { };
   projectName = pyproject.project.name or poetrySection.name;
@@ -83,6 +89,7 @@ let
   environment = stdenv.mkDerivation (
     removeAttrs args [
       "lockFile"
+      "poetryLockFile"
       "python"
       "groups"
       "checkGroups"
@@ -112,6 +119,9 @@ let
         export POETRY_NO_INTERACTION=1
         export POETRY_PURIFIER_MODE=offline
         export POETRY_PURIFIER_LOCK=${lockFile}
+        ${lib.optionalString (poetryLockFile != null) ''
+          cp --no-preserve=mode ${poetryLockFile} poetry.lock
+        ''}
 
         # Poetry writes the wheels it builds from sdists next to them, so the
         # directories of the cache are writable and its files are links.

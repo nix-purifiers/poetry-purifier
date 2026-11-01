@@ -15,6 +15,9 @@
 {
   lockFile,
   src,
+  # The project's poetry.lock, which is in `src` unless a build keeps it
+  # elsewhere.
+  poetryLockFile ? src + "/poetry.lock",
 }:
 let
   format = 6;
@@ -22,8 +25,10 @@ let
   lock = builtins.fromJSON (builtins.readFile lockFile);
 
   contentHash = builtins.hashString "sha256" (builtins.toJSON (removeAttrs lock [ "contentHash" ]));
-  fileLine = name: "${name} ${builtins.hashFile "sha256" (src + "/${name}")}\n";
-  inputsHash = builtins.hashString "sha256" (fileLine "pyproject.toml" + fileLine "poetry.lock");
+  fileLine = name: file: "${name} ${builtins.hashFile "sha256" file}\n";
+  inputsHash = builtins.hashString "sha256" (
+    fileLine "pyproject.toml" (src + "/pyproject.toml") + fileLine "poetry.lock" poetryLockFile
+  );
 in
 if (lock.format or null) != format then
   throw "poetry-purifier: ${toString lockFile} has format ${
