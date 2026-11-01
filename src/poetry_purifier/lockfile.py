@@ -23,7 +23,7 @@ from poetry.utils.cache import ArtifactCache
 
 
 FILE_NAME = "poetry-purifier.lock.json"
-FORMAT = 2
+FORMAT = 3
 
 
 def sri_from_hex(hex_digest: str) -> str:

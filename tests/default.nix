@@ -35,16 +35,24 @@ in
   # sdist Poetry built with the setuptools the lock resolved, a git
   # dependency, a URL sdist and a path dependency.
   app-runs = runCommand "app-runs" { } ''
-    ${app}/bin/hello --name=nix | tee "$out"
+    ${lib.getExe app.bins.hello} --name=nix | tee "$out"
     grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example' "$out"
   '';
 
-  # `poetry build` made the project's wheel and sdist.
-  app-dist = runCommand "app-dist" { } ''
-    test -f ${app.dist}/app-1.0.0-py3-none-any.whl
-    test -f ${app.dist}/app-1.0.0.tar.gz
-    touch "$out"
-  '';
+  # Nix knows the project's outputs from pyproject.toml when it evaluates
+  # the build: its one script, and the wheel and sdist of `poetry build`.
+  outputs-by-name =
+    assert lib.attrNames app.bins == [ "hello" ];
+    assert
+      lib.attrNames app.artifacts == [
+        "sdist"
+        "wheel"
+      ];
+    runCommand "outputs-by-name" { } ''
+      test -f ${app.artifacts.wheel}/app-1.0.0-py3-none-any.whl
+      test -f ${app.artifacts.sdist}/app-1.0.0.tar.gz
+      touch "$out"
+    '';
 
   # The path dependency is in develop mode, and the Nix build installs it as
   # a regular package rather than as a link into the build directory.

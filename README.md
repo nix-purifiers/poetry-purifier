@@ -79,10 +79,31 @@ buildPoetryProject { src = ./.; }
 ```
 
 The result is a virtual environment with the project and the dependencies of
-its `main` group, and with the project's scripts in `bin/`. Its `dist` output
-holds the wheel and the sdist that `poetry build` made. Path dependencies in
-develop mode are installed as regular packages, because the build directory
-does not outlive the build.
+its `main` group, and with the project's scripts in `bin/`. Path
+dependencies in develop mode are installed as regular packages, because the
+build directory does not outlive the build.
+
+Nix reads the project's outputs from `pyproject.toml` when it evaluates the
+build, with no generated Nix files and no import-from-derivation, and the
+result has one attribute per output:
+
+- `bins.<script>` is a package with one script in `bin/`, for each script
+  of `[project.scripts]`, `[project.gui-scripts]` and
+  `[tool.poetry.scripts]`. `nix run` runs it.
+- `artifacts.wheel` and `artifacts.sdist` each hold one file that
+  `poetry build` made. They are keyed by kind, because a wheel's file name
+  carries platform tags that only the build decides.
+
+```nix
+let
+  app = buildPoetryProject { src = ./.; };
+in
+{
+  packages.default = app;
+  packages.hello = app.bins.hello;
+  packages.wheel = app.artifacts.wheel;
+}
+```
 
 `buildPoetryProject` takes these arguments besides the usual ones of
 `stdenv.mkDerivation`:
@@ -118,8 +139,8 @@ interactive mode off.
 poetry purifier publish --repository <name>
 ```
 
-`poetry purifier publish` has Nix build the project's `dist` output from the
-lockfile, then runs Poetry's own `publish` on it. Repositories, credentials
+`poetry purifier publish` has Nix build the project's wheel and sdist from
+the lockfile, then runs Poetry's own `publish` on it. Repositories, credentials
 and the other options of `poetry publish` work as they do there, and nothing
 is built outside the Nix sandbox.
 
@@ -132,9 +153,9 @@ keeps the file, `mirrors` lists other URLs that serve the same file, and
 `mirrors` is empty in the entries the lock run writes. A git entry is
 `{ path, git = { url, rev, submodules }, hash }`, where `hash` is what
 `nix-prefetch-git` reports. `builds` maps each set of build requirements to
-the packages it resolves to, with their environment markers. `project` names
-the project and its scripts, `python` is the Python version of the lock run,
-and `inputsHash` covers `pyproject.toml` and `poetry.lock`.
+the packages it resolves to, with their environment markers. `python` is the
+Python version of the lock run, and `inputsHash` covers `pyproject.toml` and
+`poetry.lock`.
 
 ## Limitations
 
@@ -149,9 +170,9 @@ and `inputsHash` covers `pyproject.toml` and `poetry.lock`.
   repositories and installs build requirements. These are Poetry internals,
   so the plugin is tested with one Poetry version, 2.5.1, the one in the
   flake.
-- Wheel selection reads manylinux and `linux_*` platform tags, because the
-  flake builds for x86_64-linux and aarch64-linux. The lockfile itself holds
-  the files of every platform.
+- The Nix builds are Linux only: x86_64-linux and aarch64-linux, the systems
+  of the nix-purifiers family. Wheel selection reads manylinux and `linux_*`
+  platform tags. The lockfile itself holds the files of every platform.
 
 ## Tests
 
@@ -162,7 +183,7 @@ tests/lock-run.sh
 ```
 
 The flake checks build `tests/fixtures/app` offline and run its script,
-check its `dist` output, check that the path dependency is installed
+check its outputs by name, check that the path dependency is installed
 without links into the build directory, check that the git checkout has its
 submodule, check that one lock selects the right wheels for x86_64 and
 aarch64, check that the committed lock is up to date, and publish the

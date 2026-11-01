@@ -22,7 +22,7 @@
       }
     ]
   },
-  "format": 2,
+  "format": 3,
   "inputsHash": "sha256-63rNn4GHRmXmk9MWEgFjx7brdjcTjw74dp6rCRanEMs=",
   "packages": {
     "certifi==2026.10.23": [
@@ -1172,11 +1172,5 @@
     ]
   },
   "poetry": "2.5.1",
-  "project": {
-    "name": "app",
-    "scripts": [
-      "hello"
-    ]
-  },
   "python": "3.14"
 }

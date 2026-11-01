@@ -205,7 +205,6 @@ class PurifierLockCommand(Command):
                 text=True,
             ).stdout.strip(),
             "inputsHash": lockfile.inputs_hash(root),
-            "project": self._project(),
             "packages": packages,
             "builds": builds,
         }
@@ -370,10 +369,3 @@ class PurifierLockCommand(Command):
             (package, markers[canonicalize_name(package.name)])
             for package in poetry.locker.locked_repository().packages
         ]
-
-    def _project(self) -> dict[str, Any]:
-        data = self.poetry.pyproject.data
-        scripts = data.get("project", {}).get("scripts") or data.get(
-            "tool", {}
-        ).get("poetry", {}).get("scripts", {})
-        return {"name": self.poetry.package.name, "scripts": sorted(scripts)}
