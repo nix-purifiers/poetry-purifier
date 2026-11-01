@@ -248,30 +248,30 @@ repositories and installs build requirements. These are Poetry internals,
 so the plugin is tested with one Poetry version, 2.5.1, the one in the
 flake.
 
-## Real-world projects
+## Examples
+
+These are projects that CI locks and builds. They show the purifier at
+work, and they are not a list of the projects it works with.
 
 [rich](https://github.com/Textualize/rich) v15.0.0, at commit
 `6ac483cbea39cab124dfd3483bba70ffafb71050`, is a Poetry project with the
 older `[tool.poetry.dev-dependencies]` table, an optional `jupyter` extra and
-a large pytest suite. These steps were run on it:
+a large pytest suite. Its `poetry.lock` was made by Poetry 2.1.3, and
+`poetry lock` from Poetry 2.5.1 rewrote it without changing a locked
+version. The `real-world-rich` job runs `tests/real-world-rich.sh` on both
+systems. The script builds rich offline in the sandbox from its pinned
+commit with the rewritten `poetry.lock` in the source tree, and runs its whole
+test suite. The source tree is a derivation, so the script builds for the
+current system and no flake check holds it. The purifier lockfile of rich is
+`tests/real-world/rich/poetry-purifier.lock.json`. It holds 325 file URLs and
+two sets of build requirements.
 
-1. Its `poetry.lock` was made by Poetry 2.1.3. With Poetry 2.5.1, `poetry
-   lock` kept every locked version and rewrote the file.
-2. The quickstart command, `nix run github:nix-purifiers/poetry-purifier --
-   purifier lock`, locked it in about 11 seconds. The purifier lockfile
-   holds 325 file URLs and two sets of build requirements.
-3. With an empty Poetry cache and no network, `poetry install` installed
-   the project, `poetry install --extras jupyter` installed the extra, and
-   `poetry run pytest` passed. pyright resolved every import from the
-   environment.
-4. `poetry add --group dev pytest-timeout` left the purifier lockfile out of
-   date. `poetry purifier lock --check` and `poetry install` said so and
-   named `poetry purifier lock`.
-5. `buildPoetryProject` builds it offline in the sandbox and runs its whole
-   test suite. The `real-world-rich` job runs `tests/real-world-rich.sh` in
-   CI on both systems. It builds from the pinned commit with the relocked
-   `poetry.lock` of step 1 in the source tree. That tree is a derivation, so
-   the build runs from a script for the current system.
+The fixture `tests/fixtures/app` has a dependency of each source in the table
+above, a path dependency with a script, and a test suite. The flake checks
+build it, and the `conformance-relock`, `conformance-rebuild` and
+`conformance-offline` jobs lock, rebuild and work offline on it. The fixture
+`tests/fixtures/update` holds an old version of idna, and the
+`conformance-update` job moves it with `poetry purifier update`.
 
 ## Credits
 

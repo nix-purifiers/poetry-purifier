@@ -130,6 +130,12 @@ let
       dontConfigure = true;
 
       buildPhase = ''
+        # nixpkgs' Python setup hook sets PYTHONPATH to the site-packages of
+        # the build inputs. Poetry passes it on to its virtual environments
+        # and isolated builds, where those packages would come ahead of the
+        # locked ones. The Poetry in the build inputs finds its own modules
+        # without it.
+        unset PYTHONPATH
         runHook preBuild
 
         export HOME="$TMPDIR"
@@ -169,6 +175,8 @@ let
           runHook postCheck
         '';
       preCheck = ''
+        # The tests import from the check environment, as in the build.
+        unset PYTHONPATH
         export PATH="$TMPDIR/check-env/bin:$PATH"
       ''
       + args.preCheck or "";

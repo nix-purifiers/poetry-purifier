@@ -173,6 +173,32 @@ in
   # group installed offline beside the built wheel.
   app-tests = app.tests;
 
+  # nixpkgs' Python setup hook sets PYTHONPATH in a build that has Poetry and
+  # Python as inputs. This build fails if PYTHONPATH is set when the build
+  # phase starts or when the tests run, because Poetry would pass it on to
+  # the isolated builds and virtual environments, and the site-packages of
+  # nixpkgs would come ahead of the locked packages.
+  pythonpath-unset =
+    let
+      unset = ''
+        if [ -n "''${PYTHONPATH:-}" ]; then
+          echo "PYTHONPATH is set: $PYTHONPATH" >&2
+          exit 1
+        fi
+      '';
+    in
+    (build {
+      inherit pkgs;
+      src = ./fixtures/app;
+      preBuild = unset;
+      checkPhase = ''
+        runHook preCheck
+        ${unset}
+        pytest
+        runHook postCheck
+      '';
+    }).tests;
+
   # The lock in memory: the shape that the purifier library checks, the
   # charset-normalizer wheels of each CPU marked with their system, the git
   # checkout on every system, and the outputs by name.
