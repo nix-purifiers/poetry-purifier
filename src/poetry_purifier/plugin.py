@@ -70,9 +70,13 @@ class PurifierPlugin(ApplicationPlugin):
     ) -> None:
         realize = os.environ.get("POETRY_PURIFIER_REALIZE")
         command = event.command
-        if realize is None or command.name not in OFFLINE_COMMANDS:
+        if realize is None or (command.name or "").startswith("purifier"):
             return
-        root = command.poetry.pyproject_path.parent  # type: ignore[attr-defined]
+        try:
+            root = command.poetry.pyproject_path.parent  # type: ignore[attr-defined]
+        except (AttributeError, RuntimeError):
+            event.io.write_error_line("<warning>poetry-purifier: warning: no purifier lockfile found; running Poetry impurely.</warning>")
+            return
         # POETRY_PURIFIER_LOCKFILE and POETRY_PURIFIER_TOOL_LOCKFILE name
         # lockfiles kept outside the project, like the --lockfile and
         # --tool-lockfile options of the purifier commands.
@@ -81,15 +85,16 @@ class PurifierPlugin(ApplicationPlugin):
         )
         tool_lock = lockfile_option.tool_path_from_environment(root)
         if not lock_path.exists():
+            event.io.write_error_line('<warning>poetry-purifier: warning: no poetry-purifier.lock.json found; running Poetry impurely. Run `poetry purifier lock` to use Nix-resolved dependencies.</warning>')
+            return
+        if command.name not in OFFLINE_COMMANDS:
             return
         if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(
             root, tool_lock
         ):
-            event.io.write_error_line(
-                f"<warning>{lockfile.FILE_NAME} is out of date, so Poetry downloads"
-                " as usual. Run `poetry purifier lock` to renew it.</warning>"
+            raise RuntimeError(
+                f"{lockfile.FILE_NAME} is out of date. Run `poetry purifier lock` to renew it."
             )
-            return
         interactive.use_locked_cache(root, lock_path, tool_lock, Path(realize), event.io)
         modes.enable_offline(lock_path, root, tool_lock)
         if tool_lock != root / "poetry.lock":

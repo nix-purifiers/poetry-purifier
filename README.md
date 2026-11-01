@@ -1,7 +1,11 @@
 # poetry-purifier
 
-A Poetry plugin and Nix library that build a Poetry project in the Nix
-sandbox, offline, from its lockfiles.
+poetry-purifier keeps Poetry's development workflow on locked,
+Nix-resolved dependencies. Use the normal build and test commands in your
+working tree; building the project itself in the Nix sandbox is an
+optional next step.
+
+It follows the [purifier contract](https://github.com/nix-purifiers/purifier/blob/main/CONTRACT.md).
 
 Poetry still installs, builds, tests and publishes the project.
 `poetry.lock` already records the name, version and hash of every file
@@ -16,32 +20,112 @@ family and meets the family's contract. It fetches download entries, and
 picks and names wheels, with the family's shared library,
 [purifier](https://github.com/nix-purifiers/purifier).
 
-## Quickstart
+## Installation
 
-In a Poetry project, write the purifier lockfile with the Poetry from this
-flake, and build the project with Nix from its directory. Neither step adds a
-Nix file to the project. Replace `<project>` with the name of the project in
-`pyproject.toml`:
+Install the integration into your Nix profile once:
 
-```zsh
-nix run github:nix-purifiers/poetry-purifier -- purifier lock
-nix build --impure --expr '
-  let
-    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
-    pkgs = import purifier.inputs.nixpkgs {
-      system = builtins.currentSystem;
-      overlays = [ purifier.overlays.default ];
-    };
-  in
-  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.my-project'
+```sh
+nix profile install 'github:nix-purifiers/poetry-purifier'
 ```
 
-This uses the purifier's pinned nixpkgs, matching the lock command above.
-To build with ambient `<nixpkgs>` from your Nix search path instead,
-replace `import purifier.inputs.nixpkgs` with `import <nixpkgs>`.
-Both forms need no Nix files in your project. The build tool and language
-versions must match the lockfile; with ambient nixpkgs, lock with the
-purifier from that package set or pass a compatible toolchain to the builder.
+This installs the `poetry` wrapper. Use it for the locked
+development workflow below. With no purifier lockfile, it warns on standard
+error and runs the ordinary tool with impure resolution.
+
+`nix shell` makes an integration available temporarily instead of installing
+it. Keep using the activation steps below where a project environment or
+prefetched cache is required.
+
+## Quickstart
+
+Install Nix, then run the following from your existing project's root.
+The setup prepares the locked dependencies and the integration that
+Poetry's normal commands use:
+
+```zsh
+nix develop github:nix-purifiers/poetry-purifier
+poetry purifier lock
+poetry install
+poetry run pytest
+```
+
+Commit the lockfiles that the lock command writes, including the build
+tool's own lockfile when it has one. Keep using the project's usual build,
+test and editor commands with this setup. Nix provides the locked
+dependencies; the development commands above run outside the Nix sandbox.
+No project Nix files are needed for this workflow.
+
+Sandboxed builds of the whole project are an optional
+[next step](#building-the-project-with-nix).
+
+## Development loop
+
+| Step | Command |
+|---|---|
+| Install for development | `poetry install` in `nix develop` |
+| Run a script or the tests | `poetry run <script>`, `poetry run pytest` |
+| Add a dependency | `poetry add <package>`, then `poetry purifier lock` |
+| Update dependencies | `poetry purifier update [<package>...]` |
+| Relock after editing `pyproject.toml` | `poetry purifier lock` |
+| Check the lockfiles in CI | `poetry purifier lock --check` |
+| Build and test in the sandbox | `nix build`, `nix flake check` |
+
+In a project with an up-to-date purifier lockfile, `poetry install`,
+`poetry sync` and `poetry build` have Nix fetch the locked files for this
+machine, link them into Poetry's cache, and run offline. Path dependencies
+in develop mode stay editable. `POETRY_PURIFIER=0` turns this off.
+
+`poetry purifier lock` keeps the resolution of `poetry.lock`. When
+`poetry.lock` is missing or out of date with `pyproject.toml`, it runs
+`poetry lock` first, which keeps the versions `poetry.lock` already has.
+Then it records what `poetry.lock` cannot. It copies the project to a
+temporary directory and runs `poetry install` with every group and extra,
+then `poetry build`, with an empty cache. That run shows which build
+requirements Poetry installs. Then it locks every platform:
+
+- It asks Poetry's repositories for the URL of every file that `poetry.lock`
+  names.
+- A registry package that some platform builds from its sdist has its build
+  requirements read from the `[build-system]` table of the sdist.
+- Each set of build requirements is resolved for all platforms by `poetry
+  lock` in a throwaway project. A build requirement that `poetry.lock` also
+  locks is held at the version `poetry.lock` has.
+- A git dependency is hashed with `nix-prefetch-git`, with its submodules,
+  because Poetry clones git dependencies with their submodules.
+
+A relock of unchanged inputs writes the same bytes. It keeps the
+resolutions of build requirements that the current lockfile has, unless
+they disagree with `poetry.lock`. `--update-build-requirements` resolves
+them again. `--force` locks even when the lockfile is up to date.
+
+`poetry purifier update` runs `poetry update --lock`, for every package or
+for the named ones, and then relocks the purifier lockfile against the
+result, in one run.
+
+The commands find both lockfiles next to `pyproject.toml`. A project can
+instead keep its build external: the flake that calls the builder keeps the
+lockfiles outside the repository and passes them as `lockFile` and
+`poetryLock`. The commands take the same paths as `--lockfile <path>` and
+`--tool-lockfile <path>`, or as the environment variables
+`POETRY_PURIFIER_LOCKFILE` and `POETRY_PURIFIER_TOOL_LOCKFILE`, and an option
+takes precedence over its variable. With a `--tool-lockfile`, `lock` and
+`update` write `poetry.lock` there and leave the copy in the repository as it
+is, and `lock` starts from the copy in the repository when the outside one
+does not exist yet. A dev shell can set both variables to the paths its flake
+passes to the builder.
+
+`poetry purifier publish --repository <name>` has Nix build the `release`
+from the lockfiles, then runs Poetry's own `publish` on its files.
+Repositories, credentials and the other options of `poetry publish` work as
+they do there.
+
+## Building the project with Nix
+
+Once the native development workflow is working, you can also build and
+test the whole project in the Nix sandbox. For this step, keep a flake or
+another Nix build definition in the project's repository, or maintain an
+external packaging repository that points at its sources and lockfiles.
+The builder consumes the same lockfiles as the development workflow.
 
 `poetry purifier lock` writes `poetry-purifier.lock.json` next to
 `poetry.lock`. We recommend committing both lockfiles to the repository, and
@@ -129,66 +213,29 @@ that read every purifier, such as an SBOM generator. An entry that only some
 systems fetch, such as a wheel for one CPU, has `systems`. The builder
 checks this shape with the purifier library's `checkLock`.
 
-## Development loop
+### One-off builds without a project Nix file
 
-| Step | Command |
-|---|---|
-| Install for development | `poetry install` in `nix develop` |
-| Run a script or the tests | `poetry run <script>`, `poetry run pytest` |
-| Add a dependency | `poetry add <package>`, then `poetry purifier lock` |
-| Update dependencies | `poetry purifier update [<package>...]` |
-| Relock after editing `pyproject.toml` | `poetry purifier lock` |
-| Check the lockfiles in CI | `poetry purifier lock --check` |
-| Build and test in the sandbox | `nix build`, `nix flake check` |
+For an ad hoc build, the builder can also be evaluated directly from the
+project root. Replace the example package name with one from your project:
 
-In a project with an up-to-date purifier lockfile, `poetry install`,
-`poetry sync` and `poetry build` have Nix fetch the locked files for this
-machine, link them into Poetry's cache, and run offline. Path dependencies
-in develop mode stay editable. `POETRY_PURIFIER=0` turns this off.
+```zsh
+nix build --impure --expr '
+  let
+    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+    pkgs = import purifier.inputs.nixpkgs {
+      system = builtins.currentSystem;
+      overlays = [ purifier.overlays.default ];
+    };
+  in
+  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.my-project'
+```
 
-`poetry purifier lock` keeps the resolution of `poetry.lock`. When
-`poetry.lock` is missing or out of date with `pyproject.toml`, it runs
-`poetry lock` first, which keeps the versions `poetry.lock` already has.
-Then it records what `poetry.lock` cannot. It copies the project to a
-temporary directory and runs `poetry install` with every group and extra,
-then `poetry build`, with an empty cache. That run shows which build
-requirements Poetry installs. Then it locks every platform:
-
-- It asks Poetry's repositories for the URL of every file that `poetry.lock`
-  names.
-- A registry package that some platform builds from its sdist has its build
-  requirements read from the `[build-system]` table of the sdist.
-- Each set of build requirements is resolved for all platforms by `poetry
-  lock` in a throwaway project. A build requirement that `poetry.lock` also
-  locks is held at the version `poetry.lock` has.
-- A git dependency is hashed with `nix-prefetch-git`, with its submodules,
-  because Poetry clones git dependencies with their submodules.
-
-A relock of unchanged inputs writes the same bytes. It keeps the
-resolutions of build requirements that the current lockfile has, unless
-they disagree with `poetry.lock`. `--update-build-requirements` resolves
-them again. `--force` locks even when the lockfile is up to date.
-
-`poetry purifier update` runs `poetry update --lock`, for every package or
-for the named ones, and then relocks the purifier lockfile against the
-result, in one run.
-
-The commands find both lockfiles next to `pyproject.toml`. A project can
-instead keep its build external: the flake that calls the builder keeps the
-lockfiles outside the repository and passes them as `lockFile` and
-`poetryLock`. The commands take the same paths as `--lockfile <path>` and
-`--tool-lockfile <path>`, or as the environment variables
-`POETRY_PURIFIER_LOCKFILE` and `POETRY_PURIFIER_TOOL_LOCKFILE`, and an option
-takes precedence over its variable. With a `--tool-lockfile`, `lock` and
-`update` write `poetry.lock` there and leave the copy in the repository as it
-is, and `lock` starts from the copy in the repository when the outside one
-does not exist yet. A dev shell can set both variables to the paths its flake
-passes to the builder.
-
-`poetry purifier publish --repository <name>` has Nix build the `release`
-from the lockfiles, then runs Poetry's own `publish` on its files.
-Repositories, credentials and the other options of `poetry publish` work as
-they do there.
+This uses the purifier's pinned nixpkgs, matching the lock command above.
+To build with ambient `<nixpkgs>` from your Nix search path instead,
+replace `import purifier.inputs.nixpkgs` with `import <nixpkgs>`.
+Both forms need no Nix files in your project. The build tool and language
+versions must match the lockfile; with ambient nixpkgs, lock with the
+purifier from that package set or pass a compatible toolchain to the builder.
 
 ## Working offline
 
@@ -229,7 +276,7 @@ each message names the command that fixes it.
 | Mistake | Message |
 |---|---|
 | No purifier lockfile | "… is missing. Run `poetry purifier lock`." |
-| `pyproject.toml` or `poetry.lock` changed without a relock | "… is out of date with pyproject.toml or poetry.lock. Run `poetry purifier lock`." `poetry install` warns and downloads as usual. |
+| `pyproject.toml` or `poetry.lock` changed without a relock | "… is out of date with pyproject.toml or poetry.lock. Run `poetry purifier lock`." `poetry install` stops and asks for a relock. |
 | The lockfile edited by hand, such as a changed hash or a removed entry | "… was changed after `poetry purifier lock` wrote it. Run `poetry purifier lock` to write it again." |
 | A truncated file, or one `poetry purifier lock` did not write | "… is not a lockfile that `poetry purifier lock` wrote. Run `poetry purifier lock` to write it again." |
 | A lockfile of another format version | "… has version N, and this poetry-purifier reads version M. Run `poetry purifier lock` to write it again." |
@@ -293,6 +340,11 @@ so the plugin works with the Poetry version in this flake, 2.5.1, and may
 not work with another.
 
 ## Examples
+
+For day-to-day work on these projects, use the native-tool setup and
+commands in [Quickstart](#quickstart) and [Development loop](#development-loop).
+The Nix expressions below show optional sandboxed packaging of those
+projects.
 
 ### rich
 
