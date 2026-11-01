@@ -170,6 +170,10 @@ def _sdist_version(sdist: str) -> str:
 def enable_offline(lock_path: Path, root: Path, *, sandbox: bool = False) -> None:
     """Puts Poetry offline for the project at `root`, from the lockfile at
     `lock_path`."""
+    # Poetry installs in parallel threads, and two threads that build wheels
+    # from sources in the same cache can raise its _DeadlockError. Offline
+    # installs build from sources, so they run one at a time.
+    os.environ.setdefault("POETRY_INSTALLER_PARALLEL", "false")
     lock = lockfile.read(lock_path)
     poetry_lock = root / "poetry.lock"
     packages = lockfile.expand(lock, poetry_lock)
