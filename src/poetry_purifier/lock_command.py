@@ -182,7 +182,9 @@ class PurifierLockCommand(Command):
                     raise RuntimeError(
                         f"The lock run did not download {package.source_url}."
                     )
-                packages[key] = [{k: download[k] for k in ("path", "url", "hash")}]
+                packages[key] = [
+                    {k: download[k] for k in ("path", "url", "hash")} | {"mirrors": []}
+                ]
             else:
                 packages[key] = self._locked_files(package, self.poetry.pool)
                 buildable.append(packages[key])
@@ -234,6 +236,8 @@ class PurifierLockCommand(Command):
                         lockfile.link_with_hash(link.url_without_fragment, digest)
                     ),
                     "url": link.url_without_fragment,
+                    # Package indexes serve each file at one URL.
+                    "mirrors": [],
                     "hash": lockfile.sri_from_hex(digest),
                 }
             )

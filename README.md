@@ -126,8 +126,10 @@ is built outside the Nix sandbox.
 ## The lockfile
 
 `packages` maps each `name==version` to download entries. A file entry is
-`{ path, url, hash }`, where `path` is where Poetry's artifact cache keeps
-the file and `hash` is its SRI hash. A git entry is
+`{ path, url, mirrors, hash }`, where `path` is where Poetry's artifact cache
+keeps the file, `mirrors` lists other URLs that serve the same file, and
+`hash` is its SRI hash. Package indexes serve each file at one URL, so
+`mirrors` is empty in the entries the lock run writes. A git entry is
 `{ path, git = { url, rev, submodules }, hash }`, where `hash` is what
 `nix-prefetch-git` reports. `builds` maps each set of build requirements to
 the packages it resolves to, with their environment markers. `project` names

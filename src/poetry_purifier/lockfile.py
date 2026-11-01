@@ -3,8 +3,9 @@
 # The purifier lockfile, poetry-purifier.lock.json, next to pyproject.toml.
 #
 # `packages` maps "name==version" to the files of that release: each file is
-# a download entry `{path, url, hash}`, where `path` is the file's place in
-# Poetry's cache directory and `hash` is an SRI hash. It holds every locked
+# a download entry `{path, url, mirrors, hash}`, where `path` is the file's
+# place in Poetry's cache directory, `mirrors` lists other URLs of the same
+# file, and `hash` is an SRI hash. It holds every locked
 # file of every package in poetry.lock, for every platform, and the same for
 # the packages that Poetry installed to build sdists. `builds` maps each set
 # of build requirements to the packages Poetry installed for it.
@@ -22,7 +23,7 @@ from poetry.utils.cache import ArtifactCache
 
 
 FILE_NAME = "poetry-purifier.lock.json"
-FORMAT = 1
+FORMAT = 2
 
 
 def sri_from_hex(hex_digest: str) -> str:

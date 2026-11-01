@@ -21,7 +21,8 @@ let
       }
     else
       fetchurl {
-        inherit (entry) url hash;
+        urls = [ entry.url ] ++ entry.mirrors;
+        inherit (entry) hash;
         name = baseNameOf entry.path;
       };
 in
