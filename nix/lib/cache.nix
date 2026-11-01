@@ -18,6 +18,7 @@ let
         inherit (entry.git) url rev;
         inherit (entry) hash;
         fetchSubmodules = entry.git.submodules;
+        inherit (entry.git) leaveDotGit;
       }
     else
       fetchurl {

@@ -158,8 +158,10 @@ is built outside the Nix sandbox.
 keeps the file, `mirrors` lists other URLs that serve the same file, and
 `hash` is its SRI hash. Package indexes serve each file at one URL, so
 `mirrors` is empty in the entries the lock run writes. A git entry is
-`{ path, git = { url, rev, submodules }, hash }`, where `hash` is what
-`nix-prefetch-git` reports. `builds` maps each set of build requirements to
+`{ path, git = { url, rev, submodules, leaveDotGit, commitObject }, hash }`,
+where `hash` is what `nix-prefetch-git` reports. The checkout has no `.git`
+directory (`leaveDotGit` is false and `commitObject` is null), because the
+plugin gives its builds their version. `builds` maps each set of build requirements to
 the packages it resolves to, with their environment markers. `dist` holds the
 file names of the wheel and sdist that the lock run built. `python` is the
 Python version of the lock run, and `inputsHash` covers `pyproject.toml` and

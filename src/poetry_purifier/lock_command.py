@@ -283,7 +283,15 @@ class PurifierLockCommand(Command):
         url_digest = hashlib.sha256(url.encode()).hexdigest()[:16]
         return {
             "path": f"purifier-git/{url_digest}-{rev}",
-            "git": {"url": url, "rev": rev, "submodules": True},
+            # Builds of the checkout get their version from the plugin, so
+            # they need no .git directory.
+            "git": {
+                "url": url,
+                "rev": rev,
+                "submodules": True,
+                "leaveDotGit": False,
+                "commitObject": None,
+            },
             "hash": result["hash"],
         }
 

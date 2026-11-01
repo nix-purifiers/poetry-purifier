@@ -83,12 +83,14 @@
     "sdist": "app-1.0.0.tar.gz",
     "wheel": "app-1.0.0-py3-none-any.whl"
   },
-  "format": 4,
+  "format": 5,
   "inputsHash": "sha256-JOZ+vayJEHZLnQtGz/qZkPCVK5ijHsv3pQIJgYmWA8I=",
   "packages": {
     "attrs==25.4.0": [
       {
         "git": {
+          "commitObject": null,
+          "leaveDotGit": false,
           "rev": "9a98e00a7c078360add417c5d62db820d4645ab1",
           "submodules": true,
           "url": "https://github.com/python-attrs/attrs.git"
@@ -1156,6 +1158,8 @@
     "git-package-example==0.2.0a1": [
       {
         "git": {
+          "commitObject": null,
+          "leaveDotGit": false,
           "rev": "0be1215c90fffe37c5629cf2764615e9d9530e67",
           "submodules": true,
           "url": "https://github.com/python-poetry/test-fixture-vcs-repository.git"
