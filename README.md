@@ -19,19 +19,40 @@ picks and names wheels, with the family's shared library,
 ## Quickstart
 
 In a Poetry project, write the purifier lockfile with the Poetry from this
-flake. Then commit both lockfiles, `poetry.lock` and
-`poetry-purifier.lock.json`, to the repository. We recommend this setup. A
-flake sees only the files git tracks, so add them to git:
+flake, and build the project with Nix from its directory. Neither step adds a
+Nix file to the project. Replace `<project>` with the name of the project in
+`pyproject.toml`:
 
 ```zsh
 nix run github:nix-purifiers/poetry-purifier -- purifier lock
-git add poetry.lock poetry-purifier.lock.json
+nix build --impure --expr '
+  let
+    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+    pkgs = import purifier.inputs.nixpkgs {
+      system = builtins.currentSystem;
+      overlays = [ purifier.overlays.default ];
+    };
+  in
+  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.my-project'
 ```
 
-Then add a `flake.nix`. The `overlays.default` of this flake adds one
-attribute to a package set, the scope `poetry-purifier`. The scope holds the
-builder `buildPoetryProject`, the Poetry with the plugin as `poetry`, and the
-`plugin`:
+This uses the purifier's pinned nixpkgs, matching the lock command above.
+To build with ambient `<nixpkgs>` from your Nix search path instead,
+replace `import purifier.inputs.nixpkgs` with `import <nixpkgs>`.
+Both forms need no Nix files in your project. The build tool and language
+versions must match the lockfile; with ambient nixpkgs, lock with the
+purifier from that package set or pass a compatible toolchain to the builder.
+
+`poetry purifier lock` writes `poetry-purifier.lock.json` next to
+`poetry.lock`. We recommend committing both lockfiles to the repository, and
+the builder looks for them there. The `overlays.default` of this flake adds
+one attribute to a package set, the scope `poetry-purifier`. The scope holds
+the builder `buildPoetryProject`, the Poetry with the plugin as `poetry`, and
+the `plugin`.
+
+The authors of a project can package it with a flake. The flake can live in
+the repository of the project or in another one, and it calls the builder
+directly:
 
 ```nix
 {
@@ -64,14 +85,8 @@ builder `buildPoetryProject`, the Poetry with the plugin as `poetry`, and the
 runs one of the project's scripts, `nix flake check` runs the tests in the
 sandbox, and `nix develop` gives the shell.
 
-A package written for `callPackage` takes the scope by name:
-
-```nix
-# package.nix
-{ poetry-purifier }:
-(poetry-purifier.buildPoetryProject { src = ./.; }).packages.<project>
-```
-
+A function that an overlay or a flake passes to `callPackage` takes the scope
+by name, as the argument `poetry-purifier`.
 `poetry-purifier.overrideScope` replaces what everything in the scope shares,
 such as the `poetry` that the builder uses. `buildPoetryProject.override`
 replaces what the builder takes from the package set, such as `fetchurl` or
@@ -282,55 +297,49 @@ not work with another.
 ### rich
 
 [rich](https://github.com/Textualize/rich) is a Python library for styled
-terminal output. Clone it and write its purifier lockfile. The command runs
-`poetry lock` first when `poetry.lock` is out of date, so add both files to
-git:
+terminal output. Clone it, write its purifier lockfile, and build it. The
+lock command runs `poetry lock` first when `poetry.lock` is out of date:
 
 ```zsh
 git clone https://github.com/Textualize/rich
 cd rich
 nix run github:nix-purifiers/poetry-purifier -- purifier lock
-git add poetry.lock poetry-purifier.lock.json
-```
-
-Then add this `flake.nix` next to its `pyproject.toml`. The tests of rich
-run `which`, which the build sandbox does not have, so the flake adds it:
-
-```nix
-{
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.poetry-purifier.url = "github:nix-purifiers/poetry-purifier";
-
-  outputs =
-    { nixpkgs, poetry-purifier, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [ poetry-purifier.overlays.default ];
-      };
-      rich = pkgs.poetry-purifier.buildPoetryProject {
-        src = ./.;
-        nativeCheckInputs = [ pkgs.which ];
-      };
-    in
-    {
-      packages.${system}.default = rich.packages.rich;
-      checks.${system}.tests = rich.tests;
-      devShells.${system}.default = pkgs.mkShell {
-        packages = [ pkgs.poetry-purifier.poetry ];
-      };
+nix build --impure --expr '
+  let
+    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+    pkgs = import purifier.inputs.nixpkgs {
+      system = builtins.currentSystem;
+      overlays = [ purifier.overlays.default ];
     };
-}
+  in
+  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.rich'
 ```
 
-`nix build` builds the library, and `nix flake check` runs its test suite in
-the sandbox. For development, run these in `nix develop`:
+The tests of rich run `which`, which the build sandbox does not have. This
+build runs the test suite of rich in the sandbox with `which` added:
 
 ```zsh
-poetry purifier prefetch
-poetry install --extras jupyter
-poetry run pytest
+nix build --impure --expr '
+  let
+    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+    pkgs = import purifier.inputs.nixpkgs {
+      system = builtins.currentSystem;
+      overlays = [ purifier.overlays.default ];
+    };
+  in
+  (pkgs.poetry-purifier.buildPoetryProject {
+    src = ./.;
+    nativeCheckInputs = [ pkgs.which ];
+  }).tests'
+```
+
+For development, run Poetry from this flake. It installs offline from the
+locked files:
+
+```zsh
+nix run github:nix-purifiers/poetry-purifier -- purifier prefetch
+nix run github:nix-purifiers/poetry-purifier -- install --extras jupyter
+nix run github:nix-purifiers/poetry-purifier -- run pytest
 ```
 
 ## Credits
