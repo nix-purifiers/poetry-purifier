@@ -10,8 +10,7 @@
 let
   inherit (pkgs) lib runCommand;
   purified = pkgs.extend overlay;
-  inherit (purified.poetry-purifier) poetry;
-  inherit (purified) buildPoetryProject;
+  inherit (purified.poetry-purifier) poetry buildPoetryProject;
   build = buildPoetryProject;
 
   app = build {
@@ -142,21 +141,35 @@ in
     '';
 
   # The contract: a fixture whose source holds no purifier lockfile builds
-  # from a lockfile kept outside it.
+  # from a lockfile kept outside it, and also builds when its source holds
+  # no poetry.lock either and the flake passes one from outside.
   conformance-external =
     let
-      external = build {
-        src = builtins.path {
+      without =
+        names:
+        builtins.path {
           path = ./fixtures/app;
-          name = "app-without-lockfile";
-          filter = path: _: baseNameOf path != "poetry-purifier.lock.json";
+          name = "app-without-lockfiles";
+          filter = path: _: !(lib.any (name: lib.hasSuffix "/fixtures/app/${name}" path) names);
         };
+      external = build {
+        src = without [ "poetry-purifier.lock.json" ];
         lockFile = ./fixtures/app/poetry-purifier.lock.json;
+      };
+      replaced = build {
+        src = without [
+          "poetry-purifier.lock.json"
+          "poetry.lock"
+        ];
+        lockFile = ./fixtures/app/poetry-purifier.lock.json;
+        poetryLock = ./fixtures/app/poetry.lock;
       };
     in
     runCommand "conformance-external" { } ''
       ${lib.getExe external.packages.hello} --name=external | tee "$out"
       grep -q 'hello, external' "$out"
+      ${lib.getExe replaced.packages.hello} --name=replaced | tee "$out"
+      grep -q 'hello, replaced' "$out"
     '';
 
   # The project's script runs from the environment Poetry installed
@@ -197,21 +210,32 @@ in
       '';
     }).tests;
 
-  # A package written for callPackage takes the builder by name, and
-  # `override` replaces what the builder takes from the package set. The
-  # replacement `fetchgit` stops the evaluation of the fixture, which has a
-  # git dependency, so the replacement reaches the fetches.
+  # A package written for callPackage takes the scope by name. `override`
+  # replaces what the builder takes from the package set, and
+  # `overrideScope` replaces what the scope shares. The replacement
+  # `fetchgit` stops the evaluation of the fixture, which has a git
+  # dependency, so the replacement reaches the fetches. The scope is the only
+  # attribute the overlay adds to the package set.
   builder-in-the-package-set =
     let
       consumer = purified.callPackage (
-        { buildPoetryProject }: (buildPoetryProject { src = ./fixtures/app; }).packages.app
+        { poetry-purifier }: (poetry-purifier.buildPoetryProject { src = ./fixtures/app; }).packages.app
       ) { };
+      fails = built: !(builtins.tryEval built.packages.app.drvPath).success;
       overridden = (buildPoetryProject.override { fetchgit = _: throw "replaced fetchgit"; }) {
         src = ./fixtures/app;
       };
+      rescoped =
+        (purified.poetry-purifier.overrideScope (_: _: { poetry = throw "replaced poetry"; }))
+        .buildPoetryProject
+          { src = ./fixtures/app; };
+      added = lib.attrNames purified.poetry-purifier;
     in
     assert consumer.outPath == environment.outPath;
-    assert !(builtins.tryEval overridden.packages.app.drvPath).success;
+    assert fails overridden;
+    assert fails rescoped;
+    assert !(purified ? buildPoetryProject);
+    assert lib.elem "buildPoetryProject" added && lib.elem "poetry" added && lib.elem "plugin" added;
     runCommand "builder-in-the-package-set" { } "touch $out";
 
   # The lock in memory: the shape that the purifier library checks, the

@@ -31,6 +31,25 @@ cp -r tests/fixtures/app "$work/relock"
 )
 echo "conformance-relock: the relock is byte for byte the committed lockfile"
 
+# Both lockfiles kept outside the project: `lock` starts from the poetry.lock
+# in the project, writes both files outside, and leaves the copy in the
+# project as it is. The outside files are the committed ones, byte for byte.
+repo="$PWD"
+cp -r tests/fixtures/app "$work/outside"
+mkdir "$work/kept"
+(
+  cd "$work/outside"
+  cp poetry.lock "$work/tree-poetry.lock"
+  rm "$lock"
+  "$poetry" purifier lock --lockfile "$work/kept/$lock" --tool-lockfile "$work/kept/poetry.lock"
+  cmp poetry.lock "$work/tree-poetry.lock"
+  cmp "$work/kept/poetry.lock" poetry.lock
+  cmp "$work/kept/$lock" "$repo/tests/fixtures/app/$lock"
+  test ! -e "$lock"
+  "$poetry" purifier lock --check --lockfile "$work/kept/$lock" --tool-lockfile "$work/kept/poetry.lock"
+)
+echo "conformance-relock: the lockfiles kept outside the project are the committed ones"
+
 cp -r tests/fixtures/app "$work/app"
 rm "$work/app/$lock"
 cd "$work/app"

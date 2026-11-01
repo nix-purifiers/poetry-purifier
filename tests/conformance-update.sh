@@ -29,4 +29,17 @@ test "$(idna)" != 3.7
 
 "$poetry" check --lock
 "$poetry" purifier lock --check
+
+# Both lockfiles kept outside the project: `update` moves the poetry.lock
+# outside and leaves the copy in the project as it is.
+cd "$OLDPWD"
+cp -r tests/fixtures/update "$work/outside"
+mkdir "$work/kept"
+cd "$work/outside"
+cp poetry.lock "$work/tree-poetry.lock"
+outside=(--lockfile "$work/kept/poetry-purifier.lock.json" --tool-lockfile "$work/kept/poetry.lock")
+"$poetry" purifier update idna "${outside[@]}"
+cmp poetry.lock "$work/tree-poetry.lock"
+test "$(grep -A1 '^name = "idna"$' "$work/kept/poetry.lock" | sed -n 's/^version = "\(.*\)"$/\1/p')" != 3.7
+"$poetry" purifier lock --check "${outside[@]}"
 echo "conformance-update: ok"

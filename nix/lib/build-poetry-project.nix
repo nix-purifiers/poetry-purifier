@@ -5,13 +5,14 @@
 #
 # The file is a package for callPackage: the first argument set is what it
 # takes from the package set, and the result is the builder. The default
-# package overlay (`overlays.default`) adds it to the package set as
-# `buildPoetryProject`, so a package written for callPackage takes it like
-# any other builder:
+# package overlay (`overlays.default`) adds the scope `poetry-purifier` to
+# the package set, and the scope holds the builder as `buildPoetryProject`.
+# A package written for callPackage takes the scope by name:
 #
-#   { buildPoetryProject }: (buildPoetryProject { src = ./.; }).packages.app
+#   { poetry-purifier }:
+#   (poetry-purifier.buildPoetryProject { src = ./.; }).packages.app
 #
-# and `buildPoetryProject.override` replaces what it takes from the set.
+# and `buildPoetryProject.override` replaces what the builder takes.
 #
 # Nix fetches the files the lockfile names for this system into a copy of
 # Poetry's cache, and Poetry, with the purifier plugin in offline mode, runs
@@ -37,22 +38,31 @@
   lib,
   stdenv,
   runCommand,
-  # The fetchers for the files and the git checkouts of the lock.
+  # The fetchers for the files and the git checkouts of the lock, and the
+  # packages that the steps after a fetch build with.
   fetchurl,
   fetchgit,
+  unzip,
+  zstd,
+  python3,
+  writeText,
   # The interpreters a build can run on; the default interpreter of a build
   # is the one of the Python version the lock was made with.
   pythonInterpreters,
   # The shared purifier library.
   purifier,
-  # The poetry-purifier package scope, whose `poetry` is Poetry with the
-  # purifier plugin.
-  poetry-purifier,
+  # Poetry with the purifier plugin, the `poetry` of the poetry-purifier
+  # scope that holds this builder.
+  poetry,
 }:
 {
   src,
   # The purifier lockfile. By default, the one in `src`.
   lockFile ? src + "/poetry-purifier.lock.json",
+  # The project's poetry.lock. By default, the one in `src`. A copy kept
+  # outside the project takes the place of the one in `src`, in the lock
+  # check and in the build.
+  poetryLock ? src + "/poetry.lock",
   # Fetchers for the purifier library's fetchEntry and tree, such as a
   # `fetchurl` that sends credentials or uses a mirror.
   fetchers ? { },
@@ -68,9 +78,7 @@
   ...
 }@args:
 let
-  inherit (poetry-purifier) poetry;
-
-  lockFiles = { inherit lockFile src; };
+  lockFiles = { inherit lockFile src poetryLock; };
   # The parsed lockfile. The interpreter comes from it, and the lock in
   # memory needs the interpreter, so the builder reads the lockfile before
   # checkLock does. A problem found here fails evaluation with its message.
@@ -115,7 +123,15 @@ let
   # at the path the plugin copies it from.
   cache = purifier.tree (
     {
-      pkgs = { inherit runCommand fetchurl fetchgit; };
+      inherit
+        runCommand
+        fetchurl
+        fetchgit
+        unzip
+        zstd
+        python3
+        writeText
+        ;
       name = "${projectName}-poetry-cache";
       entries = purifier.entriesFor stdenv.hostPlatform.system checked;
     }
@@ -126,6 +142,7 @@ let
     removeAttrs args [
       "src"
       "lockFile"
+      "poetryLock"
       "fetchers"
       "python"
       "groups"
@@ -164,6 +181,8 @@ let
         # A module imported during the build would otherwise leave bytecode
         # that records the build time, and two builds would differ.
         export PYTHONDONTWRITEBYTECODE=1
+        # The poetry.lock that the lock check read is the one the build uses.
+        cp --no-preserve=mode ${poetryLock} poetry.lock
 
         # Poetry writes the wheels it builds from sdists next to them, so the
         # directories of the cache are writable and its files are links.

@@ -21,9 +21,10 @@
 {
   lockFile,
   src,
+  # The project's poetry.lock. By default, the one in `src`.
+  poetryLock ? src + "/poetry.lock",
 }:
 let
-  poetryLock = src + "/poetry.lock";
   version = 8;
   relock = "Run `poetry purifier lock` to write it again.";
   name = toString lockFile;

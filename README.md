@@ -19,15 +19,19 @@ picks and names wheels, with the family's shared library,
 ## Quickstart
 
 In a Poetry project, write the purifier lockfile with the Poetry from this
-flake. Then add it to git, because a flake sees only the files git tracks:
+flake. Then commit both lockfiles, `poetry.lock` and
+`poetry-purifier.lock.json`, to the repository. We recommend this setup. A
+flake sees only the files git tracks, so add them to git:
 
 ```zsh
 nix run github:nix-purifiers/poetry-purifier -- purifier lock
-git add poetry-purifier.lock.json
+git add poetry.lock poetry-purifier.lock.json
 ```
 
-Then add a `flake.nix`. The flake's `overlays.default` adds the builder
-`buildPoetryProject` to a package set, where nixpkgs keeps its own builders:
+Then add a `flake.nix`. The `overlays.default` of this flake adds one
+attribute to a package set, the scope `poetry-purifier`. The scope holds the
+builder `buildPoetryProject`, the Poetry with the plugin as `poetry`, and the
+`plugin`:
 
 ```nix
 {
@@ -42,7 +46,7 @@ Then add a `flake.nix`. The flake's `overlays.default` adds the builder
         inherit system;
         overlays = [ poetry-purifier.overlays.default ];
       };
-      project = pkgs.buildPoetryProject { src = ./.; };
+      project = pkgs.poetry-purifier.buildPoetryProject { src = ./.; };
     in
     {
       # The packages are the environment of the project and its scripts.
@@ -60,23 +64,27 @@ Then add a `flake.nix`. The flake's `overlays.default` adds the builder
 runs one of the project's scripts, `nix flake check` runs the tests in the
 sandbox, and `nix develop` gives the shell.
 
-A package written for `callPackage` takes the builder by name, like any
-other builder:
+A package written for `callPackage` takes the scope by name:
 
 ```nix
 # package.nix
-{ buildPoetryProject }:
-(buildPoetryProject { src = ./.; }).packages.<project>
+{ poetry-purifier }:
+(poetry-purifier.buildPoetryProject { src = ./.; }).packages.<project>
 ```
 
-`buildPoetryProject.override` replaces what the builder takes from the
-package set, such as `fetchurl`, `pythonInterpreters` or the
-`poetry-purifier` scope.
+`poetry-purifier.overrideScope` replaces what everything in the scope shares,
+such as the `poetry` that the builder uses. `buildPoetryProject.override`
+replaces what the builder takes from the package set, such as `fetchurl` or
+`pythonInterpreters`.
 
 `buildPoetryProject` takes these arguments:
 
 - `src`: the project.
-- `lockFile`: the purifier lockfile. The default is the one in `src`.
+- `lockFile`: the purifier lockfile. The default is the one in `src`. A
+  `lockFile` outside `src` takes the place of any purifier lockfile in `src`.
+- `poetryLock`: the `poetry.lock` of the project. The default is the one in
+  `src`. A copy outside `src` takes the place of the one in `src`, in the
+  lock check and in the build.
 - `fetchers`: fetchers for the purifier library, such as a `fetchurl` that
   sends credentials or uses a mirror.
 - `python`: the interpreter. The default is the nixpkgs interpreter of the
@@ -150,10 +158,17 @@ them again. `--force` locks even when the lockfile is up to date.
 for the named ones, and then relocks the purifier lockfile against the
 result, in one run.
 
-The commands find the purifier lockfile next to `pyproject.toml`. For a
-lockfile kept elsewhere, they take `--lockfile <path>` or the environment
-variable `POETRY_PURIFIER_LOCKFILE`, and the option takes precedence. A
-dev shell can set the variable to the path its flake passes as `lockFile`.
+The commands find both lockfiles next to `pyproject.toml`. A project can
+instead keep its build external: the flake that calls the builder keeps the
+lockfiles outside the repository and passes them as `lockFile` and
+`poetryLock`. The commands take the same paths as `--lockfile <path>` and
+`--tool-lockfile <path>`, or as the environment variables
+`POETRY_PURIFIER_LOCKFILE` and `POETRY_PURIFIER_TOOL_LOCKFILE`, and an option
+takes precedence over its variable. With a `--tool-lockfile`, `lock` and
+`update` write `poetry.lock` there and leave the copy in the repository as it
+is, and `lock` starts from the copy in the repository when the outside one
+does not exist yet. A dev shell can set both variables to the paths its flake
+passes to the builder.
 
 `poetry purifier publish --repository <name>` has Nix build the `release`
 from the lockfiles, then runs Poetry's own `publish` on its files.
@@ -221,6 +236,10 @@ Every source `poetry.lock` can name works, in the Nix build and offline.
 | `url` (a wheel or an sdist) | The URL and the hash | Nothing |
 | `git`, with submodules | The URL and the commit | The hash of the checkout, in `git` |
 | `directory` or `file` (a path) | The path | Nothing, because the files are in the project |
+
+Poetry reads the path of a `directory` or `file` source relative to the
+`poetry.lock` it reads. A project that keeps `poetry.lock` outside the
+repository needs those paths to resolve from the directory of that copy.
 
 The lockfile also holds what no entry of `poetry.lock` covers. `builds`
 maps each set of build requirements to the packages it resolves to, with
@@ -290,7 +309,7 @@ run `which`, which the build sandbox does not have, so the flake adds it:
         inherit system;
         overlays = [ poetry-purifier.overlays.default ];
       };
-      rich = pkgs.buildPoetryProject {
+      rich = pkgs.poetry-purifier.buildPoetryProject {
         src = ./.;
         nativeCheckInputs = [ pkgs.which ];
       };

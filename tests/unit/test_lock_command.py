@@ -111,5 +111,6 @@ def test_check_names_the_command_for_a_missing_lock(tmp_path: Path) -> None:
     command = PurifierLockCommand()
     lines: list[str] = []
     command.line_error = lines.append  # type: ignore[method-assign]
-    assert command._check(tmp_path, tmp_path / "poetry-purifier.lock.json") == 1
+    lock_path = tmp_path / "poetry-purifier.lock.json"
+    assert command._check(tmp_path, lock_path, tmp_path / "poetry.lock") == 1
     assert "poetry purifier lock" in lines[0]

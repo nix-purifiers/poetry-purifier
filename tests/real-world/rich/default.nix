@@ -25,7 +25,7 @@ let
     sha256 = "1qs8n1hcjxcpwbfjjlzfmywfczxzcpvjkk3ay04kdbi1lvlynkaj";
   };
 
-  rich = pkgs.buildPoetryProject {
+  rich = pkgs.poetry-purifier.buildPoetryProject {
     src = runCommand "rich-source" { } ''
       cp -r ${upstream} "$out"
       chmod -R u+w "$out"

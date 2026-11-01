@@ -26,11 +26,12 @@ from poetry_purifier import lockfile_option
 class PurifierPublishCommand(PublishCommand):
     name = "purifier publish"
     description = "Publishes the wheel and sdist that Nix builds from the lockfile."
-    options = [*PublishCommand.options, lockfile_option.OPTION]  # noqa: RUF012
+    options = [*PublishCommand.options, *lockfile_option.OPTIONS]  # noqa: RUF012
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
         lock_path = lockfile_option.path(self)
+        tool_lock = lockfile_option.tool_path(self, root)
         if not lock_path.exists():
             self.line_error(
                 f"<error>{lock_path} is missing. Run `poetry purifier lock`.</error>"
@@ -41,20 +42,22 @@ class PurifierPublishCommand(PublishCommand):
         except lockfile.LockfileError as e:
             self.line_error(f"<error>{e}</error>")
             return 1
-        if lock["inputsHash"] != lockfile.inputs_hash(root):
+        if lock["inputsHash"] != lockfile.inputs_hash(root, tool_lock):
             self.line_error(
                 f"<error>{lock_path} is out of date with pyproject.toml or"
                 " poetry.lock. Run `poetry purifier lock`.</error>"
             )
             return 1
 
-        dist = os.environ.get("POETRY_PURIFIER_DIST") or self._build(root, lock_path)
+        dist = os.environ.get("POETRY_PURIFIER_DIST") or self._build(
+            root, lock_path, tool_lock
+        )
         self.line(f"Publishing the files Nix built in {dist}")
         self.io.input.set_option("dist-dir", dist)
         self.io.input.set_option("build", False)
         return super().handle()
 
-    def _build(self, root: Path, lock_path: Path) -> str:
+    def _build(self, root: Path, lock_path: Path, tool_lock: Path) -> str:
         build_nix = os.environ.get("POETRY_PURIFIER_BUILD")
         if build_nix is None:
             raise RuntimeError(
@@ -72,6 +75,11 @@ class PurifierPublishCommand(PublishCommand):
                 "--arg",
                 "lockFile",
                 str(lock_path),
+                *(
+                    ["--arg", "poetryLock", str(tool_lock)]
+                    if tool_lock != root / "poetry.lock"
+                    else []
+                ),
                 "--attr",
                 "release",
                 "--no-out-link",

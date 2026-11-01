@@ -28,9 +28,12 @@ def gc_root(root: Path) -> Path:
     return root / ".poetry-purifier" / "prefetch"
 
 
-def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> Path:
+def use_locked_cache(
+    root: Path, lock_path: Path, tool_lock: Path, realize: Path, io: IO
+) -> Path:
     """Fetches the locked files and the interpreter, links the files into
-    Poetry's cache, and returns the directory with `files` and `python`."""
+    Poetry's cache, and returns the directory with `files` and `python`.
+    `tool_lock` is the poetry.lock of the project."""
     lock = lockfile.read(lock_path)
     out_link = gc_root(root)
     out_link.parent.mkdir(exist_ok=True)
@@ -44,7 +47,7 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> Path
             str(lock_path),
             "--arg",
             "poetryLock",
-            str(root / "poetry.lock"),
+            str(tool_lock),
             "--argstr",
             "pythonVersion",
             lock["python"],

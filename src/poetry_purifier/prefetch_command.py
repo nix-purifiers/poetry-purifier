@@ -31,11 +31,12 @@ class PurifierPrefetchCommand(Command):
         "Fetches the locked files and the interpreter through Nix, so that"
         " Poetry works offline."
     )
-    options = [lockfile_option.OPTION]  # noqa: RUF012
+    options = [*lockfile_option.OPTIONS]  # noqa: RUF012
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
         lock_path = lockfile_option.path(self)
+        tool_lock = lockfile_option.tool_path(self, root)
         realize = os.environ.get("POETRY_PURIFIER_REALIZE")
         if realize is None:
             self.line_error(
@@ -53,7 +54,7 @@ class PurifierPrefetchCommand(Command):
         except lockfile.LockfileError as e:
             self.line_error(f"<error>{e}</error>")
             return 1
-        if lock["inputsHash"] != lockfile.inputs_hash(root):
+        if lock["inputsHash"] != lockfile.inputs_hash(root, tool_lock):
             self.line_error(
                 f"<error>{lock_path} is out of date with pyproject.toml or"
                 " poetry.lock. Run `poetry purifier lock`.</error>"
@@ -61,7 +62,7 @@ class PurifierPrefetchCommand(Command):
             return 1
 
         realized = interactive.use_locked_cache(
-            root, lock_path, Path(realize), self.io
+            root, lock_path, tool_lock, Path(realize), self.io
         )
         python = realized / "python" / "bin" / f"python{lock['python']}"
         # What `poetry env use` does.

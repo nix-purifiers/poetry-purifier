@@ -53,6 +53,8 @@ let
     {
       src,
       lockFile,
+      # The project's poetry.lock when it lies outside the project.
+      poetryLock ? null,
       # This wrapper, whose path the wrapper script sets.
       poetry ? builtins.storePath (builtins.getEnv "POETRY_PURIFIER_POETRY"),
     }:
@@ -61,9 +63,8 @@ let
       ignored = [ ".git" ".venv" ".poetry-purifier" "dist" "__pycache__" ];
     in
     pkgs.callPackage ${sources}/nix/lib/build-poetry-project.nix {
-      inherit purifier;
-      poetry-purifier = { inherit poetry; };
-    } {
+      inherit purifier poetry;
+    } ({
       inherit lockFile;
       src = builtins.path {
         path = src;
@@ -73,7 +74,7 @@ let
           !(builtins.elem (baseNameOf path) ignored)
           && builtins.match "result.*" (baseNameOf path) == null;
       };
-    }
+    } // pkgs.lib.optionalAttrs (poetryLock != null) { inherit poetryLock; })
   '';
 in
 symlinkJoin {

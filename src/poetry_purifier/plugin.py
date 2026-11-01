@@ -24,6 +24,7 @@ from poetry.plugins.application_plugin import ApplicationPlugin
 
 from poetry_purifier import interactive
 from poetry_purifier import lockfile
+from poetry_purifier import lockfile_option
 from poetry_purifier import modes
 from poetry_purifier.lock_command import PurifierLockCommand
 from poetry_purifier.lock_command import PurifierUpdateCommand
@@ -72,18 +73,25 @@ class PurifierPlugin(ApplicationPlugin):
         if realize is None or command.name not in OFFLINE_COMMANDS:
             return
         root = command.poetry.pyproject_path.parent  # type: ignore[attr-defined]
-        # POETRY_PURIFIER_LOCKFILE names a lockfile kept outside the project,
-        # like the --lockfile option of the purifier commands.
+        # POETRY_PURIFIER_LOCKFILE and POETRY_PURIFIER_TOOL_LOCKFILE name
+        # lockfiles kept outside the project, like the --lockfile and
+        # --tool-lockfile options of the purifier commands.
         lock_path = Path(
             os.environ.get("POETRY_PURIFIER_LOCKFILE") or root / lockfile.FILE_NAME
         )
+        tool_lock = lockfile_option.tool_path_from_environment(root)
         if not lock_path.exists():
             return
-        if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(root):
+        if lockfile.read(lock_path)["inputsHash"] != lockfile.inputs_hash(
+            root, tool_lock
+        ):
             event.io.write_error_line(
                 f"<warning>{lockfile.FILE_NAME} is out of date, so Poetry downloads"
                 " as usual. Run `poetry purifier lock` to renew it.</warning>"
             )
             return
-        interactive.use_locked_cache(root, lock_path, Path(realize), event.io)
-        modes.enable_offline(lock_path, root)
+        interactive.use_locked_cache(root, lock_path, tool_lock, Path(realize), event.io)
+        modes.enable_offline(lock_path, root, tool_lock)
+        if tool_lock != root / "poetry.lock":
+            # Poetry installs from the poetry.lock the lockfile was made from.
+            command.poetry.locker._lock = tool_lock  # type: ignore[attr-defined]

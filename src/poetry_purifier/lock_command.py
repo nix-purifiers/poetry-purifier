@@ -91,31 +91,71 @@ class PurifierLockCommand(Command):
             "Resolves the build requirements again, rather than keeping the"
             " versions the current lockfile has for them.",
         ),
-        lockfile_option.OPTION,
+        *lockfile_option.OPTIONS,
     ]
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
         target = lockfile_option.path(self)
+        self._tool_lock = lockfile_option.tool_path(self, root)
         if self.option("check"):
-            return self._check(root, target)
-        if self._resolve(root):
-            # Poetry reads the new poetry.lock.
-            self.get_application().reset_poetry()
-        elif not self.option("force") and lockfile.is_fresh(target, root):
+            return self._check(root, target, self._tool_lock)
+        if self._resolve(root, self._tool_lock):
+            if self._tool_lock == root / "poetry.lock":
+                # Poetry reads the new poetry.lock.
+                self.get_application().reset_poetry()
+        elif not self.option("force") and lockfile.is_fresh(
+            target, root, self._tool_lock
+        ):
             self.line(f"{target} is up to date.")
             return 0
         return self._lock(root, target)
 
-    def _resolve(self, root: Path) -> bool:
+    def _resolve(self, root: Path, tool_lock: Path) -> bool:
         """Writes poetry.lock where it is missing or out of date with
         pyproject.toml, keeping the versions it has, and returns whether it
         ran. `poetry lock` keeps the versions of an existing poetry.lock."""
+        if tool_lock != root / "poetry.lock":
+            return self._resolve_outside(root, tool_lock)
         locker = self.poetry.locker
         if locker.is_locked() and locker.is_fresh():
             return False
         self._run_project_poetry(root, "lock")
         return True
+
+    def _stage(self, root: Path, tool_lock: Path) -> Path:
+        """A copy of the project whose poetry.lock is the one at `tool_lock`,
+        or the project's own when `tool_lock` does not exist yet. Poetry
+        reads and writes poetry.lock next to pyproject.toml, so a poetry.lock
+        kept elsewhere is locked in a copy of the project."""
+        self._stage_directory = tempfile.TemporaryDirectory(
+            prefix="poetry-purifier-stage-"
+        )
+        stage = Path(self._stage_directory.name) / "project"
+        shutil.copytree(root, stage, ignore=IGNORED)
+        source = tool_lock if tool_lock.exists() else root / "poetry.lock"
+        if source.exists():
+            shutil.copyfile(source, stage / "poetry.lock")
+        return stage
+
+    def _resolve_outside(self, root: Path, tool_lock: Path) -> bool:
+        """Like `_resolve`, for a poetry.lock outside the project. The copy in
+        the project stays as it is."""
+        stage = self._stage(root, tool_lock)
+        poetry = Factory().create_poetry(stage)
+        ran = not (poetry.locker.is_locked() and poetry.locker.is_fresh())
+        if ran:
+            self._run_project_poetry(stage, "lock")
+        self._publish_stage(stage, tool_lock, force=ran)
+        return ran
+
+    def _publish_stage(self, stage: Path, tool_lock: Path, *, force: bool) -> None:
+        """Writes the poetry.lock of the staged project to `tool_lock`, and
+        has the rest of the command read the staged project."""
+        if force or not tool_lock.exists():
+            tool_lock.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(stage / "poetry.lock", tool_lock)
+        self.set_poetry(Factory().create_poetry(stage))
 
     def _run_project_poetry(self, root: Path, *arguments: str) -> None:
         """Runs Poetry on the project itself, with the user's configuration."""
@@ -153,7 +193,7 @@ class PurifierLockCommand(Command):
         self.line(f"Wrote {target}")
         return 0
 
-    def _check(self, root: Path, lock_path: Path) -> int:
+    def _check(self, root: Path, lock_path: Path, tool_lock: Path) -> int:
         if not lock_path.exists():
             self.line_error(
                 f"<error>{lock_path} is missing. Run `poetry purifier lock`.</error>"
@@ -161,7 +201,7 @@ class PurifierLockCommand(Command):
             return 1
         try:
             lock = lockfile.read(lock_path)
-            lockfile.expand(lock, root / "poetry.lock")
+            lockfile.expand(lock, tool_lock)
         except (lockfile.LockfileError, KeyError) as e:
             message = (
                 str(e)
@@ -170,7 +210,7 @@ class PurifierLockCommand(Command):
             )
             self.line_error(f"<error>{message}</error>")
             return 1
-        if lock["inputsHash"] != lockfile.inputs_hash(root):
+        if lock["inputsHash"] != lockfile.inputs_hash(root, tool_lock):
             self.line_error(
                 f"<error>{lock_path} is out of date with pyproject.toml or"
                 " poetry.lock. Run `poetry purifier lock`.</error>"
@@ -208,6 +248,8 @@ class PurifierLockCommand(Command):
     def _record(self, root: Path, python: str) -> list[dict[str, Any]]:
         project = self._workdir / "project"
         shutil.copytree(root, project, ignore=IGNORED)
+        if self._tool_lock != root / "poetry.lock":
+            shutil.copyfile(self._tool_lock, project / "poetry.lock")
         record_path = self._workdir / "record.jsonl"
         record_path.touch()
         record = {
@@ -267,7 +309,7 @@ class PurifierLockCommand(Command):
                 capture_output=True,
                 text=True,
             ).stdout.strip(),
-            "inputsHash": lockfile.inputs_hash(root),
+            "inputsHash": lockfile.inputs_hash(root, self._tool_lock),
             # The file names of the project's wheel and sdist, as `poetry
             # build` made them on the system of the lock run.
             "dist": self._dist,
@@ -499,6 +541,15 @@ class PurifierUpdateCommand(PurifierLockCommand):
 
     def handle(self) -> int:
         root = self.poetry.pyproject_path.parent
-        self._run_project_poetry(root, "update", "--lock", *self.argument("packages"))
-        self.get_application().reset_poetry()
+        self._tool_lock = lockfile_option.tool_path(self, root)
+        packages = self.argument("packages")
+        if self._tool_lock == root / "poetry.lock":
+            self._run_project_poetry(root, "update", "--lock", *packages)
+            self.get_application().reset_poetry()
+        else:
+            # The copy in the project stays as it is, and the update runs on
+            # a copy of the project that holds the poetry.lock to update.
+            stage = self._stage(root, self._tool_lock)
+            self._run_project_poetry(stage, "update", "--lock", *packages)
+            self._publish_stage(stage, self._tool_lock, force=True)
         return self._lock(root, lockfile_option.path(self))

@@ -44,4 +44,20 @@ grep -rq "$work/app/libs/greeting" .venv --include='*.pth'
 
 "$poetry" build
 test -f dist/app-1.0.0-py3-none-any.whl
+
+# Both lockfiles kept outside the project: with the two variables a dev
+# shell sets, Poetry installs from the poetry.lock outside and the loop runs
+# as before. Poetry resolves a path dependency relative to the poetry.lock it
+# reads, so the directory of the outside copy links the project's libs.
+mkdir "$work/kept"
+ln -s "$PWD/libs" "$work/kept/libs"
+mv poetry.lock poetry-purifier.lock.json "$work/kept/"
+rm -rf .venv
+export POETRY_PURIFIER_LOCKFILE="$work/kept/poetry-purifier.lock.json"
+export POETRY_PURIFIER_TOOL_LOCKFILE="$work/kept/poetry.lock"
+"$poetry" purifier prefetch
+"$poetry" install
+"$poetry" run hello --name=outside | tee "$work/out-outside"
+grep -q 'hello, outside' "$work/out-outside"
+test ! -e poetry.lock
 echo "conformance-offline: ok"
