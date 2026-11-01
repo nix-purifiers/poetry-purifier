@@ -13,7 +13,7 @@
 let
   lock = builtins.fromJSON (builtins.readFile lockFile);
 in
-import ./cache.nix { inherit (pkgs) fetchurl linkFarm; } "poetry-purifier-files" (
+import ./cache.nix { inherit (pkgs) fetchurl fetchgit linkFarm; } "poetry-purifier-files" (
   import ./select.nix {
     inherit
       lock

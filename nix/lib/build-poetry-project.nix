@@ -12,7 +12,7 @@
   lib,
   pkgs,
   stdenv,
-  fetchurl,
+  fetchgit,
   linkFarm,
   poetry-purifier,
 }:
@@ -25,6 +25,9 @@
   python ? null,
   # The dependency groups to install beside the project.
   groups ? [ "main" ],
+  # The fetcher of locked files, for a package index that needs credentials
+  # or a mirror.
+  fetchurl ? pkgs.fetchurl,
   ...
 }@args:
 let
@@ -38,7 +41,7 @@ let
     arch = stdenv.hostPlatform.parsed.cpu.name;
     glibcVersion = stdenv.cc.libc.version;
   };
-  mkCache = import ./cache.nix { inherit fetchurl linkFarm; };
+  mkCache = import ./cache.nix { inherit fetchurl fetchgit linkFarm; };
   cache = mkCache "${lock.project.name}-poetry-cache" files;
 in
 stdenv.mkDerivation (
@@ -46,6 +49,7 @@ stdenv.mkDerivation (
     "lockFile"
     "python"
     "groups"
+    "fetchurl"
   ]
   // {
     name = args.name or lock.project.name;

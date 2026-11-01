@@ -1,0 +1,9 @@
+[project]
+name = "greeting"
+version = "0.1.0"
+description = "A path dependency of the poetry-purifier test project"
+requires-python = ">=3.11"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

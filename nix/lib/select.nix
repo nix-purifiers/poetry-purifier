@@ -3,7 +3,7 @@
 # The locked files to fetch for one system. For each package, these are the
 # wheels that install with the given Python on this system, or the package's
 # sdists when no wheel does. Poetry makes the final choice among them when it
-# installs.
+# installs. A git dependency is its checkout on every system.
 {
   lock,
   pythonVersion,
@@ -27,6 +27,6 @@ let
     let
       wheels = filter (file: isWheel file && installs (baseNameOf file.path)) files;
     in
-    if wheels != [ ] then wheels else filter (file: !isWheel file) files;
+    if wheels != [ ] then wheels else filter (file: file ? git || !isWheel file) files;
 in
 concatMap forPackage (attrValues lock.packages)

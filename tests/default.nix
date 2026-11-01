@@ -3,9 +3,11 @@
 let
   inherit (pkgs) lib runCommand;
   purified = pkgs.extend overlay;
+  inherit (purified.poetry-purifier) poetry;
 
   app = purified.buildPoetryProject { src = ./fixtures/app; };
   lock = lib.importJSON ./fixtures/app/poetry-purifier.lock.json;
+  sitePackages = "${app}/${app.python.sitePackages}";
 
   selectFor =
     arch:
@@ -17,20 +19,44 @@ let
       }
     );
   charsetWheels = arch: lib.filter (lib.hasPrefix "charset_normalizer-") (selectFor arch);
+
+  # A copy of the fixture that Poetry can write to.
+  withFixture = ''
+    export HOME="$TMPDIR"
+    export POETRY_CACHE_DIR="$TMPDIR/poetry-cache"
+    cp -r ${./fixtures/app} app
+    chmod -R u+w app
+    cd app
+  '';
 in
 {
   # The project's script runs from the environment Poetry installed
-  # offline. docopt comes from its sdist, which Poetry built with the
-  # setuptools the lock run recorded.
+  # offline. It imports one dependency of each kind: registry wheels, an
+  # sdist Poetry built with the setuptools the lock resolved, a git
+  # dependency, a URL sdist and a path dependency.
   app-runs = runCommand "app-runs" { } ''
     ${app}/bin/hello --name=nix | tee "$out"
-    grep -q 'hello, nix (requests 2\.' "$out"
+    grep -q 'hello, nix (requests 2\..*six 1\.17\.0, git-package-example' "$out"
   '';
 
   # `poetry build` made the project's wheel and sdist.
   app-dist = runCommand "app-dist" { } ''
     test -f ${app.dist}/app-1.0.0-py3-none-any.whl
     test -f ${app.dist}/app-1.0.0.tar.gz
+    touch "$out"
+  '';
+
+  # The path dependency is in develop mode, and the Nix build installs it as
+  # a regular package rather than as a link into the build directory.
+  path-dependency-installed = runCommand "path-dependency-installed" { } ''
+    test -f ${sitePackages}/greeting.py
+    ! grep -rq /build ${sitePackages} --include='*.pth'
+    touch "$out"
+  '';
+
+  # The git dependency is fetched with its submodules, as Poetry clones it.
+  git-submodules = runCommand "git-submodules" { } ''
+    test -n "$(ls -A ${app.cache}/purifier-git/*/submodules/sample-namespace-packages)"
     touch "$out"
   '';
 
@@ -44,4 +70,50 @@ in
     );
     assert lib.elem "docopt-0.6.2.tar.gz" (selectFor "aarch64");
     pkgs.emptyFile;
+
+  # The committed lock matches the fixture's pyproject.toml and poetry.lock.
+  lock-up-to-date = runCommand "lock-up-to-date" { nativeBuildInputs = [ poetry ]; } ''
+    ${withFixture}
+    poetry purifier lock --check
+    touch "$out"
+  '';
+
+  # `poetry purifier publish` uploads the wheel and sdist that Nix built to
+  # a package index.
+  publish =
+    runCommand "publish"
+      {
+        nativeBuildInputs = [
+          poetry
+          # pypiserver imports cgi, which Python 3.14 removed, unless
+          # legacy-cgi provides it.
+          (pkgs.python3.withPackages (ps: [
+            ps.pypiserver
+            ps.legacy-cgi
+          ]))
+        ];
+      }
+      ''
+        ${withFixture}
+        mkdir "$TMPDIR/index"
+        python3 -m pypiserver run --port 8765 --authenticate . --passwords . "$TMPDIR/index" &
+        server=$!
+        for _ in $(seq 50); do
+          python3 -c 'import socket; socket.create_connection(("127.0.0.1", 8765))' 2>/dev/null && break
+          sleep 0.2
+        done
+
+        export POETRY_REPOSITORIES_LOCAL_URL=http://127.0.0.1:8765/
+        # The index accepts any credentials.
+        export POETRY_HTTP_BASIC_LOCAL_USERNAME=purifier
+        export POETRY_HTTP_BASIC_LOCAL_PASSWORD="$POETRY_HTTP_BASIC_LOCAL_USERNAME"
+        export POETRY_PURIFIER_DIST=${app.dist}
+        poetry purifier publish --repository local
+
+        kill "$server"
+        test -f "$TMPDIR/index/app-1.0.0-py3-none-any.whl"
+        test -f "$TMPDIR/index/app-1.0.0.tar.gz"
+        cmp "$TMPDIR/index/app-1.0.0-py3-none-any.whl" ${app.dist}/app-1.0.0-py3-none-any.whl
+        touch "$out"
+      '';
 }

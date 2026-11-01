@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: MIT
 #
-# The Poetry application plugin. It adds `poetry purifier lock`, and it puts
-# Poetry in the mode that POETRY_PURIFIER_MODE names before a command runs:
+# The Poetry application plugin. It adds `poetry purifier lock` and `poetry
+# purifier publish`, and it puts Poetry in the mode that POETRY_PURIFIER_MODE
+# names before a command runs:
 #
 # - `record`: the Poetry that `poetry purifier lock` runs.
 # - `offline`: a Nix build. POETRY_PURIFIER_LOCK names the lockfile, and
 #   POETRY_CACHE_DIR is a cache Nix filled from it.
 # - unset: interactive use. The wrapper from this flake sets
 #   POETRY_PURIFIER_REALIZE; when a project has an up-to-date lockfile, the
-#   plugin has Nix fetch the locked files into a cache in the project, and
-#   `poetry install`, `sync` and `build` run offline from it.
+#   plugin has Nix fetch the locked files into Poetry's cache, and `poetry
+#   install`, `sync` and `build` run offline from it.
 from __future__ import annotations
 
 import os
@@ -25,6 +26,7 @@ from poetry_purifier import interactive
 from poetry_purifier import lockfile
 from poetry_purifier import modes
 from poetry_purifier.lock_command import PurifierLockCommand
+from poetry_purifier.publish_command import PurifierPublishCommand
 
 
 if TYPE_CHECKING:
@@ -38,7 +40,7 @@ OFFLINE_COMMANDS = {"install", "sync", "build"}
 class PurifierPlugin(ApplicationPlugin):
     @property
     def commands(self) -> list[Any]:
-        return [PurifierLockCommand]
+        return [PurifierLockCommand, PurifierPublishCommand]
 
     def activate(self, application: Application) -> None:
         super().activate(application)
@@ -46,7 +48,7 @@ class PurifierPlugin(ApplicationPlugin):
         if mode == "record":
             modes.enable_record(Path(os.environ["POETRY_PURIFIER_RECORD"]))
         elif mode == "offline":
-            modes.enable_offline(Path(os.environ["POETRY_PURIFIER_LOCK"]))
+            modes.enable_offline(Path(os.environ["POETRY_PURIFIER_LOCK"]), sandbox=True)
         elif mode is None and os.environ.get("POETRY_PURIFIER") != "0":
             dispatcher = application.event_dispatcher
             assert dispatcher is not None

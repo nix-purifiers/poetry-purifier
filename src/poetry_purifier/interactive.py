@@ -57,15 +57,16 @@ def use_locked_cache(root: Path, lock_path: Path, realize: Path, io: IO) -> None
 
     cache_dir = Path(Config.create().get("cache-dir")).expanduser()
     linked = 0
-    for file in tree.rglob("*"):
-        if file.is_dir():
+    # Each entry of the tree is a link to a fetched file or git checkout.
+    for entry in tree.rglob("*"):
+        if not entry.is_symlink():
             continue
-        target = cache_dir / file.relative_to(tree)
+        target = cache_dir / entry.relative_to(tree)
         if target.exists():
             continue
         target.parent.mkdir(parents=True, exist_ok=True)
         target.unlink(missing_ok=True)
-        target.symlink_to(file.resolve())
+        target.symlink_to(entry.resolve())
         linked += 1
     if linked:
         io.write_error_line(

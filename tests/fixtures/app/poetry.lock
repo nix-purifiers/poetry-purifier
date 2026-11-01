@@ -205,6 +205,41 @@ files = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://pypi.org/simple"
+reference = "simple-index"
+
+[[package]]
+name = "git-package-example"
+version = "0.2.0a1"
+description = ""
+optional = false
+python-versions = "^3.10"
+groups = ["main"]
+files = []
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/python-poetry/test-fixture-vcs-repository.git"
+reference = "0be1215c90fffe37c5629cf2764615e9d9530e67"
+resolved_reference = "0be1215c90fffe37c5629cf2764615e9d9530e67"
+
+[[package]]
+name = "greeting"
+version = "0.1.0"
+description = "A path dependency of the poetry-purifier test project"
+optional = false
+python-versions = ">=3.11"
+groups = ["main"]
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "libs/greeting"
+
 [[package]]
 name = "idna"
 version = "3.20"
@@ -243,6 +278,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<8)"]
 
 [[package]]
+name = "six"
+version = "1.17.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+groups = ["main"]
+files = [
+    {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
+]
+
+[package.source]
+type = "url"
+url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
+
+[[package]]
 name = "urllib3"
 version = "2.8.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -262,5 +312,5 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.11"
-content-hash = "71e721f42227f3bfd210f5e77933f9225260e9a3b00bebce01e592f83871a319"
+python-versions = ">=3.11,<4"
+content-hash = "aa95a15907ff9ab0175a35eff1f6c14d9ed1cb8133de60bfc5b5eb9657f36260"

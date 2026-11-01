@@ -2,16 +2,37 @@
 name = "app"
 version = "1.0.0"
 description = "A test project for poetry-purifier"
-requires-python = ">=3.11"
-# requests pulls in charset-normalizer, which has platform wheels. docopt
-# 0.6.2 is only an sdist, so installing it runs an isolated build.
-dependencies = ["requests>=2.32", "docopt==0.6.2"]
+requires-python = ">=3.11,<4"
+# One dependency of each source kind:
+# - requests pulls in charset-normalizer, which has platform wheels.
+# - docopt 0.6.2 is only an sdist, so installing it runs an isolated build.
+#   It comes from a second package index, which Poetry reads through the
+#   simple repository API.
+# - git-package-example comes from git, from a repository with a submodule.
+# - six comes from a URL to its sdist.
+# - greeting is a path dependency, installed in develop mode.
+dependencies = [
+  "requests>=2.32",
+  "docopt==0.6.2",
+  "git-package-example @ git+https://github.com/python-poetry/test-fixture-vcs-repository.git@0be1215c90fffe37c5629cf2764615e9d9530e67",
+  "six @ https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz",
+  "greeting",
+]
 
 [project.scripts]
 hello = "app.cli:main"
 
 [tool.poetry]
 packages = [{ include = "app", from = "src" }]
+
+[tool.poetry.dependencies]
+greeting = { path = "libs/greeting", develop = true }
+docopt = { source = "simple-index" }
+
+[[tool.poetry.source]]
+name = "simple-index"
+url = "https://pypi.org/simple/"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core>=2.0"]

@@ -1,11 +1,29 @@
 {
   "builds": {
+    "poetry-core": [
+      {
+        "markers": "",
+        "name": "poetry-core",
+        "version": "2.5.0"
+      }
+    ],
     "setuptools >= 40.8.0": [
-      "setuptools==84.2.1"
+      {
+        "markers": "",
+        "name": "setuptools",
+        "version": "84.2.1"
+      }
+    ],
+    "setuptools>=61": [
+      {
+        "markers": "",
+        "name": "setuptools",
+        "version": "84.2.1"
+      }
     ]
   },
   "format": 1,
-  "inputsHash": "sha256-CRmQz/ygdanGhjjC6UtgTqckH3HfRfvheQPBAKWdR84=",
+  "inputsHash": "sha256-63rNn4GHRmXmk9MWEgFjx7brdjcTjw74dp6rCRanEMs=",
   "packages": {
     "certifi==2026.10.23": [
       {
@@ -888,6 +906,17 @@
         "url": "https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz"
       }
     ],
+    "git-package-example==0.2.0a1": [
+      {
+        "git": {
+          "rev": "0be1215c90fffe37c5629cf2764615e9d9530e67",
+          "submodules": true,
+          "url": "https://github.com/python-poetry/test-fixture-vcs-repository.git"
+        },
+        "hash": "sha256-vHHR9k+Nuu119DqZ4cmK4RefzX4PxdYYGYp7UrzuwNQ=",
+        "path": "purifier-git/9847830c8fdca57c-0be1215c90fffe37c5629cf2764615e9d9530e67"
+      }
+    ],
     "idna==3.20": [
       {
         "hash": "sha256-q3rnEil0VTNw8L25GeGpYLLNG8HvAnZBbYltuBwUWCw=",
@@ -898,6 +927,18 @@
         "hash": "sha256-p9uFACW5Xe0eropGGBoabFbJLJbw4rAF2f+NwCEMq0Q=",
         "path": "artifacts/4d/39/2c/7f0c02071d03aa7ff754f3f5dfb375a399c132f5bfeea80aa0397eb6fb/idna-3.20.tar.gz",
         "url": "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz"
+      }
+    ],
+    "poetry-core==2.5.0": [
+      {
+        "hash": "sha256-mO5GW2b34Uu5++aPteANDP8YTwNpk+yUYQrktWEvOt0=",
+        "path": "artifacts/6e/8a/b0/9b664148c897dc0956094ae771c851ee100f51dc90886956990899c4dc/poetry_core-2.5.0-py3-none-any.whl",
+        "url": "https://files.pythonhosted.org/packages/b7/25/7ed0a2ea4fe12f7fd0394387b5debbcd6fdbd06e5ac9daab96ba11471da8/poetry_core-2.5.0-py3-none-any.whl"
+      },
+      {
+        "hash": "sha256-gdBMklOxnQYEcYJo14GGfI97ISjlslu/HoQUHuxricQ=",
+        "path": "artifacts/de/b4/2e/19e9830b77a1bb96cddfca69269bb5c0effe093e37e0baa57bc1bffee7/poetry_core-2.5.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/42/b5/50f1fda26c4fe5b1d6ce5cdf0391bdfa1ca12fdcb8ad68344d5cf678fc90/poetry_core-2.5.0.tar.gz"
       }
     ],
     "requests==2.34.2": [
@@ -922,6 +963,13 @@
         "hash": "sha256-P/iztUkqCqZpYPRBk2Woa4TgEwcNQxPk1KaJT11k1rw=",
         "path": "artifacts/7f/df/bb/646ea094977fc04ce141736846f6facc16c1f80c3ec180e336afbab51e/setuptools-84.2.1.tar.gz",
         "url": "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz"
+      }
+    ],
+    "six==1.17.0": [
+      {
+        "hash": "sha256-/3AzXUaOfrbsZblbmdOig2VGBj9jrMUXHeNn6DSTKoE=",
+        "path": "artifacts/fb/2d/5c/16009bcf7a363e8a7b77e6ccd7c964aeba22398981c3167bd93685237b/six-1.17.0.tar.gz",
+        "url": "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
       }
     ],
     "urllib3==2.8.0": [
