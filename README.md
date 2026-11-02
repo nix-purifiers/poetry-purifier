@@ -346,9 +346,10 @@ terminal output. Clone it, write its purifier lockfile, and build it. The
 lock command runs `poetry lock` first when `poetry.lock` is out of date:
 
 ```zsh
+nix shell 'github:nix-purifiers/poetry-purifier'
 git clone https://github.com/Textualize/rich
 cd rich
-nix run github:nix-purifiers/poetry-purifier -- purifier lock
+poetry purifier lock
 nix build --impure --expr 'let
   purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
   pkgs = import purifier.inputs.nixpkgs {
@@ -381,11 +382,10 @@ For development, run Poetry from this flake. It installs offline from the
 locked files:
 
 ```zsh
-nix run github:nix-purifiers/poetry-purifier -- purifier \
-  prefetch
-nix run github:nix-purifiers/poetry-purifier -- install \
-  --extras jupyter
-nix run github:nix-purifiers/poetry-purifier -- run pytest
+nix shell 'github:nix-purifiers/poetry-purifier'
+poetry purifier prefetch
+poetry install --extras jupyter
+poetry run pytest
 ```
 
 ## Credits
