@@ -16,34 +16,22 @@ build and on your machine.
 It fetches download entries, and picks and names wheels, with the shared
 [purifier](https://github.com/nix-purifiers/purifier) library.
 
-## Installation
-
-Install the integration into your Nix profile once:
-
-```sh
-nix profile install 'github:nix-purifiers/poetry-purifier'
-```
-
-This installs the `poetry` wrapper. Use it for the locked
-development workflow below. With no purifier lockfile, it warns on standard
-error and runs the ordinary tool with impure resolution.
-
-`nix shell` makes an integration available temporarily instead of installing
-it. Keep using the activation steps below where a project environment or
-prefetched cache is required.
-
 ## Quickstart
 
-Install Nix, then run the following from your existing project's root.
-The setup prepares the locked dependencies and the integration that
-Poetry's normal commands use:
+From the project root:
 
 ```zsh
-nix develop github:nix-purifiers/poetry-purifier
+nix shell 'github:nix-purifiers/poetry-purifier'
 poetry purifier lock
+poetry purifier prefetch
 poetry install
-poetry run pytest
+eval "$(poetry env activate)"
+pytest
 ```
+
+`prefetch` creates Poetry’s virtual environment with the locked Python;
+`poetry install` populates it. `poetry env activate` activates it using
+Poetry’s environment settings.
 
 Commit the lockfiles that the lock command writes, including the build
 tool's own lockfile when it has one. Keep using the project's usual build,
@@ -53,6 +41,13 @@ No project Nix files are needed for this workflow.
 
 Sandboxed builds of the whole project are an optional
 [next step](#building-the-project-with-nix).
+
+The shell provides the `poetry` wrapper. Use it for the locked
+development workflow. With no purifier lockfile, it warns on standard
+error and runs the ordinary tool with impure resolution.
+
+For persistent use, add these packages through your usual Nix configuration.
+
 
 ## Development loop
 
