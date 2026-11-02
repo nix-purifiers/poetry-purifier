@@ -52,6 +52,14 @@ class PurifierPlugin(ApplicationPlugin):
 
     def activate(self, application: Application) -> None:
         super().activate(application)
+        # Published wheels discover this release's Nix runtime. The Nix
+        # package already supplies it and has no release bootstrap module.
+        try:
+            from poetry_purifier._release import configure
+        except ImportError:
+            pass
+        else:
+            configure()
         mode = os.environ.get("POETRY_PURIFIER_MODE")
         if mode == "record":
             modes.enable_record(Path(os.environ["POETRY_PURIFIER_RECORD"]))

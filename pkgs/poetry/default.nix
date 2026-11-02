@@ -106,5 +106,9 @@ symlinkJoin {
       --set POETRY_PURIFIER_POETRY "$out" \
       --prefix PATH : ${lib.makeBinPath [ nix-prefetch-git ]}
   '';
+  passthru.purifierRuntime = {
+    inherit realize build;
+    path = lib.makeBinPath [ nix-prefetch-git ];
+  };
   meta.mainProgram = "poetry";
 }

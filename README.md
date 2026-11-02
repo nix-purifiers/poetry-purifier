@@ -110,6 +110,15 @@ from the lockfiles, then runs Poetry's own `publish` on its files.
 Repositories, credentials and the other options of `poetry publish` work as
 they do there.
 
+## Published plugin
+
+Versioned plugin wheels are available in the [package index](https://nix-purifiers.github.io/poetry-purifier/simple/poetry-purifier/)
+and as [release assets](https://github.com/nix-purifiers/poetry-purifier/releases).
+Install a wheel URL with `poetry self add WHEEL_URL`.
+The published plugin uses the Nix runtime pinned by its release and warns
+that the plugin itself was resolved impurely. The Quickstart wrapper
+provides pure plugin resolution.
+
 ## Building the project with Nix
 
 Once the native development workflow is working, you can also build and
