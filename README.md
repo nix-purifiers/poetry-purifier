@@ -131,8 +131,10 @@ directly:
 
 ```nix
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.poetry-purifier.url = "github:nix-purifiers/poetry-purifier";
+  inputs.nixpkgs.url =
+    "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.poetry-purifier.url =
+    "github:nix-purifiers/poetry-purifier";
 
   outputs =
     { nixpkgs, poetry-purifier, ... }:
@@ -142,12 +144,14 @@ directly:
         inherit system;
         overlays = [ poetry-purifier.overlays.default ];
       };
-      project = pkgs.poetry-purifier.buildPoetryProject {
+      project =
+        pkgs.poetry-purifier.buildPoetryProject {
         src = ./.;
       };
     in
     {
-      # The packages are the environment of the project and its scripts.
+      # The packages are the environment of the project
+      # and its scripts.
       packages.${system} = project.packages;
       checks.${system}.tests = project.tests;
       # The shell has a `poetry` with the plugin.
