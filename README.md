@@ -147,7 +147,9 @@ directly:
         inherit system;
         overlays = [ poetry-purifier.overlays.default ];
       };
-      project = pkgs.poetry-purifier.buildPoetryProject { src = ./.; };
+      project = pkgs.poetry-purifier.buildPoetryProject {
+        src = ./.;
+      };
     in
     {
       # The packages are the environment of the project and its scripts.
@@ -215,15 +217,15 @@ For an ad hoc build, the builder can also be evaluated directly from the
 project root. Replace the example package name with one from your project:
 
 ```zsh
-nix build --impure --expr '
-  let
-    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
-    pkgs = import purifier.inputs.nixpkgs {
-      system = builtins.currentSystem;
-      overlays = [ purifier.overlays.default ];
-    };
-  in
-  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.my-project'
+nix build --impure --expr 'let
+  purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+  pkgs = import purifier.inputs.nixpkgs {
+    system = builtins.currentSystem;
+    overlays = [ purifier.overlays.default ];
+  };
+in
+(pkgs.poetry-purifier.buildPoetryProject { src = ./.; })
+.packages.my-project'
 ```
 
 This uses the purifier's pinned nixpkgs, matching the lock command above.
@@ -352,41 +354,42 @@ lock command runs `poetry lock` first when `poetry.lock` is out of date:
 git clone https://github.com/Textualize/rich
 cd rich
 nix run github:nix-purifiers/poetry-purifier -- purifier lock
-nix build --impure --expr '
-  let
-    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
-    pkgs = import purifier.inputs.nixpkgs {
-      system = builtins.currentSystem;
-      overlays = [ purifier.overlays.default ];
-    };
-  in
-  (pkgs.poetry-purifier.buildPoetryProject { src = ./.; }).packages.rich'
+nix build --impure --expr 'let
+  purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+  pkgs = import purifier.inputs.nixpkgs {
+    system = builtins.currentSystem;
+    overlays = [ purifier.overlays.default ];
+  };
+in
+(pkgs.poetry-purifier.buildPoetryProject { src = ./.; })
+.packages.rich'
 ```
 
 The tests of rich run `which`, which the build sandbox does not have. This
 build runs the test suite of rich in the sandbox with `which` added:
 
 ```zsh
-nix build --impure --expr '
-  let
-    purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
-    pkgs = import purifier.inputs.nixpkgs {
-      system = builtins.currentSystem;
-      overlays = [ purifier.overlays.default ];
-    };
-  in
-  (pkgs.poetry-purifier.buildPoetryProject {
-    src = ./.;
-    nativeCheckInputs = [ pkgs.which ];
-  }).tests'
+nix build --impure --expr 'let
+  purifier = builtins.getFlake "github:nix-purifiers/poetry-purifier";
+  pkgs = import purifier.inputs.nixpkgs {
+    system = builtins.currentSystem;
+    overlays = [ purifier.overlays.default ];
+  };
+in
+(pkgs.poetry-purifier.buildPoetryProject {
+  src = ./.;
+  nativeCheckInputs = [ pkgs.which ];
+}).tests'
 ```
 
 For development, run Poetry from this flake. It installs offline from the
 locked files:
 
 ```zsh
-nix run github:nix-purifiers/poetry-purifier -- purifier prefetch
-nix run github:nix-purifiers/poetry-purifier -- install --extras jupyter
+nix run github:nix-purifiers/poetry-purifier -- purifier \
+  prefetch
+nix run github:nix-purifiers/poetry-purifier -- install \
+  --extras jupyter
 nix run github:nix-purifiers/poetry-purifier -- run pytest
 ```
 
