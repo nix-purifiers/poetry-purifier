@@ -396,9 +396,5 @@ nix run github:nix-purifiers/poetry-purifier -- run pytest
 
 ## Credits
 
-poetry-purifier carries the design of
-[sbt-nix-backend](https://github.com/clhodapp/sbt-nix-backend) over to
-Poetry. sbt-nix-backend made Nix the dependency and build backend of sbt,
-with a lockfile of every download, a sandboxed build from it, an offline
-interactive mode, and a publish step that publishes what Nix built. The
-nix-purifiers family takes its idea from nixcloud's cargo work (libnix).
+The purifier idea was inspired by nixcloud's
+[cargo (libnix)](https://github.com/nixcloud/cargo).
