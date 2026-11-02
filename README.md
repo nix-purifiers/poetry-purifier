@@ -5,8 +5,6 @@ Nix-resolved dependencies. Use the normal build and test commands in your
 working tree; building the project itself in the Nix sandbox is an
 optional next step.
 
-It follows the [purifier contract](https://github.com/nix-purifiers/purifier/blob/main/CONTRACT.md).
-
 Poetry still installs, builds, tests and publishes the project.
 `poetry.lock` already records the name, version and hash of every file
 Poetry installs. The plugin records the rest in `poetry-purifier.lock.json`,
@@ -15,10 +13,8 @@ and the build requirements of packages built from source. Nix fetches the
 files into Poetry's cache, and Poetry runs offline from it, both in a Nix
 build and on your machine.
 
-poetry-purifier is part of the [nix-purifiers](https://nix-purifiers.github.io)
-family and meets the family's contract. It fetches download entries, and
-picks and names wheels, with the family's shared library,
-[purifier](https://github.com/nix-purifiers/purifier).
+It fetches download entries, and picks and names wheels, with the shared
+[purifier](https://github.com/nix-purifiers/purifier) library.
 
 ## Installation
 
