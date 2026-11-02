@@ -50,14 +50,35 @@ class PurifierPublishCommand(PublishCommand):
             return 1
 
         dist = os.environ.get("POETRY_PURIFIER_DIST") or self._build(
-            root, lock_path, tool_lock
+            root, lock_path, tool_lock, bool(lock.get("projectInputs"))
         )
         self.line(f"Publishing the files Nix built in {dist}")
+        if lock.get('projectInputs'):
+            from packaging.utils import parse_wheel_filename
+            from poetry.core.packages.package import Package
+            from poetry.publishing.publisher import Publisher
+            wheels = sorted(Path(dist).glob('*.whl'))
+            if not wheels:
+                raise RuntimeError('The Nix projection has no wheels to publish')
+            published = set()
+            for wheel in wheels:
+                name, version, _, _ = parse_wheel_filename(wheel.name)
+                if name in published:
+                    continue
+                published.add(name)
+                publisher = Publisher(self.poetry, self.io, Path(dist))
+                publisher._package = Package(name, str(version))
+                publisher._uploader._dist_name = wheel.name.split('-')[0]
+                publisher.publish(self.option('repository'), self.option('username'), self.option('password'),
+                    Path(self.option('cert')) if self.option('cert') else None,
+                    Path(self.option('client-cert')) if self.option('client-cert') else None,
+                    self.option('dry-run'), self.option('skip-existing'))
+            return 0
         self.io.input.set_option("dist-dir", dist)
         self.io.input.set_option("build", False)
         return super().handle()
 
-    def _build(self, root: Path, lock_path: Path, tool_lock: Path) -> str:
+    def _build(self, root: Path, lock_path: Path, tool_lock: Path, projected: bool = False) -> str:
         build_nix = os.environ.get("POETRY_PURIFIER_BUILD")
         if build_nix is None:
             raise RuntimeError(
@@ -81,7 +102,7 @@ class PurifierPublishCommand(PublishCommand):
                     else []
                 ),
                 "--attr",
-                "release",
+                "projections.python" if projected else "release",
                 "--no-out-link",
             ],
             capture_output=True,

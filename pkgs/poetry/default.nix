@@ -99,10 +99,15 @@ symlinkJoin {
   paths = [ withPlugin ];
   nativeBuildInputs = [ makeWrapper ];
   postBuild = ''
+    mkdir -p "$out/share/poetry-purifier"
+    ln -s ${purifierSource}/tools "$out/share/poetry-purifier/project-input-tools"
+    ln -s ${sources}/nix/lib "$out/share/poetry-purifier/python-bindings"
     wrapProgram "$out/bin/poetry" \
       --run ${lib.escapeShellArg unlockedNotice} \
       --set POETRY_PURIFIER_REALIZE ${realize} \
       --set POETRY_PURIFIER_BUILD ${build} \
+      --set POETRY_PURIFIER_PROJECT_INPUTS_TOOLS ${purifierSource}/tools \
+      --set POETRY_PURIFIER_PYTHON_BINDINGS ${sources}/nix/lib \
       --set POETRY_PURIFIER_POETRY "$out" \
       --prefix PATH : ${lib.makeBinPath [ nix-prefetch-git ]}
   '';

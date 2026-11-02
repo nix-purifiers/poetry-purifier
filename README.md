@@ -119,6 +119,31 @@ The published plugin uses the Nix runtime pinned by its release and warns
 that the plugin itself was resolved impurely. The Quickstart wrapper
 provides pure plugin resolution.
 
+## Dependencies from another purified project
+
+```zsh
+nix shell 'github:nix-purifiers/poetry-purifier'
+poetry purifier lock \
+  --input 'github:owner/library/<rev>#library'
+poetry purifier prefetch
+poetry install
+poetry run pytest
+```
+
+The producer exposes `projections.python`, the same wheelhouse format used
+by uv, PDM and pip. Repeat `--input` for more producers. Poetry uses their
+wheels without editing project dependency declarations. The purifier lock
+records the Nix source pins and omits supplied downloads. Relocking retains
+those pins; `poetry purifier update` refreshes them.
+
+Prefetch rebinds native lockfile paths for this machine without rewriting
+committed files. The builder exposes `projections.python` on the project
+and its package, including runtime dependencies and local path packages.
+Their Nix-derived versions and dependency metadata work with ordinary
+installers. Composed publishing uploads that wheelhouse through Poetry's
+usual repository configuration. Use an index accepting local versions,
+or consume the wheels with `--find-links`.
+
 ## Building the project with Nix
 
 Once the native development workflow is working, you can also build and

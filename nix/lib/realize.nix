@@ -17,21 +17,33 @@
 let
   # The plugin checks the lockfile before it builds this.
   lock = builtins.fromJSON (builtins.readFile lockFile);
+  projectInputs = import ./python-inputs.nix {
+    inherit purifier lock;
+    inherit (pkgs) lib runCommand writeText;
+    python = pkgs."python${builtins.replaceStrings [ "." ] [ "" ] lock.python}";
+    system = pkgs.stdenv.hostPlatform.system;
+  };
 in
-pkgs.linkFarm "poetry-purifier-prefetch" [
-  {
-    name = "files";
-    path = purifier.tree {
-      inherit pkgs;
-      name = "poetry-purifier-files";
-      entries = import ./select.nix {
-        packages = import ./entries.nix { inherit lock poetryLock; };
-        installs = purifier.wheels { inherit pythonVersion arch glibcVersion; };
+pkgs.linkFarm "poetry-purifier-prefetch" (
+  [
+    {
+      name = "files";
+      path = purifier.tree {
+        inherit pkgs;
+        name = "poetry-purifier-files";
+        entries = import ./select.nix {
+          packages = import ./entries.nix { inherit lock poetryLock; };
+          installs = purifier.wheels { inherit pythonVersion arch glibcVersion; };
+        };
       };
-    };
+    }
+    {
+      name = "python";
+      path = pkgs."python${builtins.replaceStrings [ "." ] [ "" ] lock.python}";
+    }
+  ]
+  ++ pkgs.lib.optional (projectInputs.dependencies != [ ]) {
+    name = "python-inputs.json";
+    path = "${projectInputs.bindings}/inputs.json";
   }
-  {
-    name = "python";
-    path = pkgs."python${builtins.replaceStrings [ "." ] [ "" ] lock.python}";
-  }
-]
+)

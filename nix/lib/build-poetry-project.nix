@@ -75,6 +75,7 @@
   # separate environment with those groups and the built wheel, and the
   # default check phase runs `pytest`.
   checkGroups ? [ "dev" ],
+  projectDependencies ? null,
   ...
 }@args:
 let
@@ -118,6 +119,18 @@ let
     )
   );
   fetches = checked.entries;
+  projectInputs = import ./python-inputs.nix {
+    inherit
+      lib
+      purifier
+      runCommand
+      writeText
+      lock
+      projectDependencies
+      ;
+    python = interpreter;
+    system = stdenv.hostPlatform.system;
+  };
   # A directory laid out like Poetry's cache directory: each locked file at
   # the path where Poetry's artifact cache keeps it, and each git checkout
   # at the path the plugin copies it from.
@@ -147,6 +160,7 @@ let
       "python"
       "groups"
       "checkGroups"
+      "projectDependencies"
     ]
     // {
       name = args.name or projectName;
@@ -177,7 +191,12 @@ let
         export POETRY_CACHE_DIR="$TMPDIR/poetry-cache"
         export POETRY_NO_INTERACTION=1
         export POETRY_PURIFIER_MODE=offline
+        export POETRY_PURIFIER_EXPORT_WHEELS="$out/nix-support/wheels"
+        export POETRY_PURIFIER_EXPORT_ENV="$out"
         export POETRY_PURIFIER_LOCK=${lockFile}
+        ${lib.optionalString (
+          projectInputs.dependencies != [ ]
+        ) "export POETRY_PURIFIER_PROJECT_INPUTS=${projectInputs.bindings}/inputs.json"}
         # A module imported during the build would otherwise leave bytecode
         # that records the build time, and two builds would differ.
         export PYTHONDONTWRITEBYTECODE=1
@@ -233,6 +252,7 @@ let
 
       passthru = {
         python = interpreter;
+        inherit projections;
       }
       // args.passthru or { };
     }
@@ -241,6 +261,63 @@ let
   release = runCommand "${projectName}-release" {
     passthru.files = lib.genAttrs distFiles (file: "${release}/${file}");
   } ''cp -r ${environment.dist} "$out"'';
+
+  localNames = map (package: package.name) (
+    builtins.filter (package: (package.source.type or null) == "directory") (
+      (builtins.fromTOML (builtins.readFile poetryLock)).package or [ ]
+    )
+  );
+  localWheels =
+    runCommand "${projectName}-local-wheels"
+      {
+        nativeBuildInputs = [ (interpreter.withPackages (ps: [ ps.packaging ])) ];
+        names = builtins.toJSON localNames;
+      }
+      ''
+        mkdir -p "$out"
+        python - <<'PYTHON'
+        import json, os
+        from pathlib import Path
+        from packaging.utils import canonicalize_name, parse_wheel_filename
+        selected = {canonicalize_name(name) for name in json.loads(os.environ['names'])}
+        for wheel in Path('${environment}/nix-support/wheels').glob('*.whl'):
+            if parse_wheel_filename(wheel.name)[0] in selected:
+                (Path(os.environ['out']) / wheel.name).symlink_to(wheel)
+        PYTHON
+      '';
+
+  scope =
+    runCommand "${projectName}-publication-scope"
+      {
+        nativeBuildInputs = [ (interpreter.withPackages (ps: [ ps.packaging ])) ];
+        outputs = [
+          "out"
+          "runtime"
+        ];
+        repositories = builtins.toJSON [
+          (toString release)
+          (toString localWheels)
+        ];
+        roots = builtins.toJSON [ projectName ];
+        passAsFile = [
+          "repositories"
+          "roots"
+        ];
+      }
+      ''
+        python ${./wheel_scope.py} --environment ${environment} \
+          --repositories "$repositoriesPath" --roots "$rootsPath" \
+          --destination "$out" --runtime "$runtime"
+        mkdir -p "$runtime/nix-support"
+        printf '%s\n' ${environment} > "$runtime/nix-support/inputs"
+      '';
+  projections = purifier.pythonProjections {
+    repository = scope.out;
+    runtimeRepository = scope.runtime;
+    inherit runCommand;
+    dependencies = projectInputs.dependencies;
+    python3 = interpreter;
+  };
 
   scriptPackages = lib.genAttrs scripts (
     script:
@@ -255,5 +332,5 @@ in
     ${projectName} = environment;
   };
   tests = environment.overrideAttrs { doCheck = true; };
-  inherit release fetches;
+  inherit release fetches projections;
 }

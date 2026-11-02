@@ -94,6 +94,30 @@ let
   '';
 in
 {
+  composition-producer = environment;
+  python-projection =
+    runCommand "poetry-native-projection-downstream"
+      {
+        nativeBuildInputs = [
+          pkgs.uv
+          environment.python
+        ];
+      }
+      ''
+        export HOME=$TMPDIR UV_CACHE_DIR=$TMPDIR/uv-cache UV_PYTHON_DOWNLOADS=never
+        uv venv --python ${environment.python.interpreter} downstream
+        uv pip install --python downstream/bin/python --no-index \
+          --find-links ${app.projections.python} app
+        downstream/bin/hello > result
+        grep -q 'hello, world' result
+        downstream/bin/python - <<'PYTHON'
+        from importlib.metadata import version
+        assert '+nix.' in version('app')
+        assert '+nix.' in version('greeting')
+        import requests, attrs, six, git_package_example, greeting
+        PYTHON
+        touch $out
+      '';
   unlocked-wrapper = runCommand "unlocked-wrapper" { nativeBuildInputs = [ pkgs.python3 ]; } ''
     export HOME="$TMPDIR/home"
     mkdir -p "$HOME"

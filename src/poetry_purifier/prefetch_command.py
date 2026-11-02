@@ -66,6 +66,7 @@ class PurifierPrefetchCommand(Command):
         )
         python = realized / "python" / "bin" / f"python{lock['python']}"
         # What `poetry env use` does.
+        os.environ.setdefault("POETRY_VIRTUALENVS_IN_PROJECT", "true")
         env = EnvManager(self.poetry, io=self.io).activate(str(python))
         self.line(f"Using virtualenv: {env.path}")
         return 0

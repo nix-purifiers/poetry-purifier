@@ -91,10 +91,16 @@ class PurifierLockCommand(Command):
             "Resolves the build requirements again, rather than keeping the"
             " versions the current lockfile has for them.",
         ),
+        option("input", None, "A Nix producer exposing projections.python.", flag=False, multiple=True),
         *lockfile_option.OPTIONS,
     ]
 
     def handle(self) -> int:
+        from poetry_purifier import inputs
+        with inputs.locking(self):
+            return self._handle()
+
+    def _handle(self) -> int:
         root = self.poetry.pyproject_path.parent
         target = lockfile_option.path(self)
         self._tool_lock = lockfile_option.tool_path(self, root)
@@ -118,7 +124,7 @@ class PurifierLockCommand(Command):
         if tool_lock != root / "poetry.lock":
             return self._resolve_outside(root, tool_lock)
         locker = self.poetry.locker
-        if locker.is_locked() and locker.is_fresh():
+        if not getattr(self, "_project_inputs", []) and locker.is_locked() and locker.is_fresh():
             return False
         self._run_project_poetry(root, "lock")
         return True
@@ -189,6 +195,8 @@ class PurifierLockCommand(Command):
             records = self._record(root, python)
             lock = self._compose(root, python, records)
 
+        if self._project_inputs:
+            lock["projectInputs"] = self._project_inputs
         lockfile.write(target, lock)
         self.line(f"Wrote {target}")
         return 0
@@ -234,6 +242,9 @@ class PurifierLockCommand(Command):
             "POETRY_VIRTUALENVS_IN_PROJECT": "true",
             "POETRY_NO_INTERACTION": "1",
         }
+        for key in ("POETRY_PURIFIER_PROJECT_INPUTS", "POETRY_PURIFIER_PROJECT_INPUTS_TOOLS", "POETRY_PURIFIER_PYTHON_BINDINGS"):
+            if key in os.environ:
+                env[key] = os.environ[key]
         return env
 
     def _run_poetry(self, cwd: Path, *arguments: str, **env: str) -> None:
@@ -504,7 +515,7 @@ class PurifierLockCommand(Command):
             'version = "0"\n'
             f"dependencies = {json.dumps(dependencies)}\n"
         )
-        self._run_poetry(project, "lock")
+        self._run_poetry(project, "lock", POETRY_PURIFIER_PROJECT_INPUTS="")
         locked = tomllib.loads((project / "poetry.lock").read_text())
         markers: dict[str, str] = {}
         for info in locked["package"]:
@@ -540,6 +551,11 @@ class PurifierUpdateCommand(PurifierLockCommand):
     ]
 
     def handle(self) -> int:
+        from poetry_purifier import inputs
+        with inputs.locking(self, refresh=True):
+            return self._handle()
+
+    def _handle(self) -> int:
         root = self.poetry.pyproject_path.parent
         self._tool_lock = lockfile_option.tool_path(self, root)
         packages = self.argument("packages")

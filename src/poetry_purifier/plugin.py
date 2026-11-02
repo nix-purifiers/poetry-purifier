@@ -52,6 +52,11 @@ class PurifierPlugin(ApplicationPlugin):
 
     def activate(self, application: Application) -> None:
         super().activate(application)
+        from poetry_purifier import wheel_capture
+        wheel_capture.enable()
+        from poetry_purifier import inputs
+        inputs.enable()
+        application.event_dispatcher.add_listener(COMMAND, inputs.command)
         # Published wheels discover this release's Nix runtime. The Nix
         # package already supplies it and has no release bootstrap module.
         try:
@@ -106,6 +111,8 @@ class PurifierPlugin(ApplicationPlugin):
                 f"{lockfile.FILE_NAME} is out of date. Run `poetry purifier lock` to renew it."
             )
         interactive.use_locked_cache(root, lock_path, tool_lock, Path(realize), event.io)
+        from poetry_purifier import inputs
+        inputs.bind(command.poetry)
         modes.enable_offline(lock_path, root, tool_lock)
         if tool_lock != root / "poetry.lock":
             # Poetry installs from the poetry.lock the lockfile was made from.

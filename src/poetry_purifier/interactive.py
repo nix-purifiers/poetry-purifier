@@ -70,6 +70,12 @@ def use_locked_cache(
         )
     realized = Path(build.stdout.strip())
     tree = realized / "files"
+    configuration = realized / 'python-inputs.json'
+    if configuration.exists():
+        import os
+        from poetry_purifier import inputs
+        os.environ['POETRY_PURIFIER_PROJECT_INPUTS'] = str(configuration)
+        inputs.enable()
 
     cache_dir = Path(Config.create().get("cache-dir")).expanduser()
     linked = 0
