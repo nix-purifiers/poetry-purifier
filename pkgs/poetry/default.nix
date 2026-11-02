@@ -30,6 +30,23 @@
 }:
 let
   inherit (pkgs) poetry;
+  unlockedNotice = ''
+    case "''${1:-}" in
+      "" | --version | -V | --help | -h)
+        if [ "''${POETRY_PURIFIER:-1}" != 0 ] && [ -z "''${POETRY_PURIFIER_MODE:-}" ]; then
+          root="$PWD"
+          while [ ! -f "$root/pyproject.toml" ] && [ "$root" != / ]; do
+            root=$(dirname "$root")
+          done
+          lock="''${POETRY_PURIFIER_LOCKFILE:-$root/poetry-purifier.lock.json}"
+          if [ ! -e "$lock" ]; then
+            echo "poetry-purifier: warning: no purifier lockfile found; running poetry impurely." >&2
+            export POETRY_PURIFIER_WARNING_SENT=1
+          fi
+        fi
+        ;;
+    esac
+  '';
   withPlugin = poetry.withPlugins (_: [ plugin ]);
   # The Nix files of the builder.
   sources = lib.fileset.toSource {
@@ -83,6 +100,7 @@ symlinkJoin {
   nativeBuildInputs = [ makeWrapper ];
   postBuild = ''
     wrapProgram "$out/bin/poetry" \
+      --run ${lib.escapeShellArg unlockedNotice} \
       --set POETRY_PURIFIER_REALIZE ${realize} \
       --set POETRY_PURIFIER_BUILD ${build} \
       --set POETRY_PURIFIER_POETRY "$out" \

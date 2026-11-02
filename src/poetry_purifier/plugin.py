@@ -75,7 +75,8 @@ class PurifierPlugin(ApplicationPlugin):
         try:
             root = command.poetry.pyproject_path.parent  # type: ignore[attr-defined]
         except (AttributeError, RuntimeError):
-            event.io.write_error_line("<warning>poetry-purifier: warning: no purifier lockfile found; running Poetry impurely.</warning>")
+            if not os.environ.get("POETRY_PURIFIER_WARNING_SENT"):
+                event.io.write_error_line("<warning>poetry-purifier: warning: no purifier lockfile found; running Poetry impurely.</warning>")
             return
         # POETRY_PURIFIER_LOCKFILE and POETRY_PURIFIER_TOOL_LOCKFILE name
         # lockfiles kept outside the project, like the --lockfile and
@@ -85,7 +86,8 @@ class PurifierPlugin(ApplicationPlugin):
         )
         tool_lock = lockfile_option.tool_path_from_environment(root)
         if not lock_path.exists():
-            event.io.write_error_line('<warning>poetry-purifier: warning: no poetry-purifier.lock.json found; running Poetry impurely. Run `poetry purifier lock` to use Nix-resolved dependencies.</warning>')
+            if not os.environ.get("POETRY_PURIFIER_WARNING_SENT"):
+                event.io.write_error_line('<warning>poetry-purifier: warning: no poetry-purifier.lock.json found; running Poetry impurely. Run `poetry purifier lock` to use Nix-resolved dependencies.</warning>')
             return
         if command.name not in OFFLINE_COMMANDS:
             return

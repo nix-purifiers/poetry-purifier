@@ -94,6 +94,28 @@ let
   '';
 in
 {
+  unlocked-wrapper = runCommand "unlocked-wrapper" { nativeBuildInputs = [ pkgs.python3 ]; } ''
+    export HOME="$TMPDIR/home"
+    mkdir -p "$HOME"
+    cd "$TMPDIR"
+    for option in --version --help; do
+      ${poetry}/bin/poetry "$option" >stdout 2>stderr
+      test "$(grep -c poetry-purifier:\ warning: stderr)" = 1
+    done
+    ${poetry}/bin/poetry >stdout 2>stderr
+    test "$(grep -c poetry-purifier:\ warning: stderr)" = 1
+    cat > pyproject.toml <<'PROJECT'
+    [project]
+    name = "unlocked-probe"
+    version = "0.1.0"
+    requires-python = ">=3.10"
+    dependencies = []
+    PROJECT
+    ${poetry}/bin/poetry check >stdout 2>stderr
+    test "$(grep -c poetry-purifier:\ warning: stderr)" = 1
+    touch "$out"
+  '';
+
   # The contract: a lockfile older than the project fails, at evaluation and
   # in the command, naming the command to run. Here the fixture's lockfile
   # meets another project's files.
