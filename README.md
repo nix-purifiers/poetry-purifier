@@ -53,7 +53,7 @@ For persistent use, add these packages through your usual Nix configuration.
 
 | Step | Command |
 |---|---|
-| Install for development | `poetry install` in `nix develop` |
+| Install for development | `poetry install` after the Quickstart setup |
 | Run a script or the tests | `poetry run <script>`, `poetry run pytest` |
 | Add a dependency | `poetry add <package>`, then `poetry purifier lock` |
 | Update dependencies | `poetry purifier update [<package>...]` |
@@ -160,7 +160,7 @@ directly:
 
 `nix build '.#<project>'` builds the environment, `nix run '.#<script>'`
 runs one of the project's scripts, `nix flake check` runs the tests in the
-sandbox, and `nix develop` gives the shell.
+sandbox.
 
 A function that an overlay or a flake passes to `callPackage` takes the scope
 by name, as the argument `poetry-purifier`.
