@@ -105,7 +105,11 @@ def locking(command, refresh=False):
     state.mkdir(exist_ok=True)
     (state / '.gitignore').write_text('*\n')
     views = project_inputs.python_views(records, state / 'project-inputs')
-    configuration = python_bindings.write(views, [entry['nativeRepository'] for entry in previous], state / 'bindings')
+    import shutil
+    python = shutil.which(command.option('python'))
+    if python is None:
+        raise ValueError(f"{command.option('python')} is not on PATH")
+    configuration = python_bindings.write(views, [entry['nativeRepository'] for entry in previous], state / 'bindings', python=python)
     command._project_inputs = [entry | {'nativeRepository': str(view['repository'])}
                                for entry, view in zip(records, views, strict=True)]
     before = os.environ.get('POETRY_PURIFIER_PROJECT_INPUTS')

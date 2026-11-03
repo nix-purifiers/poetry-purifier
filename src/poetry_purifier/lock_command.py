@@ -59,6 +59,15 @@ def _is_universal_wheel(file_name: str) -> bool:
     return file_name.endswith(("-py3-none-any.whl", "-py2.py3-none-any.whl"))
 
 
+def _sdk_pythonpath() -> str:
+    # Discovery subprocesses may run a different Python; expose SDK packages
+    # without replacing that interpreter's standard library.
+    return os.pathsep.join(path for path in sys.path if path and (
+        any(part in ('site-packages','dist-packages') for part in Path(path).parts)
+        or (Path(path) / 'poetry').is_dir()
+        or (Path(path) / 'poetry_purifier').is_dir()))
+
+
 class PurifierLockCommand(Command):
     name = "purifier lock"
     description = (
@@ -169,7 +178,7 @@ class PurifierLockCommand(Command):
         subprocess.run(
             [sys.executable, "-m", "poetry", *arguments],
             cwd=root,
-            env=os.environ | {"PYTHONPATH": os.pathsep.join(p for p in sys.path if p)},
+            env=os.environ | {"PYTHONPATH": _sdk_pythonpath()},
             check=True,
         )
 
@@ -237,7 +246,7 @@ class PurifierLockCommand(Command):
             # The Poetry that runs this command, with this plugin. A Nix
             # wrapper puts Poetry's modules on the path at start-up, so the
             # interpreter alone does not find them.
-            "PYTHONPATH": os.pathsep.join(p for p in sys.path if p),
+            "PYTHONPATH": _sdk_pythonpath(),
             "POETRY_CACHE_DIR": str(self._workdir / "cache"),
             "POETRY_VIRTUALENVS_IN_PROJECT": "true",
             "POETRY_NO_INTERACTION": "1",
