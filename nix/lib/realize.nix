@@ -11,12 +11,24 @@
   lockFile,
   poetryLock,
   pythonVersion,
+  # The CPU and glibc of the calling system. On a Mac the files are instead
+  # the ones the build chooses, for nixpkgs' darwinMinVersion.
   arch,
   glibcVersion,
 }:
 let
   # The plugin checks the lockfile before it builds this.
   lock = builtins.fromJSON (builtins.readFile lockFile);
+  platform = pkgs.stdenv.hostPlatform;
+  target =
+    if platform.isDarwin then
+      {
+        # macOS wheel tags name the CPU arm64.
+        arch = "arm64";
+        macosVersion = platform.darwinMinVersion;
+      }
+    else
+      { inherit arch glibcVersion; };
   projectInputs = import ./python-inputs.nix {
     inherit purifier lock;
     inherit (pkgs) lib runCommand writeText;
@@ -33,7 +45,7 @@ pkgs.linkFarm "poetry-purifier-prefetch" (
         name = "poetry-purifier-files";
         entries = import ./select.nix {
           packages = import ./entries.nix { inherit lock poetryLock; };
-          installs = purifier.wheels { inherit pythonVersion arch glibcVersion; };
+          installs = purifier.wheels ({ inherit pythonVersion; } // target);
         };
       };
     }

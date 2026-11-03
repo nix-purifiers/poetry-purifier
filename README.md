@@ -361,9 +361,10 @@ The purifier does not support these:
   platform builds. Only running the backend shows these requirements, so
   the lockfile records them only for the builds of the lock run's own
   platform. The Nix build stops with an error that names the missing set.
-- Systems other than x86_64-linux and aarch64-linux, the systems of the
-  nix-purifiers family. Wheel selection reads manylinux and `linux_*`
-  platform tags.
+- Systems other than x86_64-linux, aarch64-linux and aarch64-darwin. On
+  aarch64-darwin, a project whose own wheel has compiled code: purifier's
+  `wheelName` names Linux wheels only, and a lock of such a project made
+  on a Mac does not build on Linux.
 
 The plugin changes how Poetry looks up links, downloads files, clones git
 repositories and installs build requirements. These are Poetry internals,

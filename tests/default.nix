@@ -298,6 +298,7 @@ in
     assert memory.purifier == "poetry-purifier";
     assert lib.any (entry: entry.systems or null == [ "aarch64-linux" ]) charset;
     assert lib.any (entry: entry.systems or null == [ "x86_64-linux" ]) charset;
+    assert lib.any (entry: entry.systems or null == [ "aarch64-darwin" ]) charset;
     assert checkouts != [ ] && lib.all (entry: !(entry ? systems)) checkouts;
     assert
       memory.outputs == {
@@ -305,11 +306,18 @@ in
         hello.kind = "script";
       };
     assert
-      app.fetches == (poetryPurifier.readLock {
-        src = ./fixtures/app;
-        pythonVersion = "3.14";
-        glibcVersion = pkgs.stdenv.cc.libc.version;
-      }).entries;
+      app.fetches == (poetryPurifier.readLock (
+        {
+          src = ./fixtures/app;
+          pythonVersion = "3.14";
+        }
+        // (
+          if pkgs.stdenv.hostPlatform.isDarwin then
+            { macosVersion = pkgs.stdenv.hostPlatform.darwinMinVersion; }
+          else
+            { glibcVersion = pkgs.stdenv.cc.libc.version; }
+        )
+      )).entries;
     runCommand "read-lock" { } "touch $out";
 
   # The fixture's environment and its release, which the conformance-rebuild

@@ -28,9 +28,9 @@
 # - `tests`: the environment with the project's tests run in the sandbox.
 # - `release`: the wheel and the sdist that `poetry build` made, which
 #   `poetry purifier publish` uploads. `release.files."<file name>"` is the
-#   path of each. The lock run recorded their names, and the library's
-#   wheelName gives a compiled wheel the tags of this system. The build
-#   fails if `poetry build` makes other files.
+#   path of each. The lock run recorded their names, and on Linux the
+#   library's wheelName gives a compiled wheel the tags of this system. The
+#   build fails if `poetry build` makes other files.
 # - `fetches`: the entries of the lock in memory (read-lock.nix), the
 #   download entries of every supported system. This system's build
 #   fetches the entries that `lib.purifier.entriesFor` gives for it.
@@ -100,13 +100,35 @@ let
     else
       pythonInterpreters."python${lib.replaceStrings [ "." ] [ "" ] lock.python}";
 
+  platform = stdenv.hostPlatform;
   system = {
     pythonVersion = lib.versions.majorMinor interpreter.version;
-    arch = stdenv.hostPlatform.parsed.cpu.name;
-    glibcVersion = stdenv.cc.libc.version;
-  };
+  }
+  // (
+    if platform.isDarwin then
+      {
+        # macOS wheel tags name the CPU arm64.
+        arch = "arm64";
+        macosVersion = platform.darwinMinVersion;
+      }
+    else
+      {
+        arch = platform.parsed.cpu.name;
+        glibcVersion = stdenv.cc.libc.version;
+      }
+  );
+  # The library's wheelName knows only Linux tags, so on darwin a pure
+  # wheel keeps its name, and a wheel with compiled code stops the
+  # evaluation.
+  wheelName =
+    if !platform.isDarwin then
+      purifier.wheelName system lock.dist.wheel
+    else if lib.hasSuffix "-any.whl" lock.dist.wheel then
+      lock.dist.wheel
+    else
+      throw "poetry-purifier: the lock run built ${lock.dist.wheel}, a wheel with compiled code, and poetry-purifier can name the wheel that such a project builds only on Linux, not on ${platform.system}";
   distFiles = [
-    (purifier.wheelName system lock.dist.wheel)
+    wheelName
     lock.dist.sdist
   ];
   # The lock in memory of the purifier contract, checked.
@@ -114,7 +136,9 @@ let
     import ./read-lock.nix { inherit lib purifier; } (
       lockFiles
       // {
-        inherit (system) pythonVersion glibcVersion;
+        inherit (system) pythonVersion;
+        glibcVersion = system.glibcVersion or null;
+        macosVersion = system.macosVersion or null;
       }
     )
   );
@@ -210,16 +234,24 @@ let
         chmod -R u+w "$POETRY_CACHE_DIR"
 
         poetry build --output "$TMPDIR/dist"
+        # pip installs the project's wheel by name from the directory, as
+        # from an index: given the file's path, pip would record it in a
+        # direct_url.json, and the build directory is new for every build on
+        # darwin.
+        installProject() {
+          "$1/bin/python" -m pip install --no-deps --no-index --no-cache-dir \
+            --find-links "$TMPDIR/dist" --only-binary :all: ${lib.escapeShellArg projectName}
+        }
 
         ${interpreter.interpreter} -m venv "$out"
         VIRTUAL_ENV="$out" poetry install --no-root --only ${lib.concatStringsSep "," groups}
-        "$out/bin/python" -m pip install --no-deps --no-index --no-cache-dir "$TMPDIR"/dist/*.whl
+        installProject "$out"
         # stdenv sets doCheck to 1 when the checks run, which `tests` does.
         if [ "''${doCheck:-}" = 1 ]; then
           ${interpreter.interpreter} -m venv "$TMPDIR/check-env"
           VIRTUAL_ENV="$TMPDIR/check-env" poetry install --no-root \
             --only ${lib.concatStringsSep "," ([ "main" ] ++ checkGroups)}
-          "$TMPDIR/check-env/bin/python" -m pip install --no-deps --no-index --no-cache-dir "$TMPDIR"/dist/*.whl
+          installProject "$TMPDIR/check-env"
         fi
         runHook postBuild
       '';
