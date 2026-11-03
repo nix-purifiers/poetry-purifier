@@ -13,11 +13,12 @@
 # - `problems`: a stale, tampered, malformed, missing or incomplete
 #   lockfile, each with the command that fixes it.
 #
-# The builder passes `pythonVersion` and `glibcVersion`, and then each
-# system's entries are the files that system's build fetches. A caller that
-# passes neither gets the files for the Python version of the lock and for
-# any glibc: every wheel that installs with a recent glibc, and each
-# package's sdists beside its wheels.
+# The builder passes `pythonVersion` and, on Linux, `glibcVersion` or, on
+# macOS, `macosVersion`, and then the entries of the systems of that OS are
+# the files their builds fetch. A caller that passes neither gets the files
+# for the Python version of the lock and for any glibc or macOS: every
+# wheel that installs with a recent one, and each package's sdists beside
+# its wheels.
 {
   lib,
   # The shared purifier library, `lib.purifier`.
@@ -32,8 +33,10 @@
   poetryLock ? src + "/poetry.lock",
   # The Python version, such as "3.14". By default, the one of the lock run.
   pythonVersion ? null,
-  # The glibc version of the systems, such as "2.40".
+  # The glibc version of the Linux systems, such as "2.40".
   glibcVersion ? null,
+  # The oldest macOS version of the darwin systems, such as "14.0".
+  macosVersion ? null,
 }:
 let
   read = import ./lockfile.nix { inherit lockFile src poetryLock; };
@@ -58,18 +61,36 @@ let
   systems = [
     "x86_64-linux"
     "aarch64-linux"
+    "aarch64-darwin"
   ];
   selectedFor =
     system:
+    let
+      darwin = lib.hasSuffix "-darwin" system;
+    in
     import ./select.nix {
       inherit packages;
-      installs = purifier.wheels {
-        pythonVersion = if pythonVersion != null then pythonVersion else lock.python;
-        arch = lib.head (lib.splitString "-" system);
-        # Newer than any glibc, when the caller does not name one.
-        glibcVersion = if glibcVersion != null then glibcVersion else "2.999";
-      };
-      withSdists = glibcVersion == null;
+      installs = purifier.wheels (
+        {
+          pythonVersion = if pythonVersion != null then pythonVersion else lock.python;
+        }
+        // (
+          if darwin then
+            {
+              # macOS wheel tags name the CPU arm64.
+              arch = "arm64";
+              # Newer than any macOS, when the caller does not name one.
+              macosVersion = if macosVersion != null then macosVersion else "999.0";
+            }
+          else
+            {
+              arch = lib.head (lib.splitString "-" system);
+              # Newer than any glibc, when the caller does not name one.
+              glibcVersion = if glibcVersion != null then glibcVersion else "2.999";
+            }
+        )
+      );
+      withSdists = (if darwin then macosVersion else glibcVersion) == null;
     };
   pathsFor = lib.genAttrs systems (system: map (entry: entry.path) (selectedFor system));
   selected = lib.unique (lib.concatMap selectedFor systems);

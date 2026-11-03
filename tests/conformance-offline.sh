@@ -19,7 +19,9 @@ pyright="$(nix build --no-link --print-out-paths 'nixpkgs#pyright')/bin/pyright"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
-cp -r tests/fixtures/app "$work/app"
+# -R copies a symbolic link in the fixture as a link; macOS's cp -r
+# follows it.
+cp -R tests/fixtures/app "$work/app"
 cd "$work/app"
 export POETRY_CACHE_DIR="$work/cache"
 export POETRY_VIRTUALENVS_IN_PROJECT=true

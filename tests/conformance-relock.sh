@@ -23,7 +23,9 @@ trap 'rm -rf "$work"' EXIT
 export POETRY_CACHE_DIR="$work/cache"
 lock="poetry-purifier.lock.json"
 
-cp -r tests/fixtures/app "$work/relock"
+# -R copies a symbolic link in the fixture as a link; macOS's cp -r
+# follows it.
+cp -R tests/fixtures/app "$work/relock"
 (
   cd "$work/relock"
   "$poetry" purifier lock --force
@@ -35,7 +37,7 @@ echo "conformance-relock: the relock is byte for byte the committed lockfile"
 # in the project, writes both files outside, and leaves the copy in the
 # project as it is. The outside files are the committed ones, byte for byte.
 repo="$PWD"
-cp -r tests/fixtures/app "$work/outside"
+cp -R tests/fixtures/app "$work/outside"
 mkdir "$work/kept"
 (
   cd "$work/outside"
@@ -50,7 +52,7 @@ mkdir "$work/kept"
 )
 echo "conformance-relock: the lockfiles kept outside the project are the committed ones"
 
-cp -r tests/fixtures/app "$work/app"
+cp -R tests/fixtures/app "$work/app"
 rm "$work/app/$lock"
 cd "$work/app"
 "$poetry" purifier lock

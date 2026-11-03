@@ -283,6 +283,17 @@ def enable_offline(
 
         Executor._install = install_operation  # type: ignore[method-assign]
 
+        # The direct_url.json of a path dependency would name its directory
+        # in the build directory too, which on darwin is new for every build.
+        original_save_url_reference = Executor._save_url_reference
+
+        def save_url_reference(self: Executor, operation: Any) -> None:
+            if operation.package.source_type in ("directory", "file"):
+                return
+            original_save_url_reference(self, operation)
+
+        Executor._save_url_reference = save_url_reference  # type: ignore[method-assign]
+
     def install(
         self: isolated_build.IsolatedEnv,
         requirements: Collection[str],
