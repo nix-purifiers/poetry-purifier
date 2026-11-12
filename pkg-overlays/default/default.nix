@@ -2,7 +2,7 @@
 #
 # The default package overlay. It adds one attribute to the package set, the
 # scope `pkgs.poetry-purifier`, made with `lib.makeScope`. The scope holds
-# the builder `buildPoetryProject` (nix/lib/build-poetry-project.nix), a
+# the builder `buildPoetryProject` (pkgs/build-poetry-project/default.nix), a
 # package for callPackage, beside the Poetry wrapper `poetry` and the
 # `plugin` (pkgs/). A package written for callPackage takes the scope by
 # name, as `{ poetry-purifier }:`. `poetry-purifier.overrideScope` replaces
@@ -17,7 +17,7 @@
     poetry-purifier = final.lib.makeScope final.newScope (self: {
       plugin = self.callPackage ../../pkgs/plugin { };
       poetry = self.callPackage ../../pkgs/poetry { purifierSource = closure-inputs.purifier; };
-      buildPoetryProject = self.callPackage ../../nix/lib/build-poetry-project.nix {
+      buildPoetryProject = self.callPackage ../../pkgs/build-poetry-project/default.nix {
         purifier = import (closure-inputs.purifier + "/nix/lib") { inherit (final) lib; };
       };
     });

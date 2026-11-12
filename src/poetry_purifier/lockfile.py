@@ -20,11 +20,11 @@
 #
 # `expand` combines the lockfile with poetry.lock into download entries
 # `{path, url, mirrors, hash}`, by "name==version", where `path` is the
-# file's place in Poetry's cache directory. nix/lib/entries.nix computes the
+# file's place in Poetry's cache directory. lib-overlays/default/entries.nix computes the
 # same entries.
 #
 # Two hashes guard the lockfile, and Nix checks both when it evaluates a
-# build, in nix/lib/check-lock.nix. `inputsHash` covers pyproject.toml and
+# build, in lib-overlays/default/lockfile.nix. `inputsHash` covers pyproject.toml and
 # poetry.lock, so a lock made from other inputs is out of date.
 # `contentHash` covers the text of the file itself, so an edit by hand, a
 # truncated file and a file that is not JSON all fail before anything parses

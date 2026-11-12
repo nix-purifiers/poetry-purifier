@@ -83,7 +83,7 @@ let
   # The parsed lockfile. The interpreter comes from it, and the lock in
   # memory needs the interpreter, so the builder reads the lockfile before
   # checkLock does. A problem found here fails evaluation with its message.
-  read = import ./lockfile.nix lockFiles;
+  read = import ../../lib-overlays/default/lockfile.nix lockFiles;
   lock = if read.problems == [ ] then read.lock else throw (lib.concatStringsSep "\n" read.problems);
   pyproject = builtins.fromTOML (builtins.readFile (src + "/pyproject.toml"));
   poetrySection = pyproject.tool.poetry or { };
@@ -133,7 +133,7 @@ let
   ];
   # The lock in memory of the purifier contract, checked.
   checked = purifier.checkLock (
-    import ./read-lock.nix { inherit lib purifier; } (
+    import ../../lib-overlays/default/read-lock.nix { inherit lib purifier; } (
       lockFiles
       // {
         inherit (system) pythonVersion;
