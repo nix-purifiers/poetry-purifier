@@ -51,7 +51,11 @@ let
   # The Nix files of the builder.
   sources = lib.fileset.toSource {
     root = ../..;
-    fileset = ../../nix;
+    fileset = lib.fileset.unions [
+      ../build-poetry-project
+      ./realize.nix
+      ../../lib-overlays/default
+    ];
   };
   context = ''
     pkgs = import ${path} { system = "${stdenv.hostPlatform.system}"; };
@@ -63,7 +67,7 @@ let
     let
       ${context}
     in
-    import ${sources}/nix/lib/realize.nix ({ inherit pkgs purifier; } // args)
+    import ${sources}/pkgs/poetry/realize.nix ({ inherit pkgs purifier; } // args)
   '';
 
   build = writeText "poetry-purifier-build.nix" ''
@@ -79,7 +83,7 @@ let
       ${context}
       ignored = [ ".git" ".venv" ".poetry-purifier" "dist" "__pycache__" ];
     in
-    pkgs.callPackage ${sources}/nix/lib/build-poetry-project.nix {
+    pkgs.callPackage ${sources}/pkgs/build-poetry-project/default.nix {
       inherit purifier poetry;
     } ({
       inherit lockFile;
@@ -101,13 +105,13 @@ symlinkJoin {
   postBuild = ''
     mkdir -p "$out/share/poetry-purifier"
     ln -s ${purifierSource}/tools "$out/share/poetry-purifier/project-input-tools"
-    ln -s ${sources}/nix/lib "$out/share/poetry-purifier/python-bindings"
+    ln -s ${sources}/pkgs/build-poetry-project "$out/share/poetry-purifier/python-bindings"
     wrapProgram "$out/bin/poetry" \
       --run ${lib.escapeShellArg unlockedNotice} \
       --set POETRY_PURIFIER_REALIZE ${realize} \
       --set POETRY_PURIFIER_BUILD ${build} \
       --set POETRY_PURIFIER_PROJECT_INPUTS_TOOLS ${purifierSource}/tools \
-      --set POETRY_PURIFIER_PYTHON_BINDINGS ${sources}/nix/lib \
+      --set POETRY_PURIFIER_PYTHON_BINDINGS ${sources}/pkgs/build-poetry-project \
       --set POETRY_PURIFIER_POETRY "$out" \
       --prefix PATH : ${lib.makeBinPath [ nix-prefetch-git ]}
   '';

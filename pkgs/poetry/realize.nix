@@ -29,7 +29,7 @@ let
       }
     else
       { inherit arch glibcVersion; };
-  projectInputs = import ./python-inputs.nix {
+  projectInputs = import ../build-poetry-project/python-inputs.nix {
     inherit purifier lock;
     inherit (pkgs) lib runCommand writeText;
     python = pkgs."python${builtins.replaceStrings [ "." ] [ "" ] lock.python}";
@@ -43,8 +43,8 @@ pkgs.linkFarm "poetry-purifier-prefetch" (
       path = purifier.tree {
         inherit pkgs;
         name = "poetry-purifier-files";
-        entries = import ./select.nix {
-          packages = import ./entries.nix { inherit lock poetryLock; };
+        entries = import ../../lib-overlays/default/select.nix {
+          packages = import ../../lib-overlays/default/entries.nix { inherit lock poetryLock; };
           installs = purifier.wheels ({ inherit pythonVersion; } // target);
         };
       };

@@ -24,8 +24,8 @@ let
   selectFor =
     arch:
     map (file: baseNameOf file.path) (
-      import ../nix/lib/select.nix {
-        packages = import ../nix/lib/entries.nix {
+      import ../lib-overlays/default/select.nix {
+        packages = import ../lib-overlays/default/entries.nix {
           inherit lock;
           poetryLock = ./fixtures/app/poetry.lock;
         };
