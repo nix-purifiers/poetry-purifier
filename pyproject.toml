@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "poetry-purifier"
-dynamic = ["version"]
+version = "0.0.0.dev0"
 description = "A Poetry plugin that locks the files Poetry downloads, so that Nix can build the project offline"
 license = "MIT"
 requires-python = ">=3.10"
@@ -14,8 +14,6 @@ dependencies = ["poetry>=2.0"]
 [project.entry-points."poetry.application.plugin"]
 purifier = "poetry_purifier.plugin:PurifierPlugin"
 
-[tool.setuptools.dynamic]
-version = { file = "version.txt" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
